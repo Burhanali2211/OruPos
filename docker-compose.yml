@@ -8,6 +8,8 @@ services:
     restart: always
     ports:
       - "127.0.0.1:3002:3000"
+    volumes:
+      - /docker/restaurants:/var/www/restaurants
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.orupos.rule=Host(`orupos.in`) || Host(`www.orupos.in`)"
