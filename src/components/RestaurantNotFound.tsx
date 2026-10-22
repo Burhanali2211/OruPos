@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { LockIcon } from "@/components/Icons";
 
 interface RestaurantNotFoundProps {
   slug: string;
@@ -32,7 +33,7 @@ export default function RestaurantNotFound({ slug }: RestaurantNotFoundProps) {
           textAlign: "center",
         }}
       >
-        {/* Lock / Unregistered Domain Badge */}
+        {/* Unregistered Domain Badge */}
         <div
           style={{
             width: "56px",
@@ -43,12 +44,11 @@ export default function RestaurantNotFound({ slug }: RestaurantNotFoundProps) {
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "26px",
             marginBottom: "20px",
             border: "1px solid #F5D9C8",
           }}
         >
-          🔒
+          <LockIcon size={24} color="#9C4124" />
         </div>
 
         {/* Subdomain pill */}
@@ -112,7 +112,7 @@ export default function RestaurantNotFound({ slug }: RestaurantNotFoundProps) {
               transition: "background-color 0.15s ease",
             }}
           >
-            <span>Register & Whitelist Domain in Admin →</span>
+            <span>Register & Whitelist Domain in Admin</span>
           </Link>
 
           <Link
@@ -142,7 +142,7 @@ export default function RestaurantNotFound({ slug }: RestaurantNotFoundProps) {
               marginTop: "8px",
             }}
           >
-            ← Back to OruPos Homepage
+            Back to OruPos Homepage
           </Link>
         </div>
 

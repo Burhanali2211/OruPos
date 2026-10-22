@@ -3,6 +3,14 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { RestaurantData, STARTER_MENU_PACKS } from "@/lib/restaurants";
+import {
+  ShieldIcon,
+  InfoIcon,
+  ExternalLinkIcon,
+  CloseIcon,
+  RefreshIcon,
+  CheckIcon,
+} from "@/components/Icons";
 
 export default function AdminDashboardPage() {
   const [restaurants, setRestaurants] = useState<RestaurantData[]>([]);
@@ -83,7 +91,7 @@ export default function AdminDashboardPage() {
 
       if (res.ok && data.success) {
         setCreatedRestaurant(data.restaurant);
-        showToast(`✓ Subdomain "${normalizedSlug}.orupos.in" whitelisted!`);
+        showToast(`Subdomain "${normalizedSlug}.orupos.in" whitelisted successfully.`);
         // Reset form
         setSlug("");
         setName("");
@@ -205,9 +213,13 @@ export default function AdminDashboardPage() {
               fontSize: "13px",
               textDecoration: "none",
               fontWeight: 500,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "4px",
             }}
           >
-            View orupos.in ↗
+            <span>View orupos.in</span>
+            <ExternalLinkIcon size={12} color="#CBD5E1" />
           </Link>
           <Link
             href="/demo"
@@ -244,7 +256,7 @@ export default function AdminDashboardPage() {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <span style={{ fontSize: "20px" }}>🛡️</span>
+            <ShieldIcon size={20} color="#065F46" />
             <div>
               <div style={{ fontSize: "13px", fontWeight: 700, color: "#065F46" }}>
                 Strict Subdomain Gating Active
@@ -273,9 +285,12 @@ export default function AdminDashboardPage() {
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div>
-                <h3 style={{ fontSize: "15px", fontWeight: 800, color: "#92400E", margin: "0 0 4px" }}>
-                  🎉 New Restaurant Whitelisted Successfully!
-                </h3>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
+                  <CheckIcon size={16} color="#92400E" />
+                  <h3 style={{ fontSize: "15px", fontWeight: 800, color: "#92400E", margin: 0 }}>
+                    New Restaurant Whitelisted Successfully
+                  </h3>
+                </div>
                 <p style={{ fontSize: "13px", color: "#B45309", margin: "0 0 12px" }}>
                   <strong>{createdRestaurant.name}</strong> is now live on subdomain:{" "}
                   <code style={{ background: "#FEF3C7", padding: "2px 6px", borderRadius: "4px" }}>
@@ -295,9 +310,13 @@ export default function AdminDashboardPage() {
                       fontSize: "12px",
                       fontWeight: 700,
                       textDecoration: "none",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "5px",
                     }}
                   >
-                    Open Menu View (/r/{createdRestaurant.slug}) ↗
+                    <span>Open Menu View (/r/{createdRestaurant.slug})</span>
+                    <ExternalLinkIcon size={12} color="#FFFFFF" />
                   </Link>
                   <Link
                     href={`/r/${createdRestaurant.slug}?table=01`}
@@ -311,9 +330,13 @@ export default function AdminDashboardPage() {
                       fontSize: "12px",
                       fontWeight: 700,
                       textDecoration: "none",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "5px",
                     }}
                   >
-                    Test Table 01 (Instant Order) ↗
+                    <span>Test Table 01 (Instant Order)</span>
+                    <ExternalLinkIcon size={12} color="#1E3A2F" />
                   </Link>
                 </div>
               </div>
@@ -324,12 +347,15 @@ export default function AdminDashboardPage() {
                 style={{
                   background: "none",
                   border: "none",
-                  fontSize: "16px",
-                  color: "#92400E",
+                  padding: "4px",
                   cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
+                aria-label="Close message"
               >
-                ✕
+                <CloseIcon size={14} color="#92400E" />
               </button>
             </div>
           </div>
@@ -578,7 +604,7 @@ export default function AdminDashboardPage() {
                   gap: "8px",
                 }}
               >
-                <span>{isSubmitting ? "Whitelisting Subdomain..." : "Whitelist & Activate Subdomain →"}</span>
+                <span>{isSubmitting ? "Whitelisting Subdomain..." : "Whitelist & Activate Subdomain"}</span>
               </button>
             </form>
           </div>
@@ -616,9 +642,13 @@ export default function AdminDashboardPage() {
                   fontSize: "12px",
                   fontWeight: 600,
                   cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "5px",
                 }}
               >
-                ↻ Refresh
+                <RefreshIcon size={12} color="#374151" />
+                <span>Refresh</span>
               </button>
             </div>
 
@@ -736,7 +766,7 @@ export default function AdminDashboardPage() {
                         fontSize: "12px",
                       }}
                     >
-                      <div style={{ display: "flex", gap: "10px" }}>
+                      <div style={{ display: "flex", gap: "12px" }}>
                         <Link
                           href={`/r/${res.slug}`}
                           target="_blank"
@@ -744,9 +774,13 @@ export default function AdminDashboardPage() {
                             color: "#1E3A2F",
                             fontWeight: 700,
                             textDecoration: "underline",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "3px",
                           }}
                         >
-                          Preview Menu ↗
+                          <span>Preview Menu</span>
+                          <ExternalLinkIcon size={11} color="#1E3A2F" />
                         </Link>
                         <Link
                           href={`/r/${res.slug}?table=01`}
@@ -755,9 +789,13 @@ export default function AdminDashboardPage() {
                             color: "#059669",
                             fontWeight: 600,
                             textDecoration: "underline",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "3px",
                           }}
                         >
-                          Test Table 01 ↗
+                          <span>Test Table 01</span>
+                          <ExternalLinkIcon size={11} color="#059669" />
                         </Link>
                       </div>
 
@@ -786,7 +824,7 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Informational Architecture Guide: R2 vs VPS */}
+        {/* Informational Architecture Guide */}
         <div
           style={{
             marginTop: "40px",
@@ -797,7 +835,7 @@ export default function AdminDashboardPage() {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-            <span style={{ fontSize: "22px" }}>💡</span>
+            <InfoIcon size={20} color="#1E3A2F" />
             <h2 style={{ fontSize: "17px", fontWeight: 800, color: "#1E3A2F", margin: 0 }}>
               Architecture Guide: Cloudflare R2 vs. VPS for OruPos
             </h2>

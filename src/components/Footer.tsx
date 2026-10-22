@@ -127,7 +127,7 @@ export default function Footer() {
           }}
         >
           <div>
-            © 2026 {ORUPOS_CONFIG.legalEntity}. All rights reserved.
+            Copyright 2026 {ORUPOS_CONFIG.legalEntity}. All rights reserved.
           </div>
           <div>
             Simple, honest table hardware for Indian restaurants.

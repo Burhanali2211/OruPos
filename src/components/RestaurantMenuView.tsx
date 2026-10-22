@@ -4,6 +4,19 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MenuItem, RestaurantData } from "@/lib/restaurants";
+import {
+  StarIcon,
+  ClockIcon,
+  MapPinIcon,
+  BellIcon,
+  ReceiptIcon,
+  WhatsAppIcon,
+  CheckIcon,
+  EditIcon,
+  CloseIcon,
+  OrderIcon,
+  ExternalLinkIcon,
+} from "@/components/Icons";
 
 interface RestaurantMenuViewProps {
   restaurant: RestaurantData;
@@ -122,31 +135,31 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
     showToast(`Updated to ${formatted}`);
   };
 
-  // Send order to Kitchen via WhatsApp
+  // Send order to Kitchen via WhatsApp (Zero emojis)
   const handleSendWhatsAppOrder = () => {
     if (cartItems.length === 0) return;
 
     const itemsSummary = cartItems
       .map(
         (c) =>
-          `• ${c.quantity}x ${c.item.name} (₹${c.item.price * c.quantity})`
+          `- ${c.quantity}x ${c.item.name} (INR ${c.item.price * c.quantity})`
       )
       .join("\n");
 
     const message = [
-      `🍽️ *NEW DINE-IN ORDER*`,
-      `📍 *${restaurant.name}*`,
-      `🪑 *Table:* ${tableNumber}`,
+      `*NEW DINE-IN ORDER*`,
+      `*Restaurant:* ${restaurant.name}`,
+      `*Table:* ${tableNumber}`,
       `--------------------------------`,
       itemsSummary,
       `--------------------------------`,
-      `*Subtotal:* ₹${cartSubtotal}`,
-      `*GST (5%):* ₹${gstAmount}`,
-      `*Total Amount:* ₹${grandTotal}`,
-      cookingNote.trim() ? `📝 *Special Instructions:* ${cookingNote.trim()}` : null,
-      `⏱️ *Time:* ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`,
+      `*Subtotal:* INR ${cartSubtotal}`,
+      `*GST (5%):* INR ${gstAmount}`,
+      `*Total Amount:* INR ${grandTotal}`,
+      cookingNote.trim() ? `*Special Instructions:* ${cookingNote.trim()}` : null,
+      `*Time:* ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`,
       `--------------------------------`,
-      `_Sent via OruPos QR Menu_`,
+      `Sent via OruPos QR Menu`,
     ]
       .filter(Boolean)
       .join("\n");
@@ -181,7 +194,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
     });
     setCart({});
     setIsCartOpen(false);
-    showToast(`Order sent to kitchen for ${tableNumber}!`);
+    showToast(`Order sent to kitchen for ${tableNumber}`);
   };
 
   return (
@@ -220,14 +233,18 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
         >
           <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#34D399", display: "inline-block" }} />
           <strong>{tableNumber}</strong>
-          <span style={{ fontSize: "10px", color: "#A7F3D0", textDecoration: "underline" }}>Change ✎</span>
+          <span style={{ fontSize: "11px", color: "#A7F3D0", display: "inline-flex", alignItems: "center", gap: "3px", textDecoration: "underline" }}>
+            <span>Edit</span>
+            <EditIcon size={10} color="#A7F3D0" />
+          </span>
         </button>
         <Link
           href="https://orupos.in"
           target="_blank"
-          style={{ color: "#E5A93C", textDecoration: "none", fontWeight: 700, fontSize: "11px" }}
+          style={{ color: "#E5A93C", textDecoration: "none", fontWeight: 700, fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "4px" }}
         >
-          Powered by OruPos ↗
+          <span>Powered by OruPos</span>
+          <ExternalLinkIcon size={10} color="#E5A93C" />
         </Link>
       </div>
 
@@ -262,11 +279,12 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
               }}
             >
               <span style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: "#4ADE80", display: "inline-block" }} />
-              {tableNumber}
-              <span style={{ fontSize: "11px", opacity: 0.8 }}>✎</span>
+              <span>{tableNumber}</span>
+              <EditIcon size={11} color="#FFFFFF" />
             </button>
-            <div style={{ fontSize: "12px", color: "#A7F3D0", display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }}>
-              🟢 Kitchen Open & Taking Orders
+            <div style={{ fontSize: "12px", color: "#A7F3D0", display: "flex", alignItems: "center", gap: "6px", fontWeight: 600 }}>
+              <span style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: "#34D399", display: "inline-block" }} />
+              <span>Kitchen Open & Taking Orders</span>
             </div>
           </div>
 
@@ -278,14 +296,17 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
           </p>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", fontSize: "12px" }}>
-            <span style={{ background: "rgba(255,255,255,0.12)", padding: "4px 10px", borderRadius: "6px" }}>
-              ⭐ {restaurant.rating}
+            <span style={{ background: "rgba(255,255,255,0.12)", padding: "5px 10px", borderRadius: "6px", display: "inline-flex", alignItems: "center", gap: "5px" }}>
+              <StarIcon size={13} color="#E5A93C" />
+              <span>{restaurant.rating}</span>
             </span>
-            <span style={{ background: "rgba(255,255,255,0.12)", padding: "4px 10px", borderRadius: "6px" }}>
-              ⏱️ {restaurant.prepTime}
+            <span style={{ background: "rgba(255,255,255,0.12)", padding: "5px 10px", borderRadius: "6px", display: "inline-flex", alignItems: "center", gap: "5px" }}>
+              <ClockIcon size={13} color="#CBD5E1" />
+              <span>{restaurant.prepTime}</span>
             </span>
-            <span style={{ background: "rgba(255,255,255,0.12)", padding: "4px 10px", borderRadius: "6px" }}>
-              📍 {restaurant.location}
+            <span style={{ background: "rgba(255,255,255,0.12)", padding: "5px 10px", borderRadius: "6px", display: "inline-flex", alignItems: "center", gap: "5px" }}>
+              <MapPinIcon size={13} color="#CBD5E1" />
+              <span>{restaurant.location}</span>
             </span>
           </div>
         </header>
@@ -594,7 +615,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
             target="_blank"
             style={{ color: "#1E3A2F", fontWeight: 700, textDecoration: "underline" }}
           >
-            Get OruPos for ₹199/table →
+            Get OruPos for ₹199 per table
           </Link>
         </div>
 
@@ -692,18 +713,18 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      gap: "4px",
+                      gap: "5px",
                     }}
                   >
                     <span>{tableNumber}</span>
-                    <span style={{ fontSize: "11px", color: "#6B7280" }}>✎</span>
+                    <EditIcon size={12} color="#6B7280" />
                   </button>
                 </div>
 
                 <div style={{ display: "flex", gap: "8px" }}>
                   <button
                     type="button"
-                    onClick={() => showToast(`🔔 Waiter alerted for ${tableNumber}! Staff on the way.`)}
+                    onClick={() => showToast(`Staff notified for ${tableNumber}. Team on the way.`)}
                     style={{
                       backgroundColor: "#F3F4F6",
                       color: "#374151",
@@ -715,16 +736,16 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                       cursor: "pointer",
                       display: "inline-flex",
                       alignItems: "center",
-                      gap: "5px",
+                      gap: "6px",
                     }}
                   >
-                    <span>🔔</span>
+                    <BellIcon size={14} color="#374151" />
                     <span>Call Staff</span>
                   </button>
 
                   <button
                     type="button"
-                    onClick={() => showToast(`🧾 Bill requested for ${tableNumber}. Cashier notified.`)}
+                    onClick={() => showToast(`Bill requested for ${tableNumber}. Cashier notified.`)}
                     style={{
                       backgroundColor: "#1E3A2F",
                       color: "#FFFFFF",
@@ -736,10 +757,10 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                       cursor: "pointer",
                       display: "inline-flex",
                       alignItems: "center",
-                      gap: "5px",
+                      gap: "6px",
                     }}
                   >
-                    <span>🧾</span>
+                    <ReceiptIcon size={14} color="#FFFFFF" />
                     <span>Get Bill</span>
                   </button>
                 </div>
@@ -809,15 +830,14 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                   borderRadius: "50%",
                   width: "32px",
                   height: "32px",
-                  fontSize: "16px",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#4B5563",
                 }}
+                aria-label="Close order details"
               >
-                ✕
+                <CloseIcon size={14} color="#4B5563" />
               </button>
             </div>
 
@@ -988,7 +1008,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                   boxShadow: "0 4px 14px rgba(37, 211, 102, 0.35)",
                 }}
               >
-                <span>💬</span>
+                <WhatsAppIcon size={18} color="#FFFFFF" />
                 <span>Send Order to Kitchen via WhatsApp</span>
               </button>
 
@@ -1011,7 +1031,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                   gap: "6px",
                 }}
               >
-                <span>🛎️</span>
+                <OrderIcon size={15} color="#FFFFFF" />
                 <span>Place Direct Table Order</span>
               </button>
             </div>
@@ -1183,16 +1203,15 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "28px",
                 marginBottom: "14px",
                 border: "2px solid #BBF7D0",
               }}
             >
-              ✓
+              <CheckIcon size={26} color="#16A34A" strokeWidth={3} />
             </div>
 
             <h3 style={{ fontSize: "19px", fontWeight: 800, color: "#1E3A2F", marginBottom: "6px" }}>
-              Order Received at Kitchen!
+              Order Received at Kitchen
             </h3>
             <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "18px" }}>
               Serving to <strong>{orderPlacedData.table}</strong> • Approx 15-20 Mins
@@ -1239,7 +1258,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                 cursor: "pointer",
               }}
             >
-              Add More Dishes / Done
+              Done / Back to Menu
             </button>
           </div>
         </div>

@@ -200,7 +200,7 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                           margin: "0 auto 4px",
                         }}
                       >
-                        {isCompleted ? "✓" : s.num}
+                        {isCompleted ? <Check size={12} color="#FFFFFF" strokeWidth={3} /> : s.num}
                       </div>
                       <span
                         style={{
@@ -294,8 +294,9 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                     </strong>
                   </div>
 
-                  <p style={{ fontSize: "12px", color: "var(--color-text-muted)", marginBottom: "20px" }}>
-                    ✓ Includes physical acrylic stand + QR code + table number for each table.
+                  <p style={{ fontSize: "12px", color: "var(--color-text-muted)", marginBottom: "20px", display: "flex", alignItems: "center", gap: "6px" }}>
+                    <Check size={13} color="var(--color-primary)" />
+                    <span>Includes physical acrylic stand + QR code + table number for each table.</span>
                   </p>
 
                   <button
