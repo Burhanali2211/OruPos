@@ -39,7 +39,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=oru_default"
-      - "traefik.http.routers.orupos-subdomains.rule=HostRegexp(`{subdomain:[a-zA-Z0-9_-]+}.orupos.in`) && !Host(`orupos.in`) && !Host(`www.orupos.in`)"
+      - "traefik.http.routers.orupos-subdomains.rule=HostRegexp(`^[a-zA-Z0-9-]+\\.orupos\\.in$$`) && !Host(`orupos.in`) && !Host(`www.orupos.in`)"
       - "traefik.http.routers.orupos-subdomains.entrypoints=websecure"
       - "traefik.http.routers.orupos-subdomains.tls.certresolver=letsencrypt"
       - "traefik.http.routers.orupos-subdomains.priority=10"
