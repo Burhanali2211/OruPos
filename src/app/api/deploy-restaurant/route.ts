@@ -18,22 +18,43 @@ function getRestaurantsBaseDir(): string {
   if (process.env.RESTAURANTS_DIR) {
     return process.env.RESTAURANTS_DIR;
   }
+  // Linux container or VPS host path
   if (fs.existsSync("/var/www/restaurants")) {
     return "/var/www/restaurants";
   }
-  const localDir = path.join(process.cwd(), "public", "restaurants");
-  if (!fs.existsSync(localDir)) {
-    fs.mkdirSync(localDir, { recursive: true });
+  if (fs.existsSync("/docker/restaurants")) {
+    return "/docker/restaurants";
   }
-  return localDir;
+  // Local project development path
+  const localDir = path.join(process.cwd(), "public", "restaurants");
+  try {
+    if (!fs.existsSync(localDir)) {
+      fs.mkdirSync(localDir, { recursive: true });
+    }
+    return localDir;
+  } catch {
+    // If running in read-only environment like Vercel Lambda
+    const tmpDir = path.join(os.tmpdir(), "orupos-restaurants");
+    if (!fs.existsSync(tmpDir)) {
+      try {
+        fs.mkdirSync(tmpDir, { recursive: true });
+      } catch {
+        // ignore
+      }
+    }
+    return tmpDir;
+  }
 }
 
 // GET /api/deploy-restaurant - List all deployed restaurants
 export async function GET() {
   try {
     const baseDir = getRestaurantsBaseDir();
+    const hasVpsStorage = fs.existsSync("/var/www/restaurants") || fs.existsSync("/docker/restaurants");
+    const isVercel = Boolean(process.env.VERCEL || process.env.NEXT_PUBLIC_VERCEL_ENV);
+
     if (!fs.existsSync(baseDir)) {
-      return NextResponse.json({ restaurants: [] });
+      return NextResponse.json({ restaurants: [], baseDir, hasVpsStorage, isVercel });
     }
 
     const entries = fs.readdirSync(baseDir, { withFileTypes: true });
@@ -86,7 +107,12 @@ export async function GET() {
     // Sort newest first
     restaurants.sort((a, b) => new Date(b.deployedAt).getTime() - new Date(a.deployedAt).getTime());
 
-    return NextResponse.json({ restaurants, baseDir });
+    return NextResponse.json({
+      restaurants,
+      baseDir,
+      hasVpsStorage,
+      isVercel,
+    });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to list deployed restaurants", details: String(error) },
@@ -95,13 +121,12 @@ export async function GET() {
   }
 }
 
-// POST /api/deploy-restaurant - Upload and unpack restaurant build
+// POST /api/deploy-restaurant - Upload and unpack restaurant build (supports both direct dist folder & .zip)
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const name = ((formData.get("name") as string) || "").trim();
     const rawSlug = ((formData.get("slug") as string) || "").trim();
-    const file = formData.get("file") as File | null;
 
     if (!rawSlug) {
       return NextResponse.json({ error: "Subdomain slug is required." }, { status: 400 });
@@ -123,13 +148,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!file) {
-      return NextResponse.json(
-        { error: "Please upload your Svelte / HTML build .zip file." },
-        { status: 400 }
-      );
-    }
-
     const baseDir = getRestaurantsBaseDir();
     const restaurantDir = path.join(baseDir, slug);
     const targetDist = path.join(restaurantDir, "dist");
@@ -140,36 +158,76 @@ export async function POST(req: NextRequest) {
     }
     fs.mkdirSync(targetDist, { recursive: true });
 
-    // Save uploaded file to temp path
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const tempZipPath = path.join(os.tmpdir(), `orupos-${slug}-${Date.now()}.zip`);
-    fs.writeFileSync(tempZipPath, buffer);
+    // Mode A: Direct folder upload with multiple files
+    const uploadedFiles = formData.getAll("files") as File[];
+    const pathsRaw = formData.get("paths") as string | null;
 
-    // Extract archive
-    const isWindows = process.platform === "win32";
-    try {
-      if (isWindows) {
-        execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
-      } else {
-        execSync(`unzip -o -q "${tempZipPath}" -d "${targetDist}"`);
+    if (uploadedFiles && uploadedFiles.length > 0) {
+      let paths: string[] = [];
+      if (pathsRaw) {
+        try {
+          paths = JSON.parse(pathsRaw);
+        } catch {
+          paths = [];
+        }
       }
-    } catch {
-      // Fallback to tar if unzip failed
-      try {
-        execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
-      } catch (extractErr) {
-        // Clean temp
-        if (fs.existsSync(tempZipPath)) fs.unlinkSync(tempZipPath);
+
+      for (let i = 0; i < uploadedFiles.length; i++) {
+        const file = uploadedFiles[i];
+        let relPath = (paths[i] || file.name).replace(/\\/g, "/");
+
+        // Clean path to prevent directory traversal
+        relPath = relPath.replace(/^(\.\.[\/\\])+/, "").replace(/^\/+/, "");
+        // Normalize: if user selected the dist folder itself, strip leading "dist/" or "build/"
+        relPath = relPath.replace(/^(dist|build|out)\//i, "");
+
+        const filePath = path.join(targetDist, relPath);
+        fs.mkdirSync(path.dirname(filePath), { recursive: true });
+
+        const buffer = Buffer.from(await file.arrayBuffer());
+        fs.writeFileSync(filePath, buffer);
+      }
+    } else {
+      // Mode B: Archive upload (.zip file)
+      const zipFile = formData.get("file") as File | null;
+
+      if (!zipFile) {
         return NextResponse.json(
-          { error: "Could not extract archive. Ensure it is a valid .zip file.", details: String(extractErr) },
+          { error: "Please drop your 'dist' folder or upload a .zip build file." },
           { status: 400 }
         );
       }
-    }
 
-    // Clean temp zip
-    if (fs.existsSync(tempZipPath)) {
-      fs.unlinkSync(tempZipPath);
+      // Save uploaded zip file to temp path
+      const buffer = Buffer.from(await zipFile.arrayBuffer());
+      const tempZipPath = path.join(os.tmpdir(), `orupos-${slug}-${Date.now()}.zip`);
+      fs.writeFileSync(tempZipPath, buffer);
+
+      // Extract archive
+      const isWindows = process.platform === "win32";
+      try {
+        if (isWindows) {
+          execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
+        } else {
+          execSync(`unzip -o -q "${tempZipPath}" -d "${targetDist}"`);
+        }
+      } catch {
+        // Fallback to tar if unzip failed
+        try {
+          execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
+        } catch (extractErr) {
+          if (fs.existsSync(tempZipPath)) fs.unlinkSync(tempZipPath);
+          return NextResponse.json(
+            { error: "Could not extract archive. Ensure it is a valid .zip file or drag the 'dist' folder directly.", details: String(extractErr) },
+            { status: 400 }
+          );
+        }
+      }
+
+      // Clean temp zip
+      if (fs.existsSync(tempZipPath)) {
+        fs.unlinkSync(tempZipPath);
+      }
     }
 
     // Normalize nested directory (e.g., if user zipped 'dist' folder instead of contents)
