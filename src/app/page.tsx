@@ -4,15 +4,10 @@ import React, { useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CardDesignsGallery from "@/components/CardDesignsGallery";
-import CustomerExperience from "@/components/CustomerExperience";
 import HowItWorks from "@/components/HowItWorks";
 import WhatYouGet from "@/components/WhatYouGet";
-import Benefits from "@/components/Benefits";
-import BusinessTypes from "@/components/BusinessTypes";
 import PricingCalculator from "@/components/PricingCalculator";
-import LiveDemoSection from "@/components/LiveDemoSection";
 import FaqSection from "@/components/FaqSection";
-import TrustSection from "@/components/TrustSection";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import OrderModal from "@/components/OrderModal";
@@ -45,23 +40,13 @@ export default function HomePage() {
 
         <CardDesignsGallery onOpenOrder={() => handleOpenOrder(10)} />
 
-        <CustomerExperience onOpenDemo={handleOpenDemo} />
-
         <HowItWorks />
 
         <WhatYouGet />
 
-        <Benefits />
-
-        <BusinessTypes />
-
         <PricingCalculator onOpenOrder={handleOpenOrder} />
 
-        <LiveDemoSection onOpenDemo={handleOpenDemo} />
-
         <FaqSection />
-
-        <TrustSection />
 
         <FinalCta onOpenOrder={() => handleOpenOrder(10)} />
       </main>

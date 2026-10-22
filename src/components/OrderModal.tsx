@@ -490,7 +490,7 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                         checked={method === "call"}
                         onChange={() => setMethod("call")}
                       />
-                      <Phone size={22} color="#163832" />
+                      <Phone size={22} color="#1E3A2F" />
                       <div>
                         <h4 style={{ fontSize: "14px", fontWeight: 700, margin: 0 }}>
                           Call Me on Phone
@@ -521,7 +521,7 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                         checked={method === "submit"}
                         onChange={() => setMethod("submit")}
                       />
-                      <Send size={22} color="#163832" />
+                      <Send size={22} color="#1E3A2F" />
                       <div>
                         <h4 style={{ fontSize: "14px", fontWeight: 700, margin: 0 }}>
                           Submit Request Online

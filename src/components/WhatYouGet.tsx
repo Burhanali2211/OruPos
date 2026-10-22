@@ -1,104 +1,50 @@
 import React from "react";
-import Image from "next/image";
-import { ShieldCheck, Hash, QrCode, Smartphone, Store, FileText, CheckCircle2 } from "lucide-react";
 
 export default function WhatYouGet() {
-  const items = [
+  const deliverables = [
     {
-      title: "3mm Optical Cast Acrylic T-Stand",
-      desc: "Ultra-clear, heavy-duty optical cast acrylic. Spill-resistant, gravy-proof, heat-tolerant, and designed to withstand rough restaurant use.",
-      icon: <ShieldCheck size={24} color="#047857" />,
-      tag: "Hardware Spec",
+      num: "01",
+      title: "3mm Optical Cast Acrylic Stand",
+      desc: "Heavy-duty transparent T-stand. Water-resistant, gravy-spill proof, and built for daily restaurant wipe-downs.",
     },
     {
-      title: "Dual-Sided Table Numbering",
-      desc: "Bold high-contrast numbers (Table 01, Table 02...) printed on both sides so floor captains and servers can identify tables from across the dining hall.",
-      icon: <Hash size={24} color="#047857" />,
-      tag: "Staff Convenience",
+      num: "02",
+      title: "Dual-Sided Table Numbers",
+      desc: "High-contrast bold numbers (Table 01, Table 02...) printed on both sides so staff spot tables across the hall.",
     },
     {
-      title: "Dedicated QR Code Per Table",
-      desc: "Every single dining table receives its own dedicated QR code mapped to that exact table number, eliminating misdirected orders.",
-      icon: <QrCode size={24} color="#047857" />,
-      tag: "Table Mapping",
+      num: "03",
+      title: "Individual Per-Table QR Code",
+      desc: "Each stand is mapped directly to that specific table, ensuring accurate waiter alerts and ordering.",
     },
     {
-      title: "High-Speed Mobile Menu Website",
-      desc: "Mobile-first web app with categories, veg/non-veg dietary indicators, dish descriptions, prices, and fast live search bar.",
-      icon: <Smartphone size={24} color="#047857" />,
-      tag: "Cloud Software",
+      num: "04",
+      title: "Fast Mobile Menu Website",
+      desc: "Clean mobile menu with Indian Veg (green) & Non-Veg (red) dietary symbols, instant search, and categories.",
     },
     {
+      num: "05",
       title: "Custom Restaurant Branding",
-      desc: "Your restaurant logo, establishment name, operational hours, and address featured prominently on both the physical acrylic stands and digital menu.",
-      icon: <Store size={24} color="#047857" />,
-      tag: "Custom Brand",
+      desc: "Your restaurant name, logo, operational hours, and address formatted cleanly on the stands and digital menu.",
     },
     {
-      title: "Done-For-You Menu Digitization",
-      desc: "You don't type a single word. Simply send us your current menu photos on WhatsApp; our team formats and organizes all your dishes and prices.",
-      icon: <FileText size={24} color="#047857" />,
-      tag: "Free Service",
+      num: "06",
+      title: "Full Menu Setup Included",
+      desc: "You don't type anything. Just share photos of your current paper menu card; our team enters all dishes and prices.",
     },
   ];
 
   return (
-    <section className="section section-white" id="what-you-get">
+    <section className="section section-subtle" id="what-you-get">
       <div className="container">
         <div className="section-header">
-          <span className="section-tag">Complete Unboxing Experience</span>
-          <h2 className="section-title">What You Get In Every Package</h2>
+          <span className="section-kicker">Package Inclusions</span>
+          <h2 className="section-title">Everything included in your ₹199 package.</h2>
           <p className="section-desc">
-            Everything you need to modernize your dining tables. Physical hardware + digital cloud menu in one single bundle.
+            Physical hardware plus cloud digital menu. No hidden setup costs. No monthly subscriptions.
           </p>
         </div>
 
-        {/* Real Product Showcase Photo */}
-        <div
-          style={{
-            borderRadius: "var(--radius-xl)",
-            overflow: "hidden",
-            boxShadow: "0 20px 45px -10px rgba(15, 23, 42, 0.12)",
-            border: "1px solid var(--color-border)",
-            marginBottom: "40px",
-            position: "relative",
-            backgroundColor: "#FFFFFF",
-          }}
-        >
-          <div style={{ position: "relative", width: "100%", height: "420px" }}>
-            <Image
-              src="/assets/stands-lineup.jpg"
-              alt="Physical acrylic table QR stands for Table 01, Table 02, and Table 03 neatly lined up"
-              fill
-              sizes="(max-width: 1200px) 100vw, 1200px"
-              style={{ objectFit: "cover" }}
-            />
-          </div>
-
-          {/* Overlay Tag */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: "16px",
-              left: "16px",
-              backgroundColor: "rgba(15, 23, 42, 0.85)",
-              backdropFilter: "blur(8px)",
-              color: "#FFFFFF",
-              padding: "8px 16px",
-              borderRadius: "var(--radius-full)",
-              fontSize: "13px",
-              fontWeight: 600,
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
-            <CheckCircle2 size={16} color="#34D399" />
-            <span>Actual Delivered Product • Laser-Printed Acrylic T-Stands</span>
-          </div>
-        </div>
-
-        {/* Inclusions Grid */}
         <div
           style={{
             display: "grid",
@@ -107,57 +53,43 @@ export default function WhatYouGet() {
           }}
           className="package-items-grid"
         >
-          {items.map((item, idx) => (
+          {deliverables.map((item, idx) => (
             <div
               key={idx}
-              className="glass-panel"
-              style={{
-                padding: "26px",
-                display: "flex",
-                flexDirection: "column",
-              }}
+              className="minimal-card"
             >
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "14px",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  color: "var(--color-primary)",
+                  marginBottom: "8px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
                 }}
               >
-                <div
-                  style={{
-                    width: "46px",
-                    height: "46px",
-                    borderRadius: "var(--radius-md)",
-                    backgroundColor: "var(--color-primary-light)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {item.icon}
-                </div>
-                <span
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                    color: "var(--color-text-muted)",
-                    backgroundColor: "var(--bg-subtle)",
-                    padding: "3px 8px",
-                    borderRadius: "4px",
-                  }}
-                >
-                  {item.tag}
-                </span>
+                {item.num}
               </div>
 
-              <h3 style={{ fontSize: "1.0625rem", fontWeight: 700, marginBottom: "8px", color: "var(--color-text-main)" }}>
+              <h3
+                style={{
+                  fontSize: "1.125rem",
+                  fontWeight: 700,
+                  marginBottom: "8px",
+                  color: "var(--color-text-main)",
+                }}
+              >
                 {item.title}
               </h3>
-              <p style={{ fontSize: "0.9rem", color: "var(--color-text-muted)", margin: 0, lineHeight: 1.55 }}>
+
+              <p
+                style={{
+                  fontSize: "0.9375rem",
+                  color: "var(--color-text-muted)",
+                  lineHeight: 1.55,
+                  margin: 0,
+                }}
+              >
                 {item.desc}
               </p>
             </div>

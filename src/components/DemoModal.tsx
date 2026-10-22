@@ -54,18 +54,18 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
       >
         <div
           style={{
-            backgroundColor: "#163832",
+            backgroundColor: "#1E3A2F",
             color: "#FFFFFF",
-            padding: "10px 16px",
+            padding: "12px 18px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             fontSize: "13px",
           }}
         >
-          <span>Live Customer Menu Preview</span>
+          <span style={{ fontWeight: 600 }}>Live Customer Menu Preview</span>
           <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-            <Link href="/demo" target="_blank" style={{ color: "#F8D58A", textDecoration: "underline" }}>
+            <Link href="/demo" target="_blank" style={{ color: "#E5A93C", textDecoration: "underline", fontWeight: 600 }}>
               Open Fullscreen
             </Link>
             <button

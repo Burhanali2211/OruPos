@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, ShieldCheck, Zap, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
 interface PricingCalculatorProps {
@@ -22,125 +22,81 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
     if (tables < 200) setTables(tables + 1);
   };
 
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTables(parseInt(e.target.value, 10));
-  };
-
   const total = tables * pricePerTable;
-  const paperReprintSavings = Math.max(8000, tables * 950);
 
   return (
-    <section className="section section-subtle" id="pricing">
-      <div className="container">
-        <div className="section-header">
-          <span className="section-tag">Radically Transparent</span>
-          <h2 className="section-title">One Simple Price. Zero Subscription Traps.</h2>
-          <p className="section-desc">
-            No monthly software fees. No percentage commissions on your food sales.
-            You pay only for the number of dining tables you need.
+    <section className="section section-white" id="pricing">
+      <div className="container container-narrow">
+        <div className="section-header" style={{ textAlign: "center" }}>
+          <span className="section-kicker">Honest Pricing</span>
+          <h2 className="section-title">₹199 per table. Pay once, use forever.</h2>
+          <p className="section-desc" style={{ margin: "0 auto" }}>
+            No monthly subscription traps. No commissions on your food sales.
+            You only pay for the number of dining tables you need.
           </p>
         </div>
 
+        {/* Minimalist Pricing Box */}
         <div
           style={{
-            maxWidth: "880px",
-            margin: "0 auto",
+            border: "1px solid var(--color-border)",
+            borderRadius: "var(--radius-lg)",
+            padding: "40px 32px",
             backgroundColor: "#FFFFFF",
-            borderRadius: "var(--radius-xl)",
-            boxShadow: "0 25px 60px -15px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.8)",
-            overflow: "hidden",
           }}
         >
-          {/* Top Banner */}
+          {/* Rate Header */}
           <div
             style={{
-              background: "linear-gradient(135deg, #13271F 0%, #1E3A2F 100%)",
-              color: "#FFFFFF",
-              padding: "36px 32px",
               textAlign: "center",
-              position: "relative",
+              paddingBottom: "28px",
+              borderBottom: "1px solid var(--color-border)",
+              marginBottom: "32px",
             }}
           >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                backgroundColor: "rgba(229, 169, 60, 0.15)",
-                border: "1px solid rgba(229, 169, 60, 0.4)",
-                padding: "4px 14px",
-                borderRadius: "var(--radius-full)",
-                fontSize: "12px",
-                fontWeight: 700,
-                color: "#FCE7C8",
-                marginBottom: "16px",
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-              }}
-            >
-              <Sparkles size={14} color="#E5A93C" />
-              <span>Flat Lifetime Rate • Zero Recurring Fees</span>
-            </div>
-
             <div
               style={{
                 display: "flex",
                 alignItems: "baseline",
                 justifyContent: "center",
-                gap: "8px",
+                gap: "6px",
                 marginBottom: "8px",
               }}
             >
-              <span style={{ fontSize: "2rem", fontWeight: 700, color: "#E5A93C" }}>₹</span>
+              <span style={{ fontSize: "1.75rem", fontWeight: 700, color: "var(--color-primary)" }}>₹</span>
               <span
                 style={{
-                  fontSize: "4rem",
+                  fontSize: "4.5rem",
                   fontWeight: 800,
                   lineHeight: 1,
-                  color: "#FFFFFF",
+                  color: "var(--color-text-main)",
                   letterSpacing: "-0.04em",
                 }}
               >
                 199
               </span>
-              <span style={{ fontSize: "1.125rem", fontWeight: 600, color: "#CBD5E1" }}>
-                / per table
+              <span style={{ fontSize: "1.125rem", color: "var(--color-text-muted)", fontWeight: 500 }}>
+                / table
               </span>
             </div>
-
-            <p style={{ fontSize: "0.9375rem", color: "#E2E8F0", maxWidth: "540px", margin: "0 auto" }}>
-              Includes 3mm Optical Acrylic Stand + Custom Table QR + Full Mobile Digital Menu + Done-For-You Digitization
+            <p style={{ fontSize: "0.9375rem", color: "var(--color-text-muted)", margin: 0 }}>
+              Physical Acrylic Stand + Table Number + QR Code + Digital Menu + Complete Setup
             </p>
           </div>
 
-          {/* Calculator Body */}
-          <div style={{ padding: "40px 36px" }}>
-            <div style={{ textAlign: "center", marginBottom: "28px" }}>
-              <label
-                htmlFor="table-slider"
-                style={{
-                  fontSize: "1.0625rem",
-                  fontWeight: 700,
-                  color: "var(--color-text-main)",
-                  display: "block",
-                  marginBottom: "8px",
-                }}
-              >
-                How Many Dining Tables Do You Have?
-              </label>
-              <p style={{ fontSize: "0.875rem", color: "var(--color-text-muted)" }}>
-                Move the slider or tap a quick preset count
-              </p>
-            </div>
+          {/* Stepper */}
+          <div style={{ textAlign: "center", marginBottom: "28px" }}>
+            <span style={{ fontSize: "14px", fontWeight: 600, color: "var(--color-text-main)", display: "block", marginBottom: "16px" }}>
+              Select Number of Dining Tables:
+            </span>
 
-            {/* Stepper & Counter */}
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "20px",
-                marginBottom: "28px",
+                gap: "18px",
+                marginBottom: "20px",
               }}
             >
               <button
@@ -148,54 +104,24 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                 onClick={handleMinus}
                 aria-label="Decrease tables"
                 style={{
-                  width: "50px",
-                  height: "50px",
-                  borderRadius: "var(--radius-md)",
-                  backgroundColor: "var(--bg-subtle)",
+                  width: "48px",
+                  height: "48px",
+                  borderRadius: "var(--radius-sm)",
                   border: "1px solid var(--color-border)",
-                  color: "var(--color-text-main)",
-                  fontSize: "1.5rem",
+                  backgroundColor: "#FFFFFF",
+                  fontSize: "20px",
                   fontWeight: 700,
                   cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "all 0.15s ease",
                 }}
               >
                 −
               </button>
 
-              <div
-                style={{
-                  minWidth: "120px",
-                  textAlign: "center",
-                  padding: "10px 20px",
-                  backgroundColor: "var(--color-primary-light)",
-                  border: "1px solid rgba(4, 120, 87, 0.2)",
-                  borderRadius: "var(--radius-md)",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "2.5rem",
-                    fontWeight: 800,
-                    lineHeight: 1,
-                    color: "var(--color-primary)",
-                  }}
-                >
+              <div style={{ minWidth: "100px", textAlign: "center" }}>
+                <span style={{ fontSize: "2.75rem", fontWeight: 800, color: "var(--color-text-main)", lineHeight: 1 }}>
                   {tables}
                 </span>
-                <span
-                  style={{
-                    display: "block",
-                    fontSize: "12px",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.5px",
-                    color: "var(--color-primary)",
-                  }}
-                >
+                <span style={{ display: "block", fontSize: "12px", color: "var(--color-text-muted)", textTransform: "uppercase", fontWeight: 600 }}>
                   Tables
                 </span>
               </div>
@@ -205,70 +131,42 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                 onClick={handlePlus}
                 aria-label="Increase tables"
                 style={{
-                  width: "50px",
-                  height: "50px",
-                  borderRadius: "var(--radius-md)",
-                  backgroundColor: "var(--bg-subtle)",
+                  width: "48px",
+                  height: "48px",
+                  borderRadius: "var(--radius-sm)",
                   border: "1px solid var(--color-border)",
-                  color: "var(--color-text-main)",
-                  fontSize: "1.5rem",
+                  backgroundColor: "#FFFFFF",
+                  fontSize: "20px",
                   fontWeight: 700,
                   cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "all 0.15s ease",
                 }}
               >
                 +
               </button>
             </div>
 
-            {/* Range Slider */}
-            <div style={{ maxWidth: "540px", margin: "0 auto 28px" }}>
+            {/* Slider */}
+            <div style={{ maxWidth: "420px", margin: "0 auto 24px" }}>
               <input
-                id="table-slider"
                 type="range"
                 min="1"
                 max="80"
                 value={tables}
-                onChange={handleSliderChange}
+                onChange={(e) => setTables(parseInt(e.target.value, 10))}
                 style={{
                   width: "100%",
-                  height: "8px",
-                  borderRadius: "4px",
-                  background: `linear-gradient(to right, #1E3A2F ${((tables - 1) / 79) * 100}%, #E2E8F0 ${((tables - 1) / 79) * 100}%)`,
+                  height: "6px",
+                  borderRadius: "3px",
+                  background: "#E8E8E6",
                   outline: "none",
                   cursor: "pointer",
+                  accentColor: "var(--color-primary)",
                 }}
               />
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  fontSize: "11px",
-                  color: "var(--color-text-muted)",
-                  marginTop: "6px",
-                  fontWeight: 600,
-                }}
-              >
-                <span>1 Table (Small Cafe)</span>
-                <span>25 Tables</span>
-                <span>50 Tables</span>
-                <span>80+ Tables (Large Hall)</span>
-              </div>
             </div>
 
             {/* Quick Presets */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                flexWrap: "wrap",
-                gap: "10px",
-                marginBottom: "36px",
-              }}
-            >
+            <div style={{ display: "flex", justifyContent: "center", gap: "8px", flexWrap: "wrap", marginBottom: "32px" }}>
               {presets.map((num) => (
                 <button
                   key={num}
@@ -277,146 +175,56 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                   style={{
                     padding: "6px 14px",
                     borderRadius: "var(--radius-full)",
-                    fontSize: "13px",
-                    fontWeight: 600,
                     border: tables === num ? "1px solid var(--color-primary)" : "1px solid var(--color-border)",
-                    backgroundColor: tables === num ? "var(--color-primary)" : "var(--bg-subtle)",
-                    color: tables === num ? "#FFFFFF" : "var(--color-text-body)",
+                    backgroundColor: tables === num ? "var(--color-primary)" : "#FFFFFF",
+                    color: tables === num ? "#FFFFFF" : "var(--color-text-main)",
+                    fontSize: "12px",
+                    fontWeight: 600,
                     cursor: "pointer",
-                    transition: "all 0.15s ease",
                   }}
                 >
                   {num} Tables
                 </button>
               ))}
             </div>
-
-            {/* Live Pricing Breakdown Card */}
-            <div
-              style={{
-                backgroundColor: "var(--bg-subtle)",
-                borderRadius: "var(--radius-lg)",
-                padding: "24px 28px",
-                border: "1px solid var(--color-border)",
-                marginBottom: "32px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  paddingBottom: "14px",
-                  borderBottom: "1px solid var(--color-border)",
-                  fontSize: "0.9375rem",
-                  color: "var(--color-text-body)",
-                }}
-              >
-                <span>{tables} × Acrylic Stands & Dedicated QR Codes (₹199 each)</span>
-                <span style={{ fontWeight: 700, color: "var(--color-text-main)" }}>₹{total}</span>
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "12px 0",
-                  borderBottom: "1px solid var(--color-border)",
-                  fontSize: "0.9375rem",
-                  color: "var(--color-text-body)",
-                }}
-              >
-                <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  <Check size={16} color="#047857" strokeWidth={3} />
-                  <span>Full Digital Menu Setup by Our Team</span>
-                </span>
-                <span style={{ fontWeight: 700, color: "var(--color-primary)" }}>FREE (₹1,500 value)</span>
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "12px 0",
-                  borderBottom: "1px solid var(--color-border)",
-                  fontSize: "0.9375rem",
-                  color: "var(--color-text-body)",
-                }}
-              >
-                <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  <Check size={16} color="#047857" strokeWidth={3} />
-                  <span>Cloud Menu Hosting & CDN Bandwidth</span>
-                </span>
-                <span style={{ fontWeight: 700, color: "var(--color-primary)" }}>LIFETIME FREE</span>
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  paddingTop: "16px",
-                  fontSize: "1.25rem",
-                  fontWeight: 800,
-                  color: "var(--color-text-main)",
-                }}
-              >
-                <span>Total Investment:</span>
-                <span style={{ fontSize: "1.875rem", color: "var(--color-primary)" }}>₹{total}</span>
-              </div>
-            </div>
-
-            {/* ROI Savings Banner */}
-            <div
-              style={{
-                backgroundColor: "var(--color-accent-light)",
-                border: "1px solid rgba(217, 119, 6, 0.3)",
-                borderRadius: "var(--radius-md)",
-                padding: "12px 18px",
-                marginBottom: "32px",
-                textAlign: "center",
-                fontSize: "13px",
-                color: "#92400E",
-                fontWeight: 600,
-              }}
-            >
-              💰 <strong>Estimated Print Savings:</strong> Saves your restaurant ~₹{paperReprintSavings.toLocaleString("en-IN")}/year on reprinting dirty laminated paper menus.
-            </div>
-
-            {/* CTA Button */}
-            <button
-              type="button"
-              className="btn btn-primary btn-block btn-lg"
-              onClick={() => onOpenOrder(tables)}
-              style={{ fontSize: "1.125rem", height: "56px" }}
-            >
-              <span>Order For {tables} Tables (₹{total})</span>
-              <ArrowRight size={20} />
-            </button>
-
-            <div
-              style={{
-                marginTop: "16px",
-                display: "flex",
-                justifyContent: "center",
-                gap: "24px",
-                fontSize: "12px",
-                color: "var(--color-text-muted)",
-                flexWrap: "wrap",
-              }}
-            >
-              <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                <ShieldCheck size={15} color="#047857" />
-                No credit card required to order
-              </span>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-                <Zap size={15} color="#047857" />
-                Dispatched in 48 hours
-              </span>
-            </div>
           </div>
+
+          {/* Minimalist Summary */}
+          <div
+            style={{
+              padding: "20px 24px",
+              backgroundColor: "var(--bg-subtle)",
+              borderRadius: "var(--radius-md)",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "24px",
+              fontSize: "15px",
+            }}
+          >
+            <div>
+              <span style={{ fontWeight: 600, color: "var(--color-text-main)" }}>
+                {tables} Stands & Digital Menu Setup
+              </span>
+              <div style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>
+                Zero Monthly Fees • Lifetime QR Hosting Included
+              </div>
+            </div>
+
+            <strong style={{ fontSize: "1.75rem", color: "var(--color-primary)", fontWeight: 800 }}>
+              ₹{total.toLocaleString("en-IN")}
+            </strong>
+          </div>
+
+          {/* Order Button */}
+          <button
+            type="button"
+            className="btn btn-primary btn-block btn-lg"
+            onClick={() => onOpenOrder(tables)}
+          >
+            <span>Proceed to Order — ₹{total.toLocaleString("en-IN")}</span>
+            <ArrowRight size={18} />
+          </button>
         </div>
       </div>
     </section>
