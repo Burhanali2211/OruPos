@@ -11,6 +11,7 @@ import {
   RefreshIcon,
   CloseIcon,
   InfoIcon,
+  EditIcon,
 } from "@/components/Icons";
 
 interface FileItem {
@@ -25,7 +26,7 @@ export default function DeployPortalPage() {
   const [hasVpsStorage, setHasVpsStorage] = useState<boolean>(true);
   const [isVercel, setIsVercel] = useState<boolean>(false);
 
-  // Form State
+  // Deploy New Form State
   const [name, setName] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
   const [selectedZip, setSelectedZip] = useState<File | null>(null);
@@ -36,8 +37,22 @@ export default function DeployPortalPage() {
   const [uploadProgress, setUploadProgress] = useState<string>("");
   const [deployedResult, setDeployedResult] = useState<DeployedRestaurant | null>(null);
 
+  // Edit / Update State
+  const [editingRestaurant, setEditingRestaurant] = useState<DeployedRestaurant | null>(null);
+  const [editName, setEditName] = useState<string>("");
+  const [editSlug, setEditSlug] = useState<string>("");
+  const [editSelectedZip, setEditSelectedZip] = useState<File | null>(null);
+  const [editSelectedFiles, setEditSelectedFiles] = useState<FileItem[]>([]);
+  const [editSourceName, setEditSourceName] = useState<string>("");
+  const [isEditDragging, setIsEditDragging] = useState<boolean>(false);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [updateProgress, setUpdateProgress] = useState<string>("");
+
   const zipInputRef = useRef<HTMLInputElement | null>(null);
   const folderInputRef = useRef<HTMLInputElement | null>(null);
+
+  const editZipInputRef = useRef<HTMLInputElement | null>(null);
+  const editFolderInputRef = useRef<HTMLInputElement | null>(null);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -117,7 +132,7 @@ export default function DeployPortalPage() {
     return list;
   }
 
-  // Handle Drag & Drop
+  // Handle Drag & Drop for Main Upload
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -138,7 +153,6 @@ export default function DeployPortalPage() {
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
       const extracted = await extractFilesFromItems(e.dataTransfer.items);
       if (extracted.length > 0) {
-        // Direct folder dropped
         handleFolderSelected(extracted, "Dropped folder");
         return;
       }
@@ -149,7 +163,6 @@ export default function DeployPortalPage() {
       if (first.name.endsWith(".zip") || first.name.endsWith(".tar") || first.name.endsWith(".gz")) {
         handleZipSelected(first);
       } else {
-        // Multi-file drop
         const items: FileItem[] = [];
         for (let i = 0; i < e.dataTransfer.files.length; i++) {
           const f = e.dataTransfer.files[i];
@@ -185,13 +198,12 @@ export default function DeployPortalPage() {
     setSelectedFiles(items);
     setSelectedZip(null);
 
-    // Normalize paths to remove outer folder name if it's "dist" or similar
     const hasIndex = items.some(
       (item) => item.path === "index.html" || item.path.endsWith("/index.html")
     );
 
     if (!hasIndex) {
-      showToast("Warning: No index.html found. Please make sure your build output contains index.html");
+      showToast("Notice: Make sure your build output contains an index.html file");
     }
 
     const folderTitle = label || (items[0] ? items[0].path.split("/")[0] : "dist");
@@ -219,7 +231,6 @@ export default function DeployPortalPage() {
       const items: FileItem[] = [];
       for (let i = 0; i < e.target.files.length; i++) {
         const file = e.target.files[i];
-        // webkitRelativePath contains e.g. "dist/index.html"
         const relPath = file.webkitRelativePath || file.name;
         items.push({ file, path: relPath });
       }
@@ -233,6 +244,139 @@ export default function DeployPortalPage() {
     setSourceName("");
     if (zipInputRef.current) zipInputRef.current.value = "";
     if (folderInputRef.current) folderInputRef.current.value = "";
+  };
+
+  // Edit Modal Handlers
+  const openEditModal = (res: DeployedRestaurant) => {
+    setEditingRestaurant(res);
+    setEditName(res.name);
+    setEditSlug(res.slug);
+    setEditSelectedZip(null);
+    setEditSelectedFiles([]);
+    setEditSourceName("");
+    setIsEditDragging(false);
+    setUpdateProgress("");
+  };
+
+  const closeEditModal = () => {
+    setEditingRestaurant(null);
+    setEditName("");
+    setEditSlug("");
+    setEditSelectedZip(null);
+    setEditSelectedFiles([]);
+    setEditSourceName("");
+    setIsEditDragging(false);
+    setUpdateProgress("");
+  };
+
+  const handleEditZipSelected = (file: File) => {
+    setEditSelectedZip(file);
+    setEditSelectedFiles([]);
+    setEditSourceName(file.name);
+  };
+
+  const handleEditFolderSelected = (items: FileItem[], label?: string) => {
+    setEditSelectedFiles(items);
+    setEditSelectedZip(null);
+    const folderTitle = label || (items[0] ? items[0].path.split("/")[0] : "dist");
+    setEditSourceName(`${folderTitle} (${items.length} file${items.length === 1 ? "" : "s"})`);
+  };
+
+  const handleEditDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsEditDragging(true);
+  };
+
+  const handleEditDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsEditDragging(false);
+  };
+
+  const handleEditDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsEditDragging(false);
+
+    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      const extracted = await extractFilesFromItems(e.dataTransfer.items);
+      if (extracted.length > 0) {
+        handleEditFolderSelected(extracted, "Dropped folder");
+        return;
+      }
+    }
+
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const first = e.dataTransfer.files[0];
+      if (first.name.endsWith(".zip") || first.name.endsWith(".tar") || first.name.endsWith(".gz")) {
+        handleEditZipSelected(first);
+      } else {
+        const items: FileItem[] = [];
+        for (let i = 0; i < e.dataTransfer.files.length; i++) {
+          const f = e.dataTransfer.files[i];
+          items.push({ file: f, path: f.name });
+        }
+        handleEditFolderSelected(items, "Selected files");
+      }
+    }
+  };
+
+  const handleUpdateSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingRestaurant) return;
+
+    const currentSlug = editingRestaurant.slug;
+    const newSlug = editSlug.toLowerCase().trim().replace(/[^a-z0-9_-]/g, "");
+    const updatedName = editName.trim();
+
+    if (!updatedName) {
+      showToast("Please enter a restaurant name");
+      return;
+    }
+
+    try {
+      setIsUpdating(true);
+      setUpdateProgress("Updating restaurant details...");
+
+      const formData = new FormData();
+      formData.append("slug", currentSlug);
+      formData.append("name", updatedName);
+      if (newSlug && newSlug !== currentSlug) {
+        formData.append("newSlug", newSlug);
+      }
+
+      if (editSelectedFiles.length > 0) {
+        setUpdateProgress(`Uploading ${editSelectedFiles.length} updated build files...`);
+        const paths = editSelectedFiles.map((item) => item.path);
+        formData.append("paths", JSON.stringify(paths));
+        for (const item of editSelectedFiles) {
+          formData.append("files", item.file);
+        }
+      } else if (editSelectedZip) {
+        setUpdateProgress(`Uploading ${editSelectedZip.name}...`);
+        formData.append("file", editSelectedZip);
+      }
+
+      const res = await fetch("/api/deploy-restaurant", {
+        method: "PUT",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.details || data.error || "Update failed");
+      }
+
+      showToast(`Updated '${data.restaurant.name}' successfully!`);
+      closeEditModal();
+      fetchRestaurants();
+    } catch (err: any) {
+      showToast(err.message || "Failed to update restaurant");
+    } finally {
+      setIsUpdating(false);
+      setUpdateProgress("");
+    }
   };
 
   const handleDeploy = async (e: React.FormEvent) => {
@@ -415,65 +559,6 @@ export default function DeployPortalPage() {
 
       {/* Main Container */}
       <main style={{ maxWidth: "1140px", margin: "0 auto", padding: "32px 20px 80px" }}>
-        {/* DNS Warning if accessed through Vercel instead of VPS */}
-        {(!hasVpsStorage || isVercel) && (
-          <div
-            style={{
-              backgroundColor: "#FEF2F2",
-              border: "1px solid #FECACA",
-              borderRadius: "14px",
-              padding: "18px 22px",
-              marginBottom: "24px",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-              <div
-                style={{
-                  width: "28px",
-                  height: "28px",
-                  borderRadius: "6px",
-                  backgroundColor: "#DC2626",
-                  color: "#FFFFFF",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: 800,
-                  fontSize: "14px",
-                  flexShrink: 0,
-                }}
-              >
-                !
-              </div>
-              <div>
-                <h4 style={{ margin: "0 0 6px", fontSize: "14px", fontWeight: 800, color: "#991B1B" }}>
-                  Hostinger DNS Setup Needed for Dedicated Subdomains
-                </h4>
-                <p style={{ margin: "0 0 10px", fontSize: "13px", color: "#B91C1C", lineHeight: 1.5 }}>
-                  Your browser currently resolved <code>orupos.in</code> to Vercel (read-only cloud).
-                  To make dedicated subdomains (<code>restaurant.orupos.in</code>) and build uploads work with persistent storage, update your Hostinger DNS records to point to your VPS:
-                </p>
-                <div
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    border: "1px solid #FCA5A5",
-                    borderRadius: "8px",
-                    padding: "10px 14px",
-                    fontSize: "12px",
-                    color: "#7F1D1D",
-                    fontFamily: "monospace",
-                    display: "grid",
-                    gap: "4px",
-                  }}
-                >
-                  <div><strong>A Record:</strong> @ (or orupos.in) &rarr; <strong>195.35.22.110</strong></div>
-                  <div><strong>A Record:</strong> * (Wildcard subdomains) &rarr; <strong>195.35.22.110</strong></div>
-                  <div><strong>A Record:</strong> www &rarr; <strong>195.35.22.110</strong></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Top Feature Notice */}
         <div
           style={{
@@ -1058,7 +1143,7 @@ export default function DeployPortalPage() {
                       </Link>
                     </div>
 
-                    <div style={{ fontSize: "12px", color: "#6B7280", display: "flex", gap: "12px" }}>
+                    <div style={{ fontSize: "12px", color: "#6B7280", display: "flex", flexWrap: "wrap", gap: "8px" }}>
                       <span>{res.filesCount} files</span>
                       <span>•</span>
                       <span>
@@ -1067,6 +1152,12 @@ export default function DeployPortalPage() {
                           month: "short",
                         })}
                       </span>
+                      {res.updatedAt && (
+                        <>
+                          <span>•</span>
+                          <span style={{ color: "#059669", fontWeight: 600 }}>Updated</span>
+                        </>
+                      )}
                     </div>
                   </div>
 
@@ -1097,25 +1188,48 @@ export default function DeployPortalPage() {
                       <ExternalLinkIcon size={12} color="#047857" />
                     </Link>
 
-                    <button
-                      onClick={() => handleDelete(res.slug)}
-                      style={{
-                        backgroundColor: "transparent",
-                        border: "none",
-                        color: "#DC2626",
-                        cursor: "pointer",
-                        padding: "4px 8px",
-                        fontSize: "12px",
-                        fontWeight: 600,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "4px",
-                        borderRadius: "6px",
-                      }}
-                    >
-                      <TrashIcon size={12} color="#DC2626" />
-                      <span>Delete</span>
-                    </button>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <button
+                        onClick={() => openEditModal(res)}
+                        style={{
+                          backgroundColor: "#F1F5F9",
+                          border: "none",
+                          color: "#1E293B",
+                          cursor: "pointer",
+                          padding: "6px 12px",
+                          fontSize: "12px",
+                          fontWeight: 700,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          borderRadius: "6px",
+                          transition: "background 0.2s ease",
+                        }}
+                      >
+                        <EditIcon size={12} color="#1E293B" />
+                        <span>Edit / Update</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleDelete(res.slug)}
+                        style={{
+                          backgroundColor: "transparent",
+                          border: "none",
+                          color: "#DC2626",
+                          cursor: "pointer",
+                          padding: "6px 8px",
+                          fontSize: "12px",
+                          fontWeight: 600,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "4px",
+                          borderRadius: "6px",
+                        }}
+                      >
+                        <TrashIcon size={12} color="#DC2626" />
+                        <span>Delete</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -1123,6 +1237,372 @@ export default function DeployPortalPage() {
           )}
         </div>
       </main>
+
+      {/* Edit & Update Modal */}
+      {editingRestaurant && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            backdropFilter: "blur(4px)",
+            zIndex: 10000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !isUpdating) {
+              closeEditModal();
+            }
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#FFFFFF",
+              borderRadius: "18px",
+              maxWidth: "600px",
+              width: "100%",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
+              padding: "28px",
+            }}
+          >
+            {/* Modal Header */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                marginBottom: "20px",
+                paddingBottom: "16px",
+                borderBottom: "1px solid #E2E8F0",
+              }}
+            >
+              <div>
+                <h3 style={{ margin: "0 0 4px", fontSize: "18px", fontWeight: 800, color: "#111827" }}>
+                  Edit & Update: {editingRestaurant.name}
+                </h3>
+                <div style={{ fontSize: "12px", color: "#64748B" }}>
+                  Current Subdomain:{" "}
+                  <strong style={{ color: "#059669" }}>{editingRestaurant.subdomain}</strong>
+                </div>
+              </div>
+              <button
+                onClick={closeEditModal}
+                disabled={isUpdating}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: isUpdating ? "not-allowed" : "pointer",
+                  color: "#94A3B8",
+                  padding: "4px",
+                }}
+              >
+                <CloseIcon size={18} color="#64748B" />
+              </button>
+            </div>
+
+            {/* Modal Form */}
+            <form onSubmit={handleUpdateSubmit}>
+              {/* Restaurant Name */}
+              <div style={{ marginBottom: "18px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    marginBottom: "6px",
+                    color: "#333333",
+                  }}
+                >
+                  Restaurant Name
+                </label>
+                <input
+                  type="text"
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "10px 14px",
+                    borderRadius: "8px",
+                    border: "1px solid #CBD5E1",
+                    fontSize: "14px",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+
+              {/* Subdomain Slug */}
+              <div style={{ marginBottom: "22px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    marginBottom: "6px",
+                    color: "#333333",
+                  }}
+                >
+                  Subdomain Slug
+                </label>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "#FAFAFA",
+                    border: "1px solid #CBD5E1",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <input
+                    type="text"
+                    value={editSlug}
+                    onChange={(e) =>
+                      setEditSlug(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))
+                    }
+                    required
+                    style={{
+                      flex: 1,
+                      padding: "10px 14px",
+                      border: "none",
+                      outline: "none",
+                      fontSize: "14px",
+                      backgroundColor: "transparent",
+                    }}
+                  />
+                  <span
+                    style={{
+                      backgroundColor: "#F1F5F9",
+                      padding: "10px 14px",
+                      fontSize: "13px",
+                      fontWeight: 700,
+                      color: "#475569",
+                      borderLeft: "1px solid #CBD5E1",
+                    }}
+                  >
+                    .orupos.in
+                  </span>
+                </div>
+                <span style={{ fontSize: "11px", color: "#64748B", marginTop: "4px", display: "block" }}>
+                  Keep the same to preserve existing links, or modify to change the live subdomain.
+                </span>
+              </div>
+
+              {/* Replace Build Dropzone */}
+              <div style={{ marginBottom: "26px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    marginBottom: "6px",
+                    color: "#333333",
+                  }}
+                >
+                  Update Website Build Files (Optional)
+                </label>
+                <div style={{ fontSize: "12px", color: "#64748B", marginBottom: "8px" }}>
+                  Drop a new <strong>dist</strong> folder or .zip to replace website files. Leave empty to keep existing build.
+                </div>
+
+                {/* Hidden Inputs */}
+                <input
+                  type="file"
+                  ref={editZipInputRef}
+                  accept=".zip,application/zip,.tar,.gz"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      handleEditZipSelected(e.target.files[0]);
+                    }
+                  }}
+                  style={{ display: "none" }}
+                />
+                <input
+                  type="file"
+                  ref={editFolderInputRef}
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      const items: FileItem[] = [];
+                      for (let i = 0; i < e.target.files.length; i++) {
+                        const file = e.target.files[i];
+                        const relPath = file.webkitRelativePath || file.name;
+                        items.push({ file, path: relPath });
+                      }
+                      handleEditFolderSelected(items, "dist folder");
+                    }
+                  }}
+                  style={{ display: "none" }}
+                  // @ts-expect-error webkitdirectory is standard in all modern browsers
+                  webkitdirectory=""
+                  directory=""
+                  multiple
+                />
+
+                <div
+                  onDragOver={handleEditDragOver}
+                  onDragLeave={handleEditDragLeave}
+                  onDrop={handleEditDrop}
+                  style={{
+                    border: isEditDragging ? "2px dashed #1E3A2F" : "2px dashed #CBD5E1",
+                    backgroundColor: isEditDragging ? "#F0FDF4" : "#F8FAFC",
+                    borderRadius: "10px",
+                    padding: "24px 16px",
+                    textAlign: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  {editSourceName ? (
+                    <div>
+                      <div style={{ fontSize: "14px", fontWeight: 700, color: "#059669", marginBottom: "4px" }}>
+                        New Build Selected: {editSourceName}
+                      </div>
+                      <div style={{ fontSize: "12px", color: "#64748B", marginBottom: "10px" }}>
+                        This build will replace the current website files upon saving.
+                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditSelectedZip(null);
+                          setEditSelectedFiles([]);
+                          setEditSourceName("");
+                        }}
+                        style={{
+                          backgroundColor: "#EF4444",
+                          color: "#FFFFFF",
+                          border: "none",
+                          padding: "6px 12px",
+                          borderRadius: "6px",
+                          fontSize: "11px",
+                          fontWeight: 700,
+                          cursor: "pointer",
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <UploadCloudIcon size={22} color="#475569" style={{ marginBottom: "6px" }} />
+                      <div style={{ fontSize: "13px", fontWeight: 700, color: "#334155", marginBottom: "10px" }}>
+                        Drop updated 'dist' folder or .zip here
+                      </div>
+                      <div style={{ display: "flex", gap: "8px", justifyContent: "center", flexWrap: "wrap" }}>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (editFolderInputRef.current) editFolderInputRef.current.click();
+                          }}
+                          style={{
+                            backgroundColor: "#1E3A2F",
+                            color: "#FFFFFF",
+                            border: "none",
+                            padding: "8px 14px",
+                            borderRadius: "6px",
+                            fontSize: "12px",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                          }}
+                        >
+                          Choose "dist" Folder
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (editZipInputRef.current) editZipInputRef.current.click();
+                          }}
+                          style={{
+                            backgroundColor: "#FFFFFF",
+                            color: "#1E3A2F",
+                            border: "1px solid #CBD5E1",
+                            padding: "8px 14px",
+                            borderRadius: "6px",
+                            fontSize: "12px",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                          }}
+                        >
+                          Choose .ZIP File
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Progress notice */}
+              {updateProgress && (
+                <div style={{ fontSize: "12px", color: "#059669", fontWeight: 600, marginBottom: "14px" }}>
+                  {updateProgress}
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+                <button
+                  type="button"
+                  onClick={closeEditModal}
+                  disabled={isUpdating}
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    border: "1px solid #CBD5E1",
+                    color: "#475569",
+                    padding: "10px 18px",
+                    borderRadius: "8px",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    cursor: isUpdating ? "not-allowed" : "pointer",
+                  }}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={isUpdating}
+                  style={{
+                    backgroundColor: isUpdating ? "#94A3B8" : "#E5A93C",
+                    color: "#13271F",
+                    border: "none",
+                    padding: "10px 24px",
+                    borderRadius: "8px",
+                    fontSize: "13px",
+                    fontWeight: 800,
+                    cursor: isUpdating ? "not-allowed" : "pointer",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    boxShadow: "0 2px 8px rgba(229, 169, 60, 0.3)",
+                  }}
+                >
+                  {isUpdating ? (
+                    <>
+                      <RefreshIcon size={14} color="#13271F" />
+                      <span>Saving Changes...</span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckIcon size={14} color="#13271F" strokeWidth={3} />
+                      <span>Save Changes</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

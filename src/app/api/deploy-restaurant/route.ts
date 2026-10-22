@@ -12,6 +12,7 @@ export interface DeployedRestaurant {
   hasIndex: boolean;
   filesCount: number;
   deployedAt: string;
+  updatedAt?: string;
 }
 
 function getRestaurantsBaseDir(): string {
@@ -43,81 +44,6 @@ function getRestaurantsBaseDir(): string {
       }
     }
     return tmpDir;
-  }
-}
-
-// GET /api/deploy-restaurant - List all deployed restaurants
-export async function GET() {
-  try {
-    const baseDir = getRestaurantsBaseDir();
-    const hasVpsStorage = fs.existsSync("/var/www/restaurants") || fs.existsSync("/docker/restaurants");
-    const isVercel = Boolean(process.env.VERCEL || process.env.NEXT_PUBLIC_VERCEL_ENV);
-
-    if (!fs.existsSync(baseDir)) {
-      return NextResponse.json({ restaurants: [], baseDir, hasVpsStorage, isVercel });
-    }
-
-    const entries = fs.readdirSync(baseDir, { withFileTypes: true });
-    const restaurants: DeployedRestaurant[] = [];
-
-    for (const entry of entries) {
-      if (entry.isDirectory()) {
-        const slug = entry.name;
-        const resDir = path.join(baseDir, slug);
-        const distDir = path.join(resDir, "dist");
-        const metaPath = path.join(resDir, "metadata.json");
-
-        let name = slug.charAt(0).toUpperCase() + slug.slice(1);
-        let deployedAt = fs.statSync(resDir).mtime.toISOString();
-        let filesCount = 0;
-
-        if (fs.existsSync(metaPath)) {
-          try {
-            const meta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
-            if (meta.name) name = meta.name;
-            if (meta.deployedAt) deployedAt = meta.deployedAt;
-          } catch {
-            // ignore
-          }
-        }
-
-        const hasDist = fs.existsSync(distDir);
-        const hasIndex = hasDist && fs.existsSync(path.join(distDir, "index.html"));
-
-        if (hasDist) {
-          try {
-            filesCount = fs.readdirSync(distDir).length;
-          } catch {
-            filesCount = 0;
-          }
-        }
-
-        restaurants.push({
-          name,
-          slug,
-          subdomain: `${slug}.orupos.in`,
-          url: `https://${slug}.orupos.in`,
-          hasIndex,
-          filesCount,
-          deployedAt,
-        });
-      }
-    }
-
-    // Sort newest first
-    restaurants.sort((a, b) => new Date(b.deployedAt).getTime() - new Date(a.deployedAt).getTime());
-
-    return NextResponse.json({
-      restaurants,
-      baseDir,
-      hasVpsStorage,
-      isVercel,
-    });
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to list deployed restaurants", details: String(error) },
-      { status: 500 }
-    );
   }
 }
 
@@ -208,6 +134,84 @@ http:
     fs.writeFileSync(tlsConfigPath, content, "utf8");
   } catch (err) {
     console.error("Could not sync Traefik tls.yml:", err);
+  }
+}
+
+// GET /api/deploy-restaurant - List all deployed restaurants
+export async function GET() {
+  try {
+    const baseDir = getRestaurantsBaseDir();
+    const hasVpsStorage = fs.existsSync("/var/www/restaurants") || fs.existsSync("/docker/restaurants");
+    const isVercel = Boolean(process.env.VERCEL || process.env.NEXT_PUBLIC_VERCEL_ENV);
+
+    if (!fs.existsSync(baseDir)) {
+      return NextResponse.json({ restaurants: [], baseDir, hasVpsStorage, isVercel });
+    }
+
+    const entries = fs.readdirSync(baseDir, { withFileTypes: true });
+    const restaurants: DeployedRestaurant[] = [];
+
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        const slug = entry.name;
+        const resDir = path.join(baseDir, slug);
+        const distDir = path.join(resDir, "dist");
+        const metaPath = path.join(resDir, "metadata.json");
+
+        let name = slug.charAt(0).toUpperCase() + slug.slice(1);
+        let deployedAt = fs.statSync(resDir).mtime.toISOString();
+        let updatedAt: string | undefined = undefined;
+        let filesCount = 0;
+
+        if (fs.existsSync(metaPath)) {
+          try {
+            const meta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
+            if (meta.name) name = meta.name;
+            if (meta.deployedAt) deployedAt = meta.deployedAt;
+            if (meta.updatedAt) updatedAt = meta.updatedAt;
+          } catch {
+            // ignore
+          }
+        }
+
+        const hasDist = fs.existsSync(distDir);
+        const hasIndex = hasDist && fs.existsSync(path.join(distDir, "index.html"));
+
+        if (hasDist) {
+          try {
+            filesCount = fs.readdirSync(distDir).length;
+          } catch {
+            filesCount = 0;
+          }
+        }
+
+        restaurants.push({
+          name,
+          slug,
+          subdomain: `${slug}.orupos.in`,
+          url: `https://${slug}.orupos.in`,
+          hasIndex,
+          filesCount,
+          deployedAt,
+          updatedAt,
+        });
+      }
+    }
+
+    // Sort newest first
+    restaurants.sort((a, b) => new Date(b.deployedAt).getTime() - new Date(a.deployedAt).getTime());
+
+    return NextResponse.json({
+      restaurants,
+      baseDir,
+      hasVpsStorage,
+      isVercel,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to list deployed restaurants", details: String(error) },
+      { status: 500 }
+    );
   }
 }
 
@@ -360,6 +364,159 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { error: "Deployment failed", details: String(error) },
+      { status: 500 }
+    );
+  }
+}
+
+// PUT /api/deploy-restaurant - Edit and update an existing restaurant website
+export async function PUT(req: NextRequest) {
+  try {
+    const formData = await req.formData();
+    const currentSlug = ((formData.get("slug") as string) || "").toLowerCase().trim().replace(/[^a-z0-9_-]/g, "");
+    const updatedName = ((formData.get("name") as string) || "").trim();
+    const rawNewSlug = ((formData.get("newSlug") as string) || "").trim();
+
+    if (!currentSlug) {
+      return NextResponse.json({ error: "Restaurant slug is required." }, { status: 400 });
+    }
+
+    const baseDir = getRestaurantsBaseDir();
+    let restaurantDir = path.join(baseDir, currentSlug);
+
+    if (!fs.existsSync(restaurantDir)) {
+      return NextResponse.json({ error: `Restaurant '${currentSlug}' does not exist.` }, { status: 404 });
+    }
+
+    let finalSlug = currentSlug;
+
+    // Handle slug renaming if provided and different
+    if (rawNewSlug) {
+      const sanitizedNewSlug = rawNewSlug.toLowerCase().replace(/[^a-z0-9_-]/g, "");
+      if (sanitizedNewSlug.length >= 2 && sanitizedNewSlug !== currentSlug) {
+        if (["www", "api", "admin", "app"].includes(sanitizedNewSlug)) {
+          return NextResponse.json({ error: `The subdomain "${sanitizedNewSlug}" is reserved.` }, { status: 400 });
+        }
+        const newDir = path.join(baseDir, sanitizedNewSlug);
+        if (fs.existsSync(newDir)) {
+          return NextResponse.json({ error: `The subdomain "${sanitizedNewSlug}.orupos.in" already exists.` }, { status: 409 });
+        }
+        fs.renameSync(restaurantDir, newDir);
+        restaurantDir = newDir;
+        finalSlug = sanitizedNewSlug;
+      }
+    }
+
+    const targetDist = path.join(restaurantDir, "dist");
+
+    // Check if new build files are provided
+    const uploadedFiles = formData.getAll("files") as File[];
+    const pathsFromAll = formData.getAll("paths") as string[];
+    const zipFile = formData.get("file") as File | null;
+    const hasNewBuild = (uploadedFiles && uploadedFiles.length > 0) || (zipFile && zipFile.size > 0);
+
+    if (hasNewBuild) {
+      if (fs.existsSync(targetDist)) {
+        fs.rmSync(targetDist, { recursive: true, force: true });
+      }
+      fs.mkdirSync(targetDist, { recursive: true });
+
+      if (uploadedFiles && uploadedFiles.length > 0) {
+        let paths: string[] = [];
+        if (pathsFromAll.length > 0) {
+          if (pathsFromAll.length === 1 && pathsFromAll[0].trim().startsWith("[")) {
+            try {
+              paths = JSON.parse(pathsFromAll[0]);
+            } catch {
+              paths = pathsFromAll;
+            }
+          } else {
+            paths = pathsFromAll;
+          }
+        }
+
+        for (let i = 0; i < uploadedFiles.length; i++) {
+          const file = uploadedFiles[i];
+          let relPath = (paths[i] || file.name).replace(/\\/g, "/");
+          relPath = relPath.replace(/^(\.\.[\/\\])+/, "").replace(/^\/+/, "");
+          relPath = relPath.replace(/^(dist|build|out)\//i, "");
+
+          const filePath = path.join(targetDist, relPath);
+          fs.mkdirSync(path.dirname(filePath), { recursive: true });
+          const buffer = Buffer.from(await file.arrayBuffer());
+          fs.writeFileSync(filePath, buffer);
+        }
+      } else if (zipFile && zipFile.size > 0) {
+        const buffer = Buffer.from(await zipFile.arrayBuffer());
+        const tempZipPath = path.join(os.tmpdir(), `orupos-${finalSlug}-${Date.now()}.zip`);
+        fs.writeFileSync(tempZipPath, buffer);
+
+        const isWindows = process.platform === "win32";
+        try {
+          if (isWindows) {
+            execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
+          } else {
+            execSync(`unzip -o -q "${tempZipPath}" -d "${targetDist}"`);
+          }
+        } catch {
+          try {
+            execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
+          } catch (extractErr) {
+            if (fs.existsSync(tempZipPath)) fs.unlinkSync(tempZipPath);
+            return NextResponse.json(
+              { error: "Could not extract archive.", details: String(extractErr) },
+              { status: 400 }
+            );
+          }
+        }
+        if (fs.existsSync(tempZipPath)) fs.unlinkSync(tempZipPath);
+      }
+
+      ensureIndexAtRoot(targetDist);
+    }
+
+    // Sync Traefik in case slug changed or subdomains changed
+    syncTraefikSubdomains(baseDir);
+
+    // Read previous metadata if exists
+    let previousMeta: any = {};
+    const metaPath = path.join(restaurantDir, "metadata.json");
+    if (fs.existsSync(metaPath)) {
+      try {
+        previousMeta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
+      } catch {
+        previousMeta = {};
+      }
+    }
+
+    let filesCount = 0;
+    try {
+      filesCount = fs.existsSync(targetDist) ? fs.readdirSync(targetDist).length : 0;
+    } catch {
+      filesCount = previousMeta.filesCount || 0;
+    }
+
+    const displayName = updatedName || previousMeta.name || (finalSlug.charAt(0).toUpperCase() + finalSlug.slice(1));
+    const metadata = {
+      name: displayName,
+      slug: finalSlug,
+      subdomain: `${finalSlug}.orupos.in`,
+      url: `https://${finalSlug}.orupos.in`,
+      filesCount,
+      deployedAt: previousMeta.deployedAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    fs.writeFileSync(metaPath, JSON.stringify(metadata, null, 2));
+
+    return NextResponse.json({
+      success: true,
+      message: `Restaurant '${displayName}' updated successfully!`,
+      restaurant: metadata,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to update restaurant", details: String(error) },
       { status: 500 }
     );
   }

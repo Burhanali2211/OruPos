@@ -349,3 +349,4 @@ export function TrashIcon({ size = 14, color = "currentColor", style }: IconProp
     </svg>
   );
 }
+
