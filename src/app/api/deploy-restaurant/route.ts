@@ -160,15 +160,19 @@ export async function POST(req: NextRequest) {
 
     // Mode A: Direct folder upload with multiple files
     const uploadedFiles = formData.getAll("files") as File[];
-    const pathsRaw = formData.get("paths") as string | null;
+    const pathsFromAll = formData.getAll("paths") as string[];
 
     if (uploadedFiles && uploadedFiles.length > 0) {
       let paths: string[] = [];
-      if (pathsRaw) {
-        try {
-          paths = JSON.parse(pathsRaw);
-        } catch {
-          paths = [];
+      if (pathsFromAll.length > 0) {
+        if (pathsFromAll.length === 1 && pathsFromAll[0].trim().startsWith("[")) {
+          try {
+            paths = JSON.parse(pathsFromAll[0]);
+          } catch {
+            paths = pathsFromAll;
+          }
+        } else {
+          paths = pathsFromAll;
         }
       }
 
