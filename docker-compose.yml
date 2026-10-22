@@ -12,11 +12,12 @@ services:
       - /docker/restaurants:/var/www/restaurants
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=oru_default"
       - "traefik.http.routers.orupos.rule=Host(`orupos.in`) || Host(`www.orupos.in`)"
       - "traefik.http.routers.orupos.entrypoints=websecure"
       - "traefik.http.routers.orupos.tls.certresolver=letsencrypt"
       - "traefik.http.routers.orupos.priority=1"
-      - "traefik.http.services.orupos.loadbalancer.server.url=http://127.0.0.1:3002"
+      - "traefik.http.services.orupos.loadbalancer.server.port=3000"
     environment:
       - NODE_ENV=production
       - PORT=3000
@@ -37,11 +38,12 @@ services:
       - /docker/restaurants:/var/www/restaurants:ro
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=oru_default"
       - "traefik.http.routers.orupos-subdomains.rule=HostRegexp(`{subdomain:[a-zA-Z0-9_-]+}.orupos.in`) && !Host(`orupos.in`) && !Host(`www.orupos.in`)"
       - "traefik.http.routers.orupos-subdomains.entrypoints=websecure"
-      - "traefik.http.routers.orupos-subdomains.tls.certresolver=cloudflare"
+      - "traefik.http.routers.orupos-subdomains.tls.certresolver=letsencrypt"
       - "traefik.http.routers.orupos-subdomains.priority=10"
-      - "traefik.http.services.orupos-subdomains.loadbalancer.server.url=http://127.0.0.1:3003"
+      - "traefik.http.services.orupos-subdomains.loadbalancer.server.port=80"
     networks:
       - default
       - oru_default
