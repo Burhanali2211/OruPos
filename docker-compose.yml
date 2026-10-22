@@ -13,10 +13,14 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=oru_default"
-      - "traefik.http.routers.orupos.rule=Host(`orupos.in`) || Host(`www.orupos.in`)"
+      - "traefik.http.routers.orupos.rule=Host(`orupos.in`)"
       - "traefik.http.routers.orupos.entrypoints=websecure"
       - "traefik.http.routers.orupos.tls.certresolver=letsencrypt"
       - "traefik.http.routers.orupos.priority=1"
+      - "traefik.http.routers.orupos-www.rule=Host(`www.orupos.in`)"
+      - "traefik.http.routers.orupos-www.entrypoints=websecure"
+      - "traefik.http.routers.orupos-www.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.orupos-www.priority=1"
       - "traefik.http.services.orupos.loadbalancer.server.port=3000"
     environment:
       - NODE_ENV=production
