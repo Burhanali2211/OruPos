@@ -483,7 +483,7 @@ export default function AdminDashboardPage() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. 919876543210 (with country code)"
+                  placeholder="e.g. 916005659527 (with country code)"
                   value={whatsapp}
                   onChange={(e) => setWhatsapp(e.target.value)}
                   style={{

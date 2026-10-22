@@ -164,7 +164,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
       .filter(Boolean)
       .join("\n");
 
-    const whatsappNumber = (restaurant.whatsapp || restaurant.phone || "919876543210").replace(/[^0-9]/g, "");
+    const whatsappNumber = (restaurant.whatsapp || restaurant.phone || "916005659527").replace(/[^0-9]/g, "");
     const encoded = encodeURIComponent(message);
     const waUrl = `https://wa.me/${whatsappNumber}?text=${encoded}`;
 

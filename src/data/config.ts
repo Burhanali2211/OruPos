@@ -72,11 +72,11 @@ export const ORUPOS_CONFIG: OruPosConfig = {
   },
 
   contact: {
-    phoneDisplay: "+91 98765 43210",
-    phoneTel: "+919876543210",
-    whatsappNumber: "919876543210",
-    whatsappDisplay: "+91 98765 43210",
-    email: "contact@orupos.in",
+    phoneDisplay: "+91 60056 59527",
+    phoneTel: "+916005659527",
+    whatsappNumber: "916005659527",
+    whatsappDisplay: "+91 60056 59527",
+    email: "faheem@easyio.tech",
     address: {
       line1: "OruPos Hospitality Technologies",
       city: "Bengaluru",
