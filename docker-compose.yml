@@ -10,6 +10,7 @@ services:
       - "127.0.0.1:3002:3000"
     volumes:
       - /docker/restaurants:/var/www/restaurants
+      - /docker/traefik/tls.yml:/etc/traefik/tls.yml
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=oru_default"

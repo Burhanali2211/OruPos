@@ -121,6 +121,96 @@ export async function GET() {
   }
 }
 
+function ensureIndexAtRoot(targetDist: string): void {
+  if (fs.existsSync(path.join(targetDist, "index.html"))) {
+    return;
+  }
+
+  function findIndexDir(dir: string, depth = 0): string | null {
+    if (depth > 3) return null;
+    try {
+      const entries = fs.readdirSync(dir, { withFileTypes: true });
+      for (const e of entries) {
+        if (e.isDirectory()) {
+          const sub = path.join(dir, e.name);
+          if (fs.existsSync(path.join(sub, "index.html"))) {
+            return sub;
+          }
+          const deeper = findIndexDir(sub, depth + 1);
+          if (deeper) return deeper;
+        }
+      }
+    } catch {
+      // ignore
+    }
+    return null;
+  }
+
+  const foundDir = findIndexDir(targetDist);
+  if (foundDir && foundDir !== targetDist) {
+    try {
+      const entries = fs.readdirSync(foundDir);
+      for (const e of entries) {
+        const src = path.join(foundDir, e);
+        const dest = path.join(targetDist, e);
+        if (fs.existsSync(dest)) {
+          fs.rmSync(dest, { recursive: true, force: true });
+        }
+        fs.renameSync(src, dest);
+      }
+      fs.rmSync(foundDir, { recursive: true, force: true });
+    } catch {
+      // ignore
+    }
+  }
+}
+
+function syncTraefikSubdomains(baseDir: string): void {
+  const tlsConfigPath = "/etc/traefik/tls.yml";
+  if (!fs.existsSync(tlsConfigPath)) {
+    return;
+  }
+  try {
+    const entries = fs.readdirSync(baseDir, { withFileTypes: true });
+    const subdomains: string[] = ["demo.orupos.in"];
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        const slug = entry.name;
+        if (slug !== "demo" && fs.existsSync(path.join(baseDir, slug, "dist"))) {
+          subdomains.push(`${slug}.orupos.in`);
+        }
+      }
+    }
+
+    const hostRules = subdomains.map((s) => `Host(\`${s}\`)`).join(" || ");
+    const content = `tls:
+  options:
+    default:
+      alpnProtocols:
+        - "http/1.1"
+
+http:
+  routers:
+    orupos-restaurants:
+      rule: "${hostRules}"
+      entryPoints:
+        - "websecure"
+      tls:
+        certResolver: "letsencrypt"
+      priority: 10
+      service: "orupos-restaurants-svc"
+  services:
+    orupos-restaurants-svc:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:3003"
+`;
+    fs.writeFileSync(tlsConfigPath, content, "utf8");
+  } catch (err) {
+    console.error("Could not sync Traefik tls.yml:", err);
+  }
+}
+
 // POST /api/deploy-restaurant - Upload and unpack restaurant build (supports both direct dist folder & .zip)
 export async function POST(req: NextRequest) {
   try {
@@ -234,26 +324,11 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Normalize nested directory (e.g., if user zipped 'dist' folder instead of contents)
-    if (!fs.existsSync(path.join(targetDist, "index.html"))) {
-      const subdirs = fs.readdirSync(targetDist, { withFileTypes: true }).filter((d) => d.isDirectory());
-      for (const dir of subdirs) {
-        const nestedIndex = path.join(targetDist, dir.name, "index.html");
-        if (fs.existsSync(nestedIndex)) {
-          const nestedPath = path.join(targetDist, dir.name);
-          const innerFiles = fs.readdirSync(nestedPath);
-          for (const f of innerFiles) {
-            fs.renameSync(path.join(nestedPath, f), path.join(targetDist, f));
-          }
-          try {
-            fs.rmdirSync(nestedPath);
-          } catch {
-            // ignore
-          }
-          break;
-        }
-      }
-    }
+    // Recursively flatten if index.html is in any subfolder
+    ensureIndexAtRoot(targetDist);
+
+    // Sync Traefik dynamic router so new subdomain immediately gets Let's Encrypt SSL
+    syncTraefikSubdomains(baseDir);
 
     // Count files
     let filesCount = 0;
@@ -305,6 +380,7 @@ export async function DELETE(req: NextRequest) {
 
     if (fs.existsSync(restaurantDir)) {
       fs.rmSync(restaurantDir, { recursive: true, force: true });
+      syncTraefikSubdomains(baseDir);
       return NextResponse.json({ success: true, message: `Removed ${slug}.orupos.in` });
     }
 
