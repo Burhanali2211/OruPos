@@ -18,6 +18,15 @@ export default function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
   const hostWithoutPort = host.split(":")[0].toLowerCase();
 
+  // If path is admin, dashboard, or api, always pass through directly
+  if (
+    url.pathname.startsWith("/admin") ||
+    url.pathname.startsWith("/dashboard") ||
+    url.pathname.startsWith("/api")
+  ) {
+    return NextResponse.next();
+  }
+
   let subdomain: string | null = null;
 
   // 1. Production domain: e.g. "spiceroute.orupos.in"
@@ -34,6 +43,12 @@ export default function middleware(req: NextRequest) {
   // 3. Vercel deployment preview: e.g. "spiceroute---orupos.vercel.app"
   else if (hostWithoutPort.includes("---") && hostWithoutPort.endsWith(".vercel.app")) {
     subdomain = hostWithoutPort.split("---")[0];
+  }
+
+  // Handle admin subdomain if someone accesses "admin.orupos.in"
+  if (subdomain === "admin") {
+    const targetUrl = new URL(`/admin${url.pathname === "/" ? "" : url.pathname}${url.search}`, req.url);
+    return NextResponse.rewrite(targetUrl);
   }
 
   // If a valid restaurant subdomain is detected, rewrite internally to /r/[subdomain]

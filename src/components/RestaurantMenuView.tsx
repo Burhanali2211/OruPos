@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MenuItem, RestaurantData } from "@/data/menu";
+import { MenuItem, RestaurantData } from "@/lib/restaurants";
 
 interface RestaurantMenuViewProps {
   restaurant: RestaurantData;
@@ -16,15 +16,89 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const displayTable = initialTable ? `Table ${initialTable}` : restaurant.tableNumber || "Table 01";
+  // Table number management
+  const [tableNumber, setTableNumber] = useState<string>(
+    initialTable ? `Table ${initialTable}` : "Table 01"
+  );
+  const [isEditingTable, setIsEditingTable] = useState<boolean>(false);
+  const [tempTableInput, setTempTableInput] = useState<string>(
+    initialTable || "01"
+  );
+
+  // Cart state: Record<dishId, quantity>
+  const [cart, setCart] = useState<Record<string, number>>({});
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [cookingNote, setCookingNote] = useState<string>("");
+  const [orderPlacedData, setOrderPlacedData] = useState<{
+    items: { item: MenuItem; quantity: number }[];
+    total: number;
+    table: string;
+    note: string;
+  } | null>(null);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
-    }, 3000);
+    }, 3200);
   };
 
+  // Add item
+  const handleAddItem = (dish: MenuItem) => {
+    setCart((prev) => {
+      const current = prev[dish.id] || 0;
+      return { ...prev, [dish.id]: current + 1 };
+    });
+    showToast(`Added ${dish.name} to order`);
+  };
+
+  // Increase quantity
+  const handleIncrease = (dishId: string) => {
+    setCart((prev) => ({
+      ...prev,
+      [dishId]: (prev[dishId] || 0) + 1,
+    }));
+  };
+
+  // Decrease quantity
+  const handleDecrease = (dishId: string) => {
+    setCart((prev) => {
+      const current = prev[dishId] || 0;
+      if (current <= 1) {
+        const copy = { ...prev };
+        delete copy[dishId];
+        return copy;
+      }
+      return { ...prev, [dishId]: current - 1 };
+    });
+  };
+
+  // Cart calculations
+  const cartItems = useMemo(() => {
+    const list: { item: MenuItem; quantity: number }[] = [];
+    for (const [id, qty] of Object.entries(cart)) {
+      if (qty > 0) {
+        const dish = restaurant.items.find((i) => i.id === id);
+        if (dish) {
+          list.push({ item: dish, quantity: qty });
+        }
+      }
+    }
+    return list;
+  }, [cart, restaurant.items]);
+
+  const totalItemsCount = useMemo(() => {
+    return cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
+  }, [cartItems]);
+
+  const cartSubtotal = useMemo(() => {
+    return cartItems.reduce((acc, curr) => acc + curr.item.price * curr.quantity, 0);
+  }, [cartItems]);
+
+  const gstAmount = Math.round(cartSubtotal * 0.05);
+  const grandTotal = cartSubtotal + gstAmount;
+
+  // Filtered dishes
   const filteredItems = useMemo(() => {
     return restaurant.items.filter((item: MenuItem) => {
       const matchesCategory = activeCategory === "all" || item.category === activeCategory;
@@ -38,14 +112,86 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
     });
   }, [restaurant.items, activeCategory, vegOnly, searchQuery]);
 
+  // Save table change
+  const handleSaveTable = () => {
+    const formatted = tempTableInput.trim()
+      ? `Table ${tempTableInput.replace(/^table\s*/i, "")}`
+      : "Table 01";
+    setTableNumber(formatted);
+    setIsEditingTable(false);
+    showToast(`Updated to ${formatted}`);
+  };
+
+  // Send order to Kitchen via WhatsApp
+  const handleSendWhatsAppOrder = () => {
+    if (cartItems.length === 0) return;
+
+    const itemsSummary = cartItems
+      .map(
+        (c) =>
+          `• ${c.quantity}x ${c.item.name} (₹${c.item.price * c.quantity})`
+      )
+      .join("\n");
+
+    const message = [
+      `🍽️ *NEW DINE-IN ORDER*`,
+      `📍 *${restaurant.name}*`,
+      `🪑 *Table:* ${tableNumber}`,
+      `--------------------------------`,
+      itemsSummary,
+      `--------------------------------`,
+      `*Subtotal:* ₹${cartSubtotal}`,
+      `*GST (5%):* ₹${gstAmount}`,
+      `*Total Amount:* ₹${grandTotal}`,
+      cookingNote.trim() ? `📝 *Special Instructions:* ${cookingNote.trim()}` : null,
+      `⏱️ *Time:* ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`,
+      `--------------------------------`,
+      `_Sent via OruPos QR Menu_`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const whatsappNumber = (restaurant.whatsapp || restaurant.phone || "919876543210").replace(/[^0-9]/g, "");
+    const encoded = encodeURIComponent(message);
+    const waUrl = `https://wa.me/${whatsappNumber}?text=${encoded}`;
+
+    // Record order placed state
+    setOrderPlacedData({
+      items: [...cartItems],
+      total: grandTotal,
+      table: tableNumber,
+      note: cookingNote,
+    });
+    setCart({});
+    setIsCartOpen(false);
+
+    // Open WhatsApp
+    window.open(waUrl, "_blank");
+  };
+
+  // Direct table order placement (without WhatsApp)
+  const handlePlaceDirectOrder = () => {
+    if (cartItems.length === 0) return;
+
+    setOrderPlacedData({
+      items: [...cartItems],
+      total: grandTotal,
+      table: tableNumber,
+      note: cookingNote,
+    });
+    setCart({});
+    setIsCartOpen(false);
+    showToast(`Order sent to kitchen for ${tableNumber}!`);
+  };
+
   return (
-    <div style={{ backgroundColor: "#F8F6F2", minHeight: "100vh", paddingBottom: "110px" }}>
-      {/* Top Brand Bar */}
+    <div style={{ backgroundColor: "#FAF8F5", minHeight: "100vh", paddingBottom: "130px", fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
+      {/* Top Sticky Bar */}
       <div
         style={{
           backgroundColor: "#13271F",
           color: "#FFFFFF",
-          padding: "8px 16px",
+          padding: "9px 16px",
           fontSize: "12px",
           display: "flex",
           justifyContent: "space-between",
@@ -56,10 +202,26 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
           boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+        <button
+          type="button"
+          onClick={() => setIsEditingTable(true)}
+          style={{
+            background: "none",
+            border: "none",
+            color: "#FFFFFF",
+            fontSize: "12px",
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            cursor: "pointer",
+            padding: 0,
+          }}
+          title="Click to change table number"
+        >
           <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#34D399", display: "inline-block" }} />
-          <strong>{displayTable}</strong> • Live Digital Menu
-        </div>
+          <strong>{tableNumber}</strong>
+          <span style={{ fontSize: "10px", color: "#A7F3D0", textDecoration: "underline" }}>Change ✎</span>
+        </button>
         <Link
           href="https://orupos.in"
           target="_blank"
@@ -69,44 +231,49 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
         </Link>
       </div>
 
-      <div style={{ maxWidth: "540px", margin: "0 auto", backgroundColor: "#FFFFFF", minHeight: "100vh", boxShadow: "0 0 30px rgba(0,0,0,0.06)" }}>
+      <div style={{ maxWidth: "560px", margin: "0 auto", backgroundColor: "#FFFFFF", minHeight: "100vh", boxShadow: "0 0 35px rgba(0,0,0,0.05)" }}>
         {/* Restaurant Header */}
         <header
           style={{
             background: "linear-gradient(180deg, #13271F 0%, #1E3A2F 100%)",
             color: "#FFFFFF",
-            padding: "24px 20px 22px",
-            borderBottomLeftRadius: "22px",
-            borderBottomRightRadius: "22px",
+            padding: "26px 22px 22px",
+            borderBottomLeftRadius: "24px",
+            borderBottomRightRadius: "24px",
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
-            <div
+            <button
+              type="button"
+              onClick={() => setIsEditingTable(true)}
               style={{
                 background: "rgba(255, 255, 255, 0.15)",
                 backdropFilter: "blur(4px)",
-                padding: "4px 12px",
+                padding: "5px 12px",
                 borderRadius: "20px",
                 fontSize: "13px",
                 fontWeight: 700,
+                color: "#FFFFFF",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
-                border: "1px solid rgba(255,255,255,0.2)",
+                border: "1px solid rgba(255,255,255,0.25)",
+                cursor: "pointer",
               }}
             >
-              <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#4ADE80", display: "inline-block" }} />
-              {displayTable}
-            </div>
-            <div style={{ fontSize: "12px", color: "#CBD5E1", display: "flex", alignItems: "center", gap: "4px" }}>
+              <span style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: "#4ADE80", display: "inline-block" }} />
+              {tableNumber}
+              <span style={{ fontSize: "11px", opacity: 0.8 }}>✎</span>
+            </button>
+            <div style={{ fontSize: "12px", color: "#A7F3D0", display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }}>
               🟢 Kitchen Open & Taking Orders
             </div>
           </div>
 
-          <h1 style={{ fontSize: "22px", fontWeight: 800, marginBottom: "4px", color: "#FFFFFF", letterSpacing: "-0.02em" }}>
+          <h1 style={{ fontSize: "24px", fontWeight: 800, marginBottom: "4px", color: "#FFFFFF", letterSpacing: "-0.02em" }}>
             {restaurant.name}
           </h1>
-          <p style={{ fontSize: "13px", color: "#CBD5E1", marginBottom: "14px" }}>
+          <p style={{ fontSize: "13px", color: "#D1D5DB", marginBottom: "14px", lineHeight: 1.4 }}>
             {restaurant.tagline}
           </p>
 
@@ -123,13 +290,13 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
           </div>
         </header>
 
-        {/* Controls: Search & Veg Filter */}
+        {/* Search & Veg Filter */}
         <div
           style={{
             padding: "16px 20px 10px",
             backgroundColor: "#FFFFFF",
             position: "sticky",
-            top: "35px",
+            top: "37px",
             zIndex: 40,
             borderBottom: "1px solid #E5E7EB",
           }}
@@ -152,7 +319,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
             />
           </div>
 
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "10px", alignItems: "center", justifyContent: "space-between" }}>
             <button
               type="button"
               onClick={() => setVegOnly(!vegOnly)}
@@ -176,6 +343,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
               </span>
               Pure Veg Only
             </button>
+
             {searchQuery && (
               <button
                 type="button"
@@ -195,7 +363,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
           </div>
         </div>
 
-        {/* Category Pill Tabs */}
+        {/* Category Tabs */}
         <nav
           style={{
             overflowX: "auto",
@@ -239,73 +407,172 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
               <p style={{ fontSize: "13px" }}>Try searching for a different dish name or reset the veg filter.</p>
             </div>
           ) : (
-            filteredItems.map((dish: MenuItem) => (
-              <article
-                key={dish.id}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: "16px",
-                  padding: "16px 0",
-                  borderBottom: "1px solid #F3F4F6",
-                }}
-              >
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
-                    <span className={`food-symbol ${dish.isVeg ? "veg" : "nonveg"}`}>
-                      <span className="inner-dot" />
-                    </span>
-                    {dish.badge && (
-                      <span
+            filteredItems.map((dish: MenuItem) => {
+              const qty = cart[dish.id] || 0;
+
+              return (
+                <article
+                  key={dish.id}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: "16px",
+                    padding: "18px 0",
+                    borderBottom: "1px solid #F3F4F6",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+                      <span className={`food-symbol ${dish.isVeg ? "veg" : "nonveg"}`}>
+                        <span className="inner-dot" />
+                      </span>
+                      {dish.badge && (
+                        <span
+                          style={{
+                            backgroundColor: "#FEF3C7",
+                            color: "#92400E",
+                            fontSize: "10px",
+                            fontWeight: 700,
+                            textTransform: "uppercase",
+                            padding: "2px 7px",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          {dish.badge}
+                        </span>
+                      )}
+                    </div>
+                    <h3 style={{ fontSize: "15px", fontWeight: 700, color: "#111827", marginBottom: "4px" }}>
+                      {dish.name}
+                    </h3>
+                    <div style={{ fontSize: "15px", fontWeight: 800, color: "#1E3A2F", marginBottom: "6px" }}>
+                      ₹{dish.price}
+                    </div>
+                    <p style={{ fontSize: "12px", color: "#6B7280", lineHeight: 1.5, margin: 0 }}>
+                      {dish.desc}
+                    </p>
+                  </div>
+
+                  {/* Right side: Dish image + Add / Quantity Button */}
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "96px", flexShrink: 0 }}>
+                    {dish.image ? (
+                      <div
                         style={{
-                          backgroundColor: "#FEF3C7",
-                          color: "#92400E",
-                          fontSize: "10px",
-                          fontWeight: 700,
-                          textTransform: "uppercase",
-                          padding: "2px 7px",
-                          borderRadius: "4px",
+                          width: "90px",
+                          height: "90px",
+                          borderRadius: "12px",
+                          overflow: "hidden",
+                          position: "relative",
+                          backgroundColor: "#F3F4F6",
+                          boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
+                          marginBottom: "8px",
                         }}
                       >
-                        {dish.badge}
-                      </span>
+                        <Image
+                          src={dish.image}
+                          alt={dish.name}
+                          fill
+                          sizes="90px"
+                          style={{ objectFit: "cover" }}
+                        />
+                      </div>
+                    ) : (
+                      <div style={{ height: "14px" }} />
+                    )}
+
+                    {/* Quantity Selector / Add button */}
+                    {qty > 0 ? (
+                      <div
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          backgroundColor: "#1E3A2F",
+                          borderRadius: "8px",
+                          boxShadow: "0 2px 8px rgba(30, 58, 47, 0.25)",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => handleDecrease(dish.id)}
+                          style={{
+                            backgroundColor: "transparent",
+                            color: "#FFFFFF",
+                            border: "none",
+                            width: "28px",
+                            height: "30px",
+                            fontSize: "15px",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                          aria-label="Decrease quantity"
+                        >
+                          -
+                        </button>
+                        <span
+                          style={{
+                            color: "#FFFFFF",
+                            fontSize: "13px",
+                            fontWeight: 700,
+                            minWidth: "20px",
+                            textAlign: "center",
+                          }}
+                        >
+                          {qty}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleIncrease(dish.id)}
+                          style={{
+                            backgroundColor: "transparent",
+                            color: "#FFFFFF",
+                            border: "none",
+                            width: "28px",
+                            height: "30px",
+                            fontSize: "15px",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                          aria-label="Increase quantity"
+                        >
+                          +
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleAddItem(dish)}
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                          color: "#1E3A2F",
+                          border: "1.5px solid #1E3A2F",
+                          borderRadius: "8px",
+                          padding: "6px 18px",
+                          fontSize: "12px",
+                          fontWeight: 700,
+                          cursor: "pointer",
+                          transition: "all 0.15s ease",
+                          boxShadow: "0 2px 5px rgba(0,0,0,0.06)",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "4px",
+                        }}
+                      >
+                        <span>ADD</span>
+                        <span style={{ fontSize: "14px", lineHeight: 1 }}>+</span>
+                      </button>
                     )}
                   </div>
-                  <h3 style={{ fontSize: "15px", fontWeight: 700, color: "#111827", marginBottom: "4px" }}>
-                    {dish.name}
-                  </h3>
-                  <div style={{ fontSize: "16px", fontWeight: 800, color: "#1E3A2F", marginBottom: "6px" }}>
-                    ₹{dish.price}
-                  </div>
-                  <p style={{ fontSize: "12px", color: "#6B7280", lineHeight: 1.5, margin: 0 }}>
-                    {dish.desc}
-                  </p>
-                </div>
-
-                {dish.image && (
-                  <div
-                    style={{
-                      width: "90px",
-                      height: "90px",
-                      borderRadius: "12px",
-                      overflow: "hidden",
-                      position: "relative",
-                      flexShrink: 0,
-                      backgroundColor: "#F3F4F6",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
-                    }}
-                  >
-                    <Image
-                      src={dish.image}
-                      alt={dish.name}
-                      fill
-                      sizes="90px"
-                      style={{ objectFit: "cover" }}
-                    />
-                  </div>
-                )}
-              </article>
-            ))
+                </article>
+              );
+            })
           )}
         </main>
 
@@ -320,7 +587,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
           }}
         >
           <p style={{ marginBottom: "6px" }}>
-            Want a digital menu and QR acrylic stands for your restaurant?
+            Want a live table ordering digital menu for your restaurant?
           </p>
           <Link
             href="https://orupos.in"
@@ -331,7 +598,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
           </Link>
         </div>
 
-        {/* Floating Table Bottom Bar */}
+        {/* Floating Bottom Bar (Dual Mode: Table Actions & Cart) */}
         <div
           style={{
             position: "fixed",
@@ -340,89 +607,657 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
             right: 0,
             backgroundColor: "#FFFFFF",
             borderTop: "1px solid #E5E7EB",
-            padding: "12px 20px",
+            padding: "10px 16px",
             zIndex: 50,
-            boxShadow: "0 -4px 20px rgba(0,0,0,0.1)",
+            boxShadow: "0 -4px 20px rgba(0,0,0,0.12)",
           }}
         >
           <div
             style={{
-              maxWidth: "540px",
+              maxWidth: "560px",
               margin: "0 auto",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
             }}
           >
-            <div>
-              <div style={{ fontSize: "11px", color: "#6B7280", fontWeight: 600, textTransform: "uppercase" }}>
-                Active Session
+            {/* When items are in cart -> show High-priority Order Bar */}
+            {totalItemsCount > 0 ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  backgroundColor: "#1E3A2F",
+                  borderRadius: "14px",
+                  padding: "10px 16px",
+                  color: "#FFFFFF",
+                  boxShadow: "0 4px 15px rgba(30, 58, 47, 0.3)",
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: "11px", color: "#A7F3D0", textTransform: "uppercase", fontWeight: 700 }}>
+                    {tableNumber} • {totalItemsCount} {totalItemsCount === 1 ? "Item" : "Items"}
+                  </div>
+                  <div style={{ fontSize: "18px", fontWeight: 800 }}>
+                    ₹{cartSubtotal}
+                    <span style={{ fontSize: "11px", fontWeight: 500, color: "#CBD5E1", marginLeft: "4px" }}>
+                      + GST
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsCartOpen(true)}
+                  style={{
+                    backgroundColor: "#E5A93C",
+                    color: "#13271F",
+                    border: "none",
+                    borderRadius: "10px",
+                    padding: "9px 18px",
+                    fontSize: "14px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    boxShadow: "0 2px 8px rgba(229, 169, 60, 0.4)",
+                  }}
+                >
+                  <span>View Order</span>
+                  <span style={{ fontSize: "16px" }}>→</span>
+                </button>
               </div>
-              <div style={{ fontSize: "16px", fontWeight: 800, color: "#1E3A2F" }}>
-                {displayTable}
+            ) : (
+              /* Idle Table Bar (Call Waiter / Bill) */
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: "11px", color: "#6B7280", fontWeight: 600, textTransform: "uppercase" }}>
+                    Active Session
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsEditingTable(true)}
+                    style={{
+                      fontSize: "15px",
+                      fontWeight: 800,
+                      color: "#1E3A2F",
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                  >
+                    <span>{tableNumber}</span>
+                    <span style={{ fontSize: "11px", color: "#6B7280" }}>✎</span>
+                  </button>
+                </div>
+
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <button
+                    type="button"
+                    onClick={() => showToast(`🔔 Waiter alerted for ${tableNumber}! Staff on the way.`)}
+                    style={{
+                      backgroundColor: "#F3F4F6",
+                      color: "#374151",
+                      border: "1px solid #D1D5DB",
+                      padding: "8px 12px",
+                      borderRadius: "8px",
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                  >
+                    <span>🔔</span>
+                    <span>Call Staff</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => showToast(`🧾 Bill requested for ${tableNumber}. Cashier notified.`)}
+                    style={{
+                      backgroundColor: "#1E3A2F",
+                      color: "#FFFFFF",
+                      border: "none",
+                      padding: "8px 14px",
+                      borderRadius: "8px",
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                  >
+                    <span>🧾</span>
+                    <span>Get Bill</span>
+                  </button>
+                </div>
               </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Cart & Order Review Modal / Drawer */}
+      {isCartOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            backdropFilter: "blur(4px)",
+            zIndex: 120,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+          }}
+          onClick={() => setIsCartOpen(false)}
+        >
+          <div
+            style={{
+              backgroundColor: "#FFFFFF",
+              borderTopLeftRadius: "24px",
+              borderTopRightRadius: "24px",
+              maxWidth: "560px",
+              width: "100%",
+              margin: "0 auto",
+              maxHeight: "85vh",
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: "0 -10px 40px rgba(0,0,0,0.25)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Drawer Header */}
+            <div
+              style={{
+                padding: "16px 20px",
+                borderBottom: "1px solid #E5E7EB",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div>
+                <h2 style={{ fontSize: "17px", fontWeight: 800, color: "#1E3A2F", margin: 0 }}>
+                  Table Order Details
+                </h2>
+                <div style={{ fontSize: "12px", color: "#6B7280" }}>
+                  Serving {tableNumber} • {restaurant.name}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsCartOpen(false)}
+                style={{
+                  background: "#F3F4F6",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "32px",
+                  height: "32px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#4B5563",
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Itemized Order List */}
+            <div style={{ padding: "16px 20px", overflowY: "auto", flex: 1 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "16px" }}>
+                {cartItems.map(({ item, quantity }) => (
+                  <div
+                    key={item.id}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      paddingBottom: "12px",
+                      borderBottom: "1px dashed #E5E7EB",
+                    }}
+                  >
+                    <div style={{ flex: 1, paddingRight: "12px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <span className={`food-symbol ${item.isVeg ? "veg" : "nonveg"}`}>
+                          <span className="inner-dot" />
+                        </span>
+                        <span style={{ fontSize: "14px", fontWeight: 700, color: "#1F2937" }}>
+                          {item.name}
+                        </span>
+                      </div>
+                      <div style={{ fontSize: "12px", color: "#6B7280", marginLeft: "20px" }}>
+                        ₹{item.price} each
+                      </div>
+                    </div>
+
+                    {/* Stepper */}
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        backgroundColor: "#F3F4F6",
+                        borderRadius: "8px",
+                        border: "1px solid #D1D5DB",
+                        marginRight: "14px",
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => handleDecrease(item.id)}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          width: "26px",
+                          height: "26px",
+                          fontWeight: 700,
+                          cursor: "pointer",
+                        }}
+                      >
+                        -
+                      </button>
+                      <span style={{ fontSize: "12px", fontWeight: 700, minWidth: "18px", textAlign: "center" }}>
+                        {quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleIncrease(item.id)}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          width: "26px",
+                          height: "26px",
+                          fontWeight: 700,
+                          cursor: "pointer",
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <div style={{ fontSize: "14px", fontWeight: 800, color: "#1E3A2F", minWidth: "55px", textAlign: "right" }}>
+                      ₹{item.price * quantity}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Special Cooking Note */}
+              <div style={{ marginBottom: "18px" }}>
+                <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "#374151", marginBottom: "6px" }}>
+                  Special Cooking Instructions (Optional)
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Less spicy, make extra crispy, no onions..."
+                  value={cookingNote}
+                  onChange={(e) => setCookingNote(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "9px 12px",
+                    border: "1px solid #D1D5DB",
+                    borderRadius: "8px",
+                    fontSize: "13px",
+                    backgroundColor: "#F9FAFB",
+                    outline: "none",
+                  }}
+                />
+              </div>
+
+              {/* Bill Breakdown */}
+              <div
+                style={{
+                  backgroundColor: "#F9FAFB",
+                  borderRadius: "12px",
+                  padding: "14px 16px",
+                  border: "1px solid #E5E7EB",
+                  fontSize: "13px",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px", color: "#4B5563" }}>
+                  <span>Items Subtotal</span>
+                  <span>₹{cartSubtotal}</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", color: "#4B5563" }}>
+                  <span>Restaurant GST (5%)</span>
+                  <span>₹{gstAmount}</span>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    paddingTop: "8px",
+                    borderTop: "1px solid #E5E7EB",
+                    fontSize: "16px",
+                    fontWeight: 800,
+                    color: "#1E3A2F",
+                  }}
+                >
+                  <span>Grand Total</span>
+                  <span>₹{grandTotal}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons in Drawer */}
+            <div
+              style={{
+                padding: "14px 20px 20px",
+                borderTop: "1px solid #E5E7EB",
+                backgroundColor: "#FFFFFF",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              {/* Primary Dispatch Action: WhatsApp to Kitchen */}
+              <button
+                type="button"
+                onClick={handleSendWhatsAppOrder}
+                style={{
+                  backgroundColor: "#25D366",
+                  color: "#FFFFFF",
+                  border: "none",
+                  borderRadius: "12px",
+                  padding: "13px 20px",
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  boxShadow: "0 4px 14px rgba(37, 211, 102, 0.35)",
+                }}
+              >
+                <span>💬</span>
+                <span>Send Order to Kitchen via WhatsApp</span>
+              </button>
+
+              {/* Secondary: Direct Table Dispatch */}
+              <button
+                type="button"
+                onClick={handlePlaceDirectOrder}
+                style={{
+                  backgroundColor: "#1E3A2F",
+                  color: "#FFFFFF",
+                  border: "none",
+                  borderRadius: "12px",
+                  padding: "12px 20px",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "6px",
+                }}
+              >
+                <span>🛎️</span>
+                <span>Place Direct Table Order</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Table Number Modal */}
+      {isEditingTable && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            zIndex: 130,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+          onClick={() => setIsEditingTable(false)}
+        >
+          <div
+            style={{
+              backgroundColor: "#FFFFFF",
+              borderRadius: "16px",
+              maxWidth: "360px",
+              width: "100%",
+              padding: "22px 20px",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 style={{ fontSize: "16px", fontWeight: 800, color: "#1E3A2F", marginBottom: "8px" }}>
+              Select or Enter Table Number
+            </h3>
+            <p style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px" }}>
+              Orders and service requests will be delivered directly to this table.
+            </p>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", marginBottom: "16px" }}>
+              {Array.from({ length: 8 }, (_, i) => {
+                const num = String(i + 1).padStart(2, "0");
+                const isSelected = tempTableInput === num;
+
+                return (
+                  <button
+                    key={num}
+                    type="button"
+                    onClick={() => setTempTableInput(num)}
+                    style={{
+                      padding: "8px 0",
+                      borderRadius: "8px",
+                      border: isSelected ? "2px solid #1E3A2F" : "1px solid #D1D5DB",
+                      backgroundColor: isSelected ? "#ECFDF5" : "#FFFFFF",
+                      color: isSelected ? "#065F46" : "#374151",
+                      fontSize: "12px",
+                      fontWeight: 700,
+                      cursor: "pointer",
+                    }}
+                  >
+                    T-{num}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div style={{ marginBottom: "16px" }}>
+              <label style={{ fontSize: "11px", fontWeight: 700, color: "#4B5563", display: "block", marginBottom: "4px" }}>
+                Or Custom Table / Room / Booth:
+              </label>
+              <input
+                type="text"
+                value={tempTableInput}
+                onChange={(e) => setTempTableInput(e.target.value)}
+                placeholder="e.g. 04, VIP 2, Terrace"
+                style={{
+                  width: "100%",
+                  padding: "9px 12px",
+                  borderRadius: "8px",
+                  border: "1px solid #D1D5DB",
+                  fontSize: "14px",
+                  outline: "none",
+                }}
+              />
             </div>
 
             <div style={{ display: "flex", gap: "8px" }}>
               <button
                 type="button"
-                onClick={() => showToast(`🔔 Waiter alerted for ${displayTable}! Staff on the way.`)}
+                onClick={() => setIsEditingTable(false)}
                 style={{
-                  backgroundColor: "#F3F4F6",
-                  color: "#374151",
-                  border: "1px solid #D1D5DB",
-                  padding: "9px 14px",
+                  flex: 1,
+                  padding: "9px 0",
                   borderRadius: "8px",
+                  border: "1px solid #D1D5DB",
+                  backgroundColor: "#FFFFFF",
+                  color: "#4B5563",
                   fontSize: "13px",
                   fontWeight: 600,
                   cursor: "pointer",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "5px",
                 }}
               >
-                <span>🔔</span>
-                <span>Call Waiter</span>
+                Cancel
               </button>
-
               <button
                 type="button"
-                onClick={() => showToast(`🧾 Bill request sent for ${displayTable}. Cashier notified.`)}
+                onClick={handleSaveTable}
                 style={{
+                  flex: 1,
+                  padding: "9px 0",
+                  borderRadius: "8px",
+                  border: "none",
                   backgroundColor: "#1E3A2F",
                   color: "#FFFFFF",
-                  border: "none",
-                  padding: "9px 16px",
-                  borderRadius: "8px",
                   fontSize: "13px",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   cursor: "pointer",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
                 }}
               >
-                <span>🧾</span>
-                <span>Get Bill</span>
+                Set Table
               </button>
             </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {/* Order Placed Success Modal */}
+      {orderPlacedData && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0,0,0,0.65)",
+            backdropFilter: "blur(4px)",
+            zIndex: 140,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+          onClick={() => setOrderPlacedData(null)}
+        >
+          <div
+            style={{
+              backgroundColor: "#FFFFFF",
+              borderRadius: "20px",
+              maxWidth: "420px",
+              width: "100%",
+              padding: "28px 24px",
+              textAlign: "center",
+              boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              style={{
+                width: "56px",
+                height: "56px",
+                borderRadius: "50%",
+                backgroundColor: "#ECFDF5",
+                color: "#16A34A",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "28px",
+                marginBottom: "14px",
+                border: "2px solid #BBF7D0",
+              }}
+            >
+              ✓
+            </div>
+
+            <h3 style={{ fontSize: "19px", fontWeight: 800, color: "#1E3A2F", marginBottom: "6px" }}>
+              Order Received at Kitchen!
+            </h3>
+            <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "18px" }}>
+              Serving to <strong>{orderPlacedData.table}</strong> • Approx 15-20 Mins
+            </p>
+
+            <div
+              style={{
+                backgroundColor: "#FAF8F5",
+                borderRadius: "12px",
+                padding: "12px 16px",
+                border: "1px solid #ECE7E1",
+                textAlign: "left",
+                fontSize: "12px",
+                marginBottom: "20px",
+              }}
+            >
+              <div style={{ fontWeight: 700, color: "#1E3A2F", marginBottom: "8px" }}>
+                Summary:
+              </div>
+              {orderPlacedData.items.map((i) => (
+                <div key={i.item.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+                  <span>{i.quantity}x {i.item.name}</span>
+                  <span style={{ fontWeight: 700 }}>₹{i.item.price * i.quantity}</span>
+                </div>
+              ))}
+              <div style={{ borderTop: "1px dashed #D1D5DB", marginTop: "8px", paddingTop: "8px", display: "flex", justifyContent: "space-between", fontWeight: 800, fontSize: "13px", color: "#1E3A2F" }}>
+                <span>Total Amount</span>
+                <span>₹{orderPlacedData.total}</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setOrderPlacedData(null)}
+              style={{
+                width: "100%",
+                backgroundColor: "#1E3A2F",
+                color: "#FFFFFF",
+                border: "none",
+                borderRadius: "10px",
+                padding: "12px 20px",
+                fontSize: "14px",
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              Add More Dishes / Done
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Toast Notification */}
       {toastMessage && (
         <div
           style={{
             position: "fixed",
-            top: "50px",
+            top: "52px",
             left: "50%",
             transform: "translateX(-50%)",
             backgroundColor: "#111827",
             color: "#FFFFFF",
-            padding: "10px 22px",
+            padding: "9px 20px",
             borderRadius: "30px",
-            fontSize: "13px",
+            fontSize: "12px",
             fontWeight: 600,
             zIndex: 100,
             boxShadow: "0 10px 25px rgba(0,0,0,0.3)",
