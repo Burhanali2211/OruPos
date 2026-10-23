@@ -1,136 +1,281 @@
 import React from "react";
-import Image from "next/image";
-import { MessageCircle, Phone, Mail } from "lucide-react";
+import Link from "next/link";
+import { MessageCircle, Phone, Mail, ShieldCheck, Globe, ArrowUpRight } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
 export default function Footer() {
   return (
     <footer
       style={{
-        backgroundColor: "#F9F9F8",
-        color: "#666666",
-        padding: "56px 0 32px",
-        borderTop: "1px solid var(--color-border)",
-        fontSize: "0.875rem",
+        backgroundColor: "#FFFFFF",
+        padding: "80px 0 36px",
+        position: "relative",
+        overflow: "hidden",
+        borderTop: "1px solid var(--border-subtle)",
       }}
-      className="site-footer"
     >
       <div className="container">
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1.4fr 1fr 1fr",
+            gridTemplateColumns: "1.4fr 0.8fr 0.8fr 1fr",
             gap: "48px",
-            marginBottom: "48px",
+            marginBottom: "64px",
           }}
           className="footer-top-grid"
         >
-          {/* Brand Info */}
+          {/* Brand Column (Easyio style) */}
           <div>
-            <div style={{ marginBottom: "16px" }}>
-              <Image src="/assets/logo.png" alt="OruPos Logo" width={120} height={38} />
-            </div>
-            <p style={{ fontSize: "0.9375rem", color: "#666666", maxWidth: "340px", marginBottom: "20px", lineHeight: 1.6 }}>
-              Durable acrylic QR table stands and high-speed digital menu solutions for Indian dining establishments.
-            </p>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
-              <li>
-                <a
-                  href={`tel:${ORUPOS_CONFIG.contact.phoneTel}`}
-                  style={{ color: "#111111", display: "inline-flex", alignItems: "center", gap: "8px", fontWeight: 600 }}
+            <Link href="#hero" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
+              <div
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  backgroundColor: "var(--zinc-950)",
+                  color: "#FFFFFF",
+                  borderRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: 900,
+                  fontSize: "18px",
+                }}
+              >
+                O
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
+                <span
+                  style={{
+                    fontSize: "1.4rem",
+                    fontWeight: 900,
+                    letterSpacing: "-0.04em",
+                    color: "var(--zinc-950)",
+                    textTransform: "uppercase",
+                  }}
                 >
-                  <Phone size={15} />
-                  <span>{ORUPOS_CONFIG.contact.phoneDisplay}</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={ORUPOS_CONFIG.getWhatsAppUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "#111111", display: "inline-flex", alignItems: "center", gap: "8px", fontWeight: 600 }}
+                  ORUPOS
+                </span>
+                <span
+                  style={{
+                    fontSize: "10px",
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    color: "var(--zinc-400)",
+                    textTransform: "uppercase",
+                    marginTop: "3px",
+                  }}
                 >
-                  <MessageCircle size={15} color="#25D366" />
-                  <span>WhatsApp: {ORUPOS_CONFIG.contact.whatsappDisplay}</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`mailto:${ORUPOS_CONFIG.contact.email}`}
-                  style={{ color: "#666666", display: "inline-flex", alignItems: "center", gap: "8px" }}
+                  QR Stands & Digital Menus
+                </span>
+              </div>
+            </Link>
+
+            <h3
+              style={{
+                fontSize: "1rem",
+                fontWeight: 600,
+                color: "var(--zinc-500)",
+                lineHeight: 1.5,
+                marginBottom: "24px",
+                maxWidth: "340px",
+              }}
+            >
+              Simple QR stands and digital menus for restaurants and cafes across India.
+            </h3>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              <a
+                href={`mailto:${ORUPOS_CONFIG.contact.email}`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  color: "var(--zinc-600)",
+                  textDecoration: "none",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                }}
+              >
+                <div
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    border: "1px solid var(--zinc-200)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "var(--zinc-950)",
+                  }}
                 >
                   <Mail size={15} />
-                  <span>{ORUPOS_CONFIG.contact.email}</span>
-                </a>
-              </li>
-            </ul>
+                </div>
+                <span>{ORUPOS_CONFIG.contact.email}</span>
+              </a>
+
+              <a
+                href={ORUPOS_CONFIG.getWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  color: "var(--zinc-600)",
+                  textDecoration: "none",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                }}
+              >
+                <div
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    border: "1px solid var(--zinc-200)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "var(--emerald-600)",
+                  }}
+                >
+                  <MessageCircle size={15} />
+                </div>
+                <span>WhatsApp: {ORUPOS_CONFIG.contact.whatsappDisplay}</span>
+              </a>
+            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Product Links */}
           <div>
             <h4
               style={{
-                color: "#111111",
-                fontSize: "0.8125rem",
-                fontWeight: 700,
+                fontSize: "11px",
+                fontWeight: 900,
                 textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                marginBottom: "16px",
+                letterSpacing: "0.25em",
+                color: "var(--zinc-950)",
+                marginBottom: "24px",
               }}
             >
               Navigation
             </h4>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
-              <li><a href="#designs" style={{ color: "#666666" }}>Card Styles & Colors</a></li>
-              <li><a href="#how-it-works" style={{ color: "#666666" }}>How It Works</a></li>
-              <li><a href="#what-you-get" style={{ color: "#666666" }}>What&apos;s Included</a></li>
-              <li><a href="#pricing" style={{ color: "#666666" }}>Pricing & Calculator</a></li>
-              <li><a href="#faq" style={{ color: "#666666" }}>Frequently Asked Questions</a></li>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
+              {["Styles", "How It Works", "Pricing", "FAQ"].map((label, idx) => {
+                const hrefs = ["#designs", "#how-it-works", "#pricing", "#faq"];
+                return (
+                  <li key={idx}>
+                    <a
+                      href={hrefs[idx]}
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: 600,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.03em",
+                        color: "var(--zinc-400)",
+                        textDecoration: "none",
+                        transition: "color 0.15s ease",
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--zinc-950)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--zinc-400)")}
+                    >
+                      {label}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
-          {/* Delivery & Assurance */}
+          {/* Hardware Specs */}
           <div>
             <h4
               style={{
-                color: "#111111",
-                fontSize: "0.8125rem",
-                fontWeight: 700,
+                fontSize: "11px",
+                fontWeight: 900,
                 textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                marginBottom: "16px",
+                letterSpacing: "0.25em",
+                color: "var(--zinc-950)",
+                marginBottom: "24px",
               }}
             >
-              The OruPos Standard
+              What You Get
             </h4>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px", color: "#666666" }}>
-              <li><span>• Flat ₹199 / Table (Zero Subscriptions)</span></li>
-              <li><span>• 3mm Heavyweight Optical Cast Acrylic</span></li>
-              <li><span>• Done-For-You Menu Digitization</span></li>
-              <li><span>• Tracked Doorstep Delivery Across India</span></li>
-              <li><span>• Dispatched within 48 business hours</span></li>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "14px", color: "var(--zinc-500)", fontSize: "13px", fontWeight: 500 }}>
+              <li><span>Sturdy acrylic stands</span></li>
+              <li><span>Dual-sided table numbers</span></li>
+              <li><span>Individual table QR codes</span></li>
+              <li><span>Instant mobile digital menu</span></li>
+              <li><span>Zero monthly subscription fees</span></li>
             </ul>
+          </div>
+
+          {/* Contact / Service Areas */}
+          <div>
+            <h4
+              style={{
+                fontSize: "11px",
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "0.25em",
+                color: "var(--zinc-950)",
+                marginBottom: "24px",
+              }}
+            >
+              Pan-India Delivery
+            </h4>
+            <p style={{ fontSize: "13px", color: "var(--zinc-500)", lineHeight: 1.6, marginBottom: "14px", fontWeight: 500 }}>
+              Doorstep courier delivery across Delhi NCR, Mumbai, Bangalore, Hyderabad, Srinagar, and all Indian cities.
+            </p>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                backgroundColor: "var(--zinc-50)",
+                border: "1px solid var(--zinc-200)",
+                padding: "6px 12px",
+                borderRadius: "9999px",
+                fontSize: "11px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                color: "var(--zinc-950)",
+              }}
+            >
+              <span>Dispatched in 48 Hours</span>
+              <ArrowUpRight size={12} />
+            </div>
           </div>
         </div>
 
+        {/* Bottom Trust & Copyright */}
         <div
           style={{
-            borderTop: "1px solid var(--color-border)",
+            borderTop: "1px solid var(--border-subtle)",
             paddingTop: "24px",
             display: "flex",
-            justifyContent: "space-between",
+            flexDirection: "row",
             alignItems: "center",
+            justifyContent: "space-between",
             flexWrap: "wrap",
-            gap: "16px",
-            fontSize: "0.8125rem",
-            color: "#888888",
+            gap: "20px",
+            fontSize: "12px",
           }}
         >
-          <div>
-            Copyright 2026 {ORUPOS_CONFIG.legalEntity}. All rights reserved.
+          <div style={{ display: "flex", alignItems: "center", gap: "20px", color: "var(--zinc-500)" }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600, fontSize: "12px" }}>
+              <ShieldCheck size={14} color="var(--emerald-600)" />
+              <span>Durable Acrylic</span>
+            </span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600, fontSize: "12px" }}>
+              <Globe size={14} color="var(--emerald-600)" />
+              <span>Pan-India Shipping</span>
+            </span>
           </div>
-          <div>
-            Simple, honest table hardware for Indian restaurants.
+
+          <div style={{ color: "var(--zinc-400)", fontWeight: 500, fontSize: "11px" }}>
+            © 2026 {ORUPOS_CONFIG.legalEntity} · All rights reserved.
           </div>
         </div>
       </div>

@@ -2,9 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, MessageCircle } from "lucide-react";
-import { ORUPOS_CONFIG } from "@/data/config";
+import { ArrowUpRight, Check, Eye } from "lucide-react";
 
 interface HeroProps {
   onOpenOrder: () => void;
@@ -16,166 +14,143 @@ export default function Hero({ onOpenOrder, onOpenDemo }: HeroProps) {
     <section
       id="hero"
       style={{
-        padding: "72px 0 80px",
-        backgroundColor: "#FFFFFF",
-        borderBottom: "1px solid var(--color-border)",
+        paddingTop: "120px",
+        paddingBottom: "72px",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <div className="container">
+      <div className="container" style={{ textAlign: "center" }}>
+        {/* Clean, Bold Minimalist Headline */}
+        <h1
+          style={{
+            fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)",
+            fontWeight: 850,
+            color: "var(--zinc-950)",
+            lineHeight: 1.12,
+            letterSpacing: "-0.035em",
+            maxWidth: "840px",
+            margin: "0 auto 18px",
+          }}
+        >
+          ₹0 subscription POS for your restaurant.
+        </h1>
+
+        {/* Crisp One-Sentence Subtitle */}
+        <p
+          style={{
+            fontSize: "clamp(1.05rem, 1.8vw, 1.25rem)",
+            color: "var(--zinc-500)",
+            fontWeight: 500,
+            maxWidth: "520px",
+            margin: "0 auto 32px",
+            lineHeight: 1.55,
+          }}
+        >
+          Acrylic QR table stands + instant mobile menu. No monthly fees. Pay ₹199 per table once, use forever.
+        </p>
+
+        {/* Two Clean Action Buttons */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "1.15fr 0.85fr",
-            gap: "56px",
+            display: "flex",
             alignItems: "center",
+            justifyContent: "center",
+            gap: "12px",
+            flexWrap: "wrap",
+            marginBottom: "40px",
           }}
-          className="hero-grid"
         >
-          {/* Left: Big Bold Typography & Minimal Copy */}
-          <div>
-            <span
-              style={{
-                fontSize: "0.75rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.12em",
-                color: "var(--color-primary)",
-                display: "inline-block",
-                marginBottom: "16px",
-              }}
-            >
-              OruPos — Table Hardware & Digital Menus
-            </span>
+          <button
+            type="button"
+            className="btn-easyio"
+            onClick={onOpenOrder}
+            style={{ height: "52px", fontSize: "14px", padding: "0 24px" }}
+          >
+            <span>Order Yours Today</span>
+            <div className="arrow-circle">
+              <ArrowUpRight size={17} />
+            </div>
+          </button>
 
-            <h1
-              style={{
-                fontSize: "clamp(2.8rem, 5.5vw, 4.4rem)",
-                lineHeight: 1.05,
-                fontWeight: 800,
-                color: "var(--color-text-main)",
-                letterSpacing: "-0.04em",
-                marginBottom: "20px",
-              }}
-            >
-              Digital menus. <br />
-              Physical QR stands. <br />
-              <span style={{ color: "var(--color-primary)" }}>₹199 per table.</span>
-            </h1>
+          <a
+            href="https://wa.me/917006871031?text=Hi%20OruPos%20team,%20I%20want%20to%20get%20the%20zero%20subscription%20POS%20system%20for%20my%20restaurant."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-easyio-ghost"
+            style={{ height: "52px", padding: "0 22px", textDecoration: "none" }}
+          >
+            <span>Contact Us Now</span>
+          </a>
 
-            <p
-              style={{
-                fontSize: "1.125rem",
-                color: "var(--color-text-muted)",
-                lineHeight: 1.6,
-                marginBottom: "32px",
-                maxWidth: "520px",
-                fontWeight: 400,
-              }}
-            >
-              Heavy-duty acrylic table stands with individual QR codes for every dining table, plus an instant mobile menu for your guests. No app required. No recurring subscriptions.
-            </p>
+          <a
+            href="#how-it-works"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "4px",
+              padding: "0 12px",
+              fontSize: "13px",
+              fontWeight: 600,
+              color: "var(--zinc-400)",
+              textDecoration: "none",
+              transition: "color 0.15s ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--zinc-950)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--zinc-400)")}
+          >
+            <span>Know More ↓</span>
+          </a>
+        </div>
 
-            {/* Actions */}
+        {/* Stand Photo Showcase */}
+        <div
+          style={{
+            maxWidth: "920px",
+            margin: "0 auto",
+            borderRadius: "clamp(20px, 3.5vw, 36px)",
+            border: "1px solid var(--border-hairline)",
+            backgroundColor: "#FFFFFF",
+            padding: "clamp(10px, 1.8vw, 16px)",
+            boxShadow: "var(--shadow-float)",
+            position: "relative",
+          }}
+        >
+          <div
+            style={{
+              borderRadius: "clamp(16px, 2.8vw, 28px)",
+              overflow: "hidden",
+              position: "relative",
+              backgroundColor: "var(--zinc-50)",
+            }}
+          >
+            <Image
+              src="/assets/hero-table-stand.jpg"
+              alt="OruPos acrylic QR table stand"
+              width={1400}
+              height={780}
+              priority
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
             <div
               style={{
+                position: "absolute",
+                bottom: "16px",
+                right: "16px",
+                backgroundColor: "rgba(9, 9, 11, 0.88)",
+                backdropFilter: "blur(10px)",
+                color: "#FFFFFF",
+                padding: "8px 16px",
+                borderRadius: "9999px",
+                fontSize: "12px",
+                fontWeight: 600,
                 display: "flex",
                 alignItems: "center",
-                gap: "14px",
-                marginBottom: "36px",
-                flexWrap: "wrap",
+                gap: "8px",
               }}
             >
-              <button
-                type="button"
-                className="btn btn-primary btn-lg"
-                onClick={onOpenOrder}
-              >
-                <span>Order Stands (₹199/table)</span>
-                <ArrowRight size={16} />
-              </button>
-
-              <a
-                href={ORUPOS_CONFIG.getWhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-secondary btn-lg"
-              >
-                <MessageCircle size={16} color="#25D366" />
-                <span>WhatsApp Inquiry</span>
-              </a>
-
-              <button
-                type="button"
-                onClick={onOpenDemo}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "var(--color-text-main)",
-                  fontSize: "14px",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                  padding: "8px 12px",
-                }}
-              >
-                See Live Demo →
-              </button>
-            </div>
-
-            {/* Minimalist Feature List */}
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "18px",
-                fontSize: "13px",
-                color: "var(--color-text-muted)",
-                borderTop: "1px solid var(--color-border-subtle)",
-                paddingTop: "20px",
-              }}
-            >
-              <span>• 3mm Optical Cast Acrylic</span>
-              <span>• Individual Table Numbers</span>
-              <span>• Full Menu Setup Included</span>
-              <span>• Doorstep Delivery Across India</span>
-            </div>
-          </div>
-
-          {/* Right: Clean, Crisp Physical Stand Showcase */}
-          <div>
-            <div
-              style={{
-                borderRadius: "var(--radius-lg)",
-                overflow: "hidden",
-                border: "1px solid var(--color-border)",
-                backgroundColor: "#F9F9F8",
-              }}
-            >
-              <Image
-                src="/assets/hero-table-stand.jpg"
-                alt="Physical acrylic QR code table stand showing Table 04 on dining table"
-                width={700}
-                height={525}
-                priority
-                style={{ width: "100%", height: "auto", display: "block" }}
-              />
-              <div
-                style={{
-                  padding: "16px 20px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  fontSize: "12px",
-                  color: "var(--color-text-muted)",
-                  borderTop: "1px solid var(--color-border)",
-                  backgroundColor: "#FFFFFF",
-                }}
-              >
-                <span style={{ fontWeight: 600, color: "var(--color-text-main)" }}>
-                  Actual Physical Table Stand (Table 04)
-                </span>
-                <span>Ready to use out of the box</span>
-              </div>
+              <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--emerald-500)" }} />
+              <span>Table 04 stand · Ready to use</span>
             </div>
           </div>
         </div>

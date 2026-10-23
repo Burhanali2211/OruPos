@@ -1,32 +1,38 @@
 import React from "react";
+import { ArrowUpRight } from "lucide-react";
 
 export default function HowItWorks() {
   const steps = [
     {
       num: "01",
-      title: "Send your menu photos",
-      desc: "Take quick photos of your existing paper menu card or send a PDF on WhatsApp. Tell us how many dining tables you have.",
+      title: "Send your menu",
+      desc: "Send photos of your current menu card or a PDF on WhatsApp. Tell us how many tables you have.",
     },
     {
       num: "02",
-      title: "We format & laser-print",
-      desc: "Our team digitizes all your food items, prices, and categories. We laser-print your acrylic table stands with individual table numbers.",
+      title: "We print & set up",
+      desc: "We create your online menu and print your acrylic stands with your logo, table numbers, and QR codes.",
     },
     {
       num: "03",
-      title: "Place on tables & start",
-      desc: "Delivered directly to your restaurant door. Put Stand 1 on Table 1, Stand 2 on Table 2, and guests scan right away.",
+      title: "Place on tables",
+      desc: "Your stands arrive in 48 hours. Place them on your dining tables and guests can scan right away.",
     },
   ];
 
   return (
-    <section className="section section-white" id="how-it-works">
+    <section className="section section-subtle" id="how-it-works">
       <div className="container">
         <div className="section-header">
-          <span className="section-kicker">Simple 3-Step Process</span>
-          <h2 className="section-title">Three steps. Ready in 48 hours.</h2>
+          <div className="section-kicker-pill">
+            <div className="kicker-dot" />
+            <span className="kicker-text">HOW IT WORKS</span>
+          </div>
+          <h2 className="section-title">
+            Up and running in 3 simple steps.
+          </h2>
           <p className="section-desc">
-            No technical skills or computer typing needed. We handle data entry, stand printing, and shipping.
+            You send us your menu on WhatsApp. We handle the printing, setup, and doorstep delivery.
           </p>
         </div>
 
@@ -34,7 +40,7 @@ export default function HowItWorks() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "32px",
+            gap: "24px",
           }}
           className="how-it-works-grid"
         >
@@ -42,31 +48,59 @@ export default function HowItWorks() {
             <div
               key={idx}
               style={{
-                borderTop: "2px solid var(--color-primary)",
-                paddingTop: "24px",
+                backgroundColor: "#FFFFFF",
+                borderRadius: "clamp(20px, 3vw, 32px)",
+                padding: "36px 30px",
+                border: "1px solid var(--border-hairline)",
                 display: "flex",
                 flexDirection: "column",
+                position: "relative",
+                transition: "all 0.3s ease",
+                boxShadow: "var(--shadow-card)",
               }}
             >
               <div
                 style={{
-                  fontSize: "1.75rem",
-                  fontWeight: 800,
-                  color: "var(--color-primary)",
-                  marginBottom: "12px",
-                  lineHeight: 1,
-                  letterSpacing: "-0.03em",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "20px",
                 }}
               >
-                {step.num}
+                <span
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: 800,
+                    letterSpacing: "0.05em",
+                    color: "var(--zinc-400)",
+                  }}
+                >
+                  Step {step.num}
+                </span>
+
+                <div
+                  style={{
+                    width: "32px",
+                    height: "32px",
+                    borderRadius: "50%",
+                    backgroundColor: "var(--zinc-100)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "var(--zinc-950)",
+                  }}
+                >
+                  <ArrowUpRight size={14} />
+                </div>
               </div>
 
               <h3
                 style={{
-                  fontSize: "1.25rem",
-                  fontWeight: 700,
-                  marginBottom: "8px",
-                  color: "var(--color-text-main)",
+                  fontSize: "1.3rem",
+                  fontWeight: 800,
+                  marginBottom: "10px",
+                  color: "var(--zinc-950)",
+                  letterSpacing: "-0.02em",
                 }}
               >
                 {step.title}
@@ -74,10 +108,11 @@ export default function HowItWorks() {
 
               <p
                 style={{
-                  fontSize: "0.9375rem",
-                  color: "var(--color-text-muted)",
+                  fontSize: "0.95rem",
+                  color: "var(--zinc-500)",
                   lineHeight: 1.6,
                   margin: 0,
+                  fontWeight: 500,
                 }}
               >
                 {step.desc}

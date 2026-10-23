@@ -1,99 +1,115 @@
 import React from "react";
+import { ShieldCheck, Hash, Smartphone, FileCheck } from "lucide-react";
 
 export default function WhatYouGet() {
   const deliverables = [
     {
-      num: "01",
-      title: "3mm Optical Cast Acrylic Stand",
-      desc: "Heavy-duty transparent T-stand. Water-resistant, gravy-spill proof, and built for daily restaurant wipe-downs.",
+      icon: ShieldCheck,
+      title: "Heavy Acrylic Stands",
+      desc: "Clear, durable stands that won't fall or bend. Easy to wipe clean after every meal.",
     },
     {
-      num: "02",
-      title: "Dual-Sided Table Numbers",
-      desc: "High-contrast bold numbers (Table 01, Table 02...) printed on both sides so staff spot tables across the hall.",
+      icon: Hash,
+      title: "Table Numbers on Both Sides",
+      desc: "Large numbers so your waitstaff can spot tables from anywhere across the room.",
     },
     {
-      num: "03",
-      title: "Individual Per-Table QR Code",
-      desc: "Each stand is mapped directly to that specific table, ensuring accurate waiter alerts and ordering.",
+      icon: Smartphone,
+      title: "Fast Mobile Menu",
+      desc: "Opens in 1 second on any phone camera. Clean dish photos, instant search, and veg/non-veg tags.",
     },
     {
-      num: "04",
-      title: "Fast Mobile Menu Website",
-      desc: "Clean mobile menu with Indian Veg (green) & Non-Veg (red) dietary symbols, instant search, and categories.",
-    },
-    {
-      num: "05",
-      title: "Custom Restaurant Branding",
-      desc: "Your restaurant name, logo, operational hours, and address formatted cleanly on the stands and digital menu.",
-    },
-    {
-      num: "06",
-      title: "Full Menu Setup Included",
-      desc: "You don't type anything. Just share photos of your current paper menu card; our team enters all dishes and prices.",
+      icon: FileCheck,
+      title: "Free Menu Setup & Updates",
+      desc: "We enter your full menu for you. Need to change prices or add dishes later? Just text us on WhatsApp.",
     },
   ];
 
   return (
-    <section className="section section-subtle" id="what-you-get">
+    <section className="section section-white" id="what-you-get">
       <div className="container">
         <div className="section-header">
-          <span className="section-kicker">Package Inclusions</span>
-          <h2 className="section-title">Everything included in your ₹199 package.</h2>
+          <div className="section-kicker-pill">
+            <div className="kicker-dot" />
+            <span className="kicker-text">WHAT'S INCLUDED</span>
+          </div>
+          <h2 className="section-title">
+            Everything you need for ₹199 per table.
+          </h2>
           <p className="section-desc">
-            Physical hardware plus cloud digital menu. No hidden setup costs. No monthly subscriptions.
+            Physical stands + online digital menu. No monthly fees, no commissions on food sales.
           </p>
         </div>
 
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
             gap: "24px",
           }}
           className="package-items-grid"
         >
-          {deliverables.map((item, idx) => (
-            <div
-              key={idx}
-              className="minimal-card"
-            >
+          {deliverables.map((item, idx) => {
+            const Icon = item.icon;
+            return (
               <div
+                key={idx}
                 style={{
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  color: "var(--color-primary)",
-                  marginBottom: "8px",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.08em",
+                  backgroundColor: "var(--zinc-50)",
+                  border: "1px solid var(--border-hairline)",
+                  borderRadius: "clamp(20px, 3vw, 32px)",
+                  padding: "32px 28px",
+                  display: "flex",
+                  flexDirection: "column",
+                  transition: "all 0.25s ease",
+                  position: "relative",
+                  boxShadow: "var(--shadow-card)",
                 }}
               >
-                {item.num}
+                <div
+                  style={{
+                    width: "44px",
+                    height: "44px",
+                    borderRadius: "50%",
+                    backgroundColor: "#FFFFFF",
+                    border: "1px solid var(--zinc-200)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "var(--zinc-950)",
+                    marginBottom: "20px",
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.04)",
+                  }}
+                >
+                  <Icon size={20} strokeWidth={1.8} />
+                </div>
+
+                <h3
+                  style={{
+                    fontSize: "1.2rem",
+                    fontWeight: 800,
+                    marginBottom: "8px",
+                    color: "var(--zinc-950)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {item.title}
+                </h3>
+
+                <p
+                  style={{
+                    fontSize: "0.925rem",
+                    color: "var(--zinc-500)",
+                    lineHeight: 1.6,
+                    margin: 0,
+                    fontWeight: 500,
+                  }}
+                >
+                  {item.desc}
+                </p>
               </div>
-
-              <h3
-                style={{
-                  fontSize: "1.125rem",
-                  fontWeight: 700,
-                  marginBottom: "8px",
-                  color: "var(--color-text-main)",
-                }}
-              >
-                {item.title}
-              </h3>
-
-              <p
-                style={{
-                  fontSize: "0.9375rem",
-                  color: "var(--color-text-muted)",
-                  lineHeight: 1.55,
-                  margin: 0,
-                }}
-              >
-                {item.desc}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

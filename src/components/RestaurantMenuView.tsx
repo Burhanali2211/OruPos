@@ -53,7 +53,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
     setToastMessage(msg);
     setTimeout(() => {
       setToastMessage(null);
-    }, 3200);
+    }, 2800);
   };
 
   // Add item
@@ -62,7 +62,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
       const current = prev[dish.id] || 0;
       return { ...prev, [dish.id]: current + 1 };
     });
-    showToast(`Added ${dish.name} to order`);
+    showToast(`Added ${dish.name}`);
   };
 
   // Increase quantity
@@ -135,7 +135,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
     showToast(`Updated to ${formatted}`);
   };
 
-  // Send order to Kitchen via WhatsApp (Zero emojis)
+  // Send order to Kitchen via WhatsApp
   const handleSendWhatsAppOrder = () => {
     if (cartItems.length === 0) return;
 
@@ -168,7 +168,6 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
     const encoded = encodeURIComponent(message);
     const waUrl = `https://wa.me/${whatsappNumber}?text=${encoded}`;
 
-    // Record order placed state
     setOrderPlacedData({
       items: [...cartItems],
       total: grandTotal,
@@ -178,11 +177,10 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
     setCart({});
     setIsCartOpen(false);
 
-    // Open WhatsApp
     window.open(waUrl, "_blank");
   };
 
-  // Direct table order placement (without WhatsApp)
+  // Direct table order placement
   const handlePlaceDirectOrder = () => {
     if (cartItems.length === 0) return;
 
@@ -194,17 +192,26 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
     });
     setCart({});
     setIsCartOpen(false);
-    showToast(`Order sent to kitchen for ${tableNumber}`);
+    showToast(`Order placed for ${tableNumber}`);
   };
 
   return (
-    <div style={{ backgroundColor: "#FAF8F5", minHeight: "100vh", paddingBottom: "130px", fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
-      {/* Top Sticky Bar */}
+    <div
+      style={{
+        backgroundColor: "#F9FAFB",
+        minHeight: "100vh",
+        paddingBottom: "110px",
+        fontFamily: "var(--font-family, system-ui, -apple-system, sans-serif)",
+      }}
+    >
+      {/* Top Minimalist Session Bar */}
       <div
         style={{
-          backgroundColor: "#13271F",
-          color: "#FFFFFF",
-          padding: "9px 16px",
+          backgroundColor: "rgba(255, 255, 255, 0.94)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          color: "var(--color-text-main, #111827)",
+          padding: "8px 16px",
           fontSize: "12px",
           display: "flex",
           justifyContent: "space-between",
@@ -212,100 +219,114 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
           position: "sticky",
           top: 0,
           zIndex: 60,
-          boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+          borderBottom: "1px solid #E5E7EB",
         }}
       >
         <button
           type="button"
           onClick={() => setIsEditingTable(true)}
           style={{
-            background: "none",
-            border: "none",
-            color: "#FFFFFF",
+            background: "#F3F4F6",
+            border: "1px solid #E5E7EB",
+            borderRadius: "var(--radius-full, 9999px)",
+            color: "var(--color-text-main, #111827)",
             fontSize: "12px",
-            display: "flex",
+            display: "inline-flex",
             alignItems: "center",
             gap: "6px",
             cursor: "pointer",
-            padding: 0,
+            padding: "4px 10px",
+            fontWeight: 600,
           }}
-          title="Click to change table number"
+          title="Click to change table"
         >
-          <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#34D399", display: "inline-block" }} />
-          <strong>{tableNumber}</strong>
-          <span style={{ fontSize: "11px", color: "#A7F3D0", display: "inline-flex", alignItems: "center", gap: "3px", textDecoration: "underline" }}>
-            <span>Edit</span>
-            <EditIcon size={10} color="#A7F3D0" />
-          </span>
+          <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#10B981", display: "inline-block" }} />
+          <span>{tableNumber}</span>
+          <span style={{ fontSize: "11px", color: "#6B7280", fontWeight: 400 }}>· Change</span>
         </button>
+
         <Link
-          href="https://orupos.in"
+          href="/"
           target="_blank"
-          style={{ color: "#E5A93C", textDecoration: "none", fontWeight: 700, fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "4px" }}
+          style={{
+            color: "#6B7280",
+            textDecoration: "none",
+            fontWeight: 500,
+            fontSize: "11.5px",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "4px",
+          }}
         >
-          <span>Powered by OruPos</span>
-          <ExternalLinkIcon size={10} color="#E5A93C" />
+          <span>OruPos</span>
+          <ExternalLinkIcon size={10} color="#9CA3AF" />
         </Link>
       </div>
 
-      <div style={{ maxWidth: "560px", margin: "0 auto", backgroundColor: "#FFFFFF", minHeight: "100vh", boxShadow: "0 0 35px rgba(0,0,0,0.05)" }}>
-        {/* Restaurant Header */}
+      <div
+        style={{
+          maxWidth: "540px",
+          margin: "0 auto",
+          backgroundColor: "#FFFFFF",
+          minHeight: "100vh",
+          borderLeft: "1px solid #F3F4F6",
+          borderRight: "1px solid #F3F4F6",
+        }}
+      >
+        {/* Restaurant Header: Clean Light Canvas */}
         <header
           style={{
-            background: "linear-gradient(180deg, #13271F 0%, #1E3A2F 100%)",
-            color: "#FFFFFF",
-            padding: "26px 22px 22px",
-            borderBottomLeftRadius: "24px",
-            borderBottomRightRadius: "24px",
+            backgroundColor: "#FFFFFF",
+            padding: "24px 20px 18px",
+            borderBottom: "1px solid #F3F4F6",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
-            <button
-              type="button"
-              onClick={() => setIsEditingTable(true)}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "8px" }}>
+            <h1
               style={{
-                background: "rgba(255, 255, 255, 0.15)",
-                backdropFilter: "blur(4px)",
-                padding: "5px 12px",
-                borderRadius: "20px",
-                fontSize: "13px",
+                fontSize: "22px",
                 fontWeight: 700,
-                color: "#FFFFFF",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                border: "1px solid rgba(255,255,255,0.25)",
-                cursor: "pointer",
+                color: "#111827",
+                letterSpacing: "-0.02em",
+                margin: 0,
               }}
             >
-              <span style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: "#4ADE80", display: "inline-block" }} />
-              <span>{tableNumber}</span>
-              <EditIcon size={11} color="#FFFFFF" />
-            </button>
-            <div style={{ fontSize: "12px", color: "#A7F3D0", display: "flex", alignItems: "center", gap: "6px", fontWeight: 600 }}>
-              <span style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: "#34D399", display: "inline-block" }} />
-              <span>Kitchen Open & Taking Orders</span>
-            </div>
+              {restaurant.name}
+            </h1>
+
+            <span
+              style={{
+                fontSize: "11px",
+                color: "#059669",
+                backgroundColor: "#ECFDF5",
+                padding: "3px 8px",
+                borderRadius: "var(--radius-full, 9999px)",
+                fontWeight: 600,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
+              <span style={{ width: "5px", height: "5px", borderRadius: "50%", backgroundColor: "#10B981" }} />
+              <span>Open</span>
+            </span>
           </div>
 
-          <h1 style={{ fontSize: "24px", fontWeight: 800, marginBottom: "4px", color: "#FFFFFF", letterSpacing: "-0.02em" }}>
-            {restaurant.name}
-          </h1>
-          <p style={{ fontSize: "13px", color: "#D1D5DB", marginBottom: "14px", lineHeight: 1.4 }}>
+          <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "14px", lineHeight: 1.5, margin: "0 0 14px" }}>
             {restaurant.tagline}
           </p>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", fontSize: "12px" }}>
-            <span style={{ background: "rgba(255,255,255,0.12)", padding: "5px 10px", borderRadius: "6px", display: "inline-flex", alignItems: "center", gap: "5px" }}>
-              <StarIcon size={13} color="#E5A93C" />
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", fontSize: "12px" }}>
+            <span style={{ background: "#F9FAFB", border: "1px solid #E5E7EB", padding: "4px 8px", borderRadius: "6px", display: "inline-flex", alignItems: "center", gap: "4px", color: "#374151" }}>
+              <StarIcon size={12} color="#D97706" />
               <span>{restaurant.rating}</span>
             </span>
-            <span style={{ background: "rgba(255,255,255,0.12)", padding: "5px 10px", borderRadius: "6px", display: "inline-flex", alignItems: "center", gap: "5px" }}>
-              <ClockIcon size={13} color="#CBD5E1" />
+            <span style={{ background: "#F9FAFB", border: "1px solid #E5E7EB", padding: "4px 8px", borderRadius: "6px", display: "inline-flex", alignItems: "center", gap: "4px", color: "#374151" }}>
+              <ClockIcon size={12} color="#6B7280" />
               <span>{restaurant.prepTime}</span>
             </span>
-            <span style={{ background: "rgba(255,255,255,0.12)", padding: "5px 10px", borderRadius: "6px", display: "inline-flex", alignItems: "center", gap: "5px" }}>
-              <MapPinIcon size={13} color="#CBD5E1" />
+            <span style={{ background: "#F9FAFB", border: "1px solid #E5E7EB", padding: "4px 8px", borderRadius: "6px", display: "inline-flex", alignItems: "center", gap: "4px", color: "#374151" }}>
+              <MapPinIcon size={12} color="#6B7280" />
               <span>{restaurant.location}</span>
             </span>
           </div>
@@ -314,15 +335,15 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
         {/* Search & Veg Filter */}
         <div
           style={{
-            padding: "16px 20px 10px",
+            padding: "12px 20px 10px",
             backgroundColor: "#FFFFFF",
             position: "sticky",
             top: "37px",
             zIndex: 40,
-            borderBottom: "1px solid #E5E7EB",
+            borderBottom: "1px solid #F3F4F6",
           }}
         >
-          <div style={{ position: "relative", marginBottom: "12px" }}>
+          <div style={{ position: "relative", marginBottom: "10px" }}>
             <input
               type="text"
               placeholder="Search dishes (e.g. Paneer, Biryani, Coffee)..."
@@ -330,10 +351,10 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
                 width: "100%",
-                padding: "11px 16px",
-                border: "1px solid #D1D5DB",
-                borderRadius: "10px",
-                fontSize: "14px",
+                padding: "9px 14px",
+                border: "1px solid #E5E7EB",
+                borderRadius: "var(--radius-full, 9999px)",
+                fontSize: "13.5px",
                 backgroundColor: "#F9FAFB",
                 outline: "none",
               }}
@@ -348,21 +369,21 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
-                padding: "6px 14px",
-                borderRadius: "20px",
+                padding: "5px 12px",
+                borderRadius: "var(--radius-full, 9999px)",
                 fontSize: "12px",
-                fontWeight: 600,
-                border: vegOnly ? "1.5px solid #16A34A" : "1px solid #D1D5DB",
+                fontWeight: 500,
+                border: vegOnly ? "1px solid #10B981" : "1px solid #E5E7EB",
                 backgroundColor: vegOnly ? "#ECFDF5" : "#FFFFFF",
-                color: vegOnly ? "#065F46" : "#374151",
+                color: vegOnly ? "#065F46" : "#4B5563",
                 cursor: "pointer",
                 transition: "all 0.15s ease",
               }}
             >
-              <span className="food-symbol veg" style={{ width: "13px", height: "13px", borderWidth: "1px" }}>
-                <span className="inner-dot" style={{ width: "6px", height: "6px" }} />
+              <span className="food-symbol veg" style={{ width: "12px", height: "12px", borderWidth: "1.5px" }}>
+                <span className="inner-dot" style={{ width: "5px", height: "5px" }} />
               </span>
-              Pure Veg Only
+              <span>Pure Veg Only</span>
             </button>
 
             {searchQuery && (
@@ -370,7 +391,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                 type="button"
                 onClick={() => setSearchQuery("")}
                 style={{
-                  fontSize: "12px",
+                  fontSize: "11.5px",
                   color: "#6B7280",
                   background: "none",
                   border: "none",
@@ -389,43 +410,46 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
           style={{
             overflowX: "auto",
             whiteSpace: "nowrap",
-            padding: "10px 20px",
+            padding: "8px 20px",
             backgroundColor: "#FFFFFF",
-            borderBottom: "1px solid #E5E7EB",
+            borderBottom: "1px solid #F3F4F6",
             display: "flex",
-            gap: "8px",
+            gap: "6px",
           }}
           aria-label="Menu categories"
         >
-          {restaurant.categories.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              onClick={() => setActiveCategory(cat.id)}
-              style={{
-                padding: "6px 16px",
-                borderRadius: "20px",
-                fontSize: "13px",
-                fontWeight: 600,
-                backgroundColor: activeCategory === cat.id ? "#1E3A2F" : "#F3F4F6",
-                color: activeCategory === cat.id ? "#FFFFFF" : "#4B5563",
-                border: "none",
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-                transition: "all 0.15s ease",
-              }}
-            >
-              {cat.label}
-            </button>
-          ))}
+          {restaurant.categories.map((cat) => {
+            const isSelected = activeCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setActiveCategory(cat.id)}
+                style={{
+                  padding: "5px 14px",
+                  borderRadius: "var(--radius-full, 9999px)",
+                  fontSize: "12.5px",
+                  fontWeight: isSelected ? 600 : 500,
+                  backgroundColor: isSelected ? "#18181B" : "#F4F4F5",
+                  color: isSelected ? "#FFFFFF" : "#4B5563",
+                  border: "none",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                  transition: "all 0.15s ease",
+                }}
+              >
+                {cat.label}
+              </button>
+            );
+          })}
         </nav>
 
         {/* Menu Items List */}
-        <main style={{ padding: "16px 20px" }}>
+        <main style={{ padding: "8px 20px" }}>
           {filteredItems.length === 0 ? (
             <div style={{ textAlign: "center", padding: "48px 20px", color: "#6B7280" }}>
-              <p style={{ fontSize: "16px", fontWeight: 700 }}>No dishes found</p>
-              <p style={{ fontSize: "13px" }}>Try searching for a different dish name or reset the veg filter.</p>
+              <p style={{ fontSize: "15px", fontWeight: 600, color: "#111827" }}>No dishes found</p>
+              <p style={{ fontSize: "12.5px" }}>Try searching for a different dish name or reset filters.</p>
             </div>
           ) : (
             filteredItems.map((dish: MenuItem) => {
@@ -437,14 +461,14 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    gap: "16px",
-                    padding: "18px 0",
+                    gap: "14px",
+                    padding: "16px 0",
                     borderBottom: "1px solid #F3F4F6",
                     alignItems: "flex-start",
                   }}
                 >
                   <div style={{ flex: 1 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
                       <span className={`food-symbol ${dish.isVeg ? "veg" : "nonveg"}`}>
                         <span className="inner-dot" />
                       </span>
@@ -454,9 +478,8 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                             backgroundColor: "#FEF3C7",
                             color: "#92400E",
                             fontSize: "10px",
-                            fontWeight: 700,
-                            textTransform: "uppercase",
-                            padding: "2px 7px",
+                            fontWeight: 600,
+                            padding: "1px 6px",
                             borderRadius: "4px",
                           }}
                         >
@@ -464,10 +487,10 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                         </span>
                       )}
                     </div>
-                    <h3 style={{ fontSize: "15px", fontWeight: 700, color: "#111827", marginBottom: "4px" }}>
+                    <h3 style={{ fontSize: "14.5px", fontWeight: 650, color: "#111827", marginBottom: "3px" }}>
                       {dish.name}
                     </h3>
-                    <div style={{ fontSize: "15px", fontWeight: 800, color: "#1E3A2F", marginBottom: "6px" }}>
+                    <div style={{ fontSize: "14px", fontWeight: 650, color: "#111827", marginBottom: "4px" }}>
                       ₹{dish.price}
                     </div>
                     <p style={{ fontSize: "12px", color: "#6B7280", lineHeight: 1.5, margin: 0 }}>
@@ -476,17 +499,17 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                   </div>
 
                   {/* Right side: Dish image + Add / Quantity Button */}
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "96px", flexShrink: 0 }}>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "88px", flexShrink: 0 }}>
                     {dish.image ? (
                       <div
                         style={{
-                          width: "90px",
-                          height: "90px",
-                          borderRadius: "12px",
+                          width: "84px",
+                          height: "84px",
+                          borderRadius: "10px",
                           overflow: "hidden",
                           position: "relative",
                           backgroundColor: "#F3F4F6",
-                          boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
+                          border: "1px solid #E5E7EB",
                           marginBottom: "8px",
                         }}
                       >
@@ -494,12 +517,12 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                           src={dish.image}
                           alt={dish.name}
                           fill
-                          sizes="90px"
+                          sizes="84px"
                           style={{ objectFit: "cover" }}
                         />
                       </div>
                     ) : (
-                      <div style={{ height: "14px" }} />
+                      <div style={{ height: "8px" }} />
                     )}
 
                     {/* Quantity Selector / Add button */}
@@ -508,9 +531,8 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                         style={{
                           display: "inline-flex",
                           alignItems: "center",
-                          backgroundColor: "#1E3A2F",
-                          borderRadius: "8px",
-                          boxShadow: "0 2px 8px rgba(30, 58, 47, 0.25)",
+                          backgroundColor: "#18181B",
+                          borderRadius: "var(--radius-full, 9999px)",
                           overflow: "hidden",
                         }}
                       >
@@ -521,10 +543,10 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                             backgroundColor: "transparent",
                             color: "#FFFFFF",
                             border: "none",
-                            width: "28px",
-                            height: "30px",
-                            fontSize: "15px",
-                            fontWeight: 700,
+                            width: "26px",
+                            height: "28px",
+                            fontSize: "14px",
+                            fontWeight: 600,
                             cursor: "pointer",
                             display: "flex",
                             alignItems: "center",
@@ -537,9 +559,9 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                         <span
                           style={{
                             color: "#FFFFFF",
-                            fontSize: "13px",
-                            fontWeight: 700,
-                            minWidth: "20px",
+                            fontSize: "12px",
+                            fontWeight: 600,
+                            minWidth: "18px",
                             textAlign: "center",
                           }}
                         >
@@ -552,10 +574,10 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                             backgroundColor: "transparent",
                             color: "#FFFFFF",
                             border: "none",
-                            width: "28px",
-                            height: "30px",
-                            fontSize: "15px",
-                            fontWeight: 700,
+                            width: "26px",
+                            height: "28px",
+                            fontSize: "14px",
+                            fontWeight: 600,
                             cursor: "pointer",
                             display: "flex",
                             alignItems: "center",
@@ -572,22 +594,22 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                         onClick={() => handleAddItem(dish)}
                         style={{
                           backgroundColor: "#FFFFFF",
-                          color: "#1E3A2F",
-                          border: "1.5px solid #1E3A2F",
-                          borderRadius: "8px",
-                          padding: "6px 18px",
-                          fontSize: "12px",
-                          fontWeight: 700,
+                          color: "#111827",
+                          border: "1px solid #D1D5DB",
+                          borderRadius: "var(--radius-full, 9999px)",
+                          padding: "5px 16px",
+                          fontSize: "11.5px",
+                          fontWeight: 600,
                           cursor: "pointer",
                           transition: "all 0.15s ease",
-                          boxShadow: "0 2px 5px rgba(0,0,0,0.06)",
+                          boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
                           display: "inline-flex",
                           alignItems: "center",
-                          gap: "4px",
+                          gap: "3px",
                         }}
                       >
                         <span>ADD</span>
-                        <span style={{ fontSize: "14px", lineHeight: 1 }}>+</span>
+                        <span style={{ fontSize: "13px", lineHeight: 1 }}>+</span>
                       </button>
                     )}
                   </div>
@@ -602,18 +624,17 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
           style={{
             textAlign: "center",
             padding: "24px 20px 16px",
-            borderTop: "1px dashed #E5E7EB",
-            fontSize: "12px",
-            color: "#6B7280",
+            borderTop: "1px solid #F3F4F6",
+            fontSize: "11.5px",
+            color: "#9CA3AF",
           }}
         >
-          <p style={{ marginBottom: "6px" }}>
+          <p style={{ marginBottom: "4px" }}>
             Want a live table ordering digital menu for your restaurant?
           </p>
           <Link
-            href="https://orupos.in"
-            target="_blank"
-            style={{ color: "#1E3A2F", fontWeight: 700, textDecoration: "underline" }}
+            href="/"
+            style={{ color: "#111827", fontWeight: 600, textDecoration: "underline" }}
           >
             Get OruPos for ₹199 per table
           </Link>
@@ -626,16 +647,18 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
             bottom: 0,
             left: 0,
             right: 0,
-            backgroundColor: "#FFFFFF",
+            backgroundColor: "rgba(255, 255, 255, 0.94)",
+            backdropFilter: "blur(14px)",
+            WebkitBackdropFilter: "blur(14px)",
             borderTop: "1px solid #E5E7EB",
-            padding: "10px 16px",
+            padding: "8px 16px",
             zIndex: 50,
-            boxShadow: "0 -4px 20px rgba(0,0,0,0.12)",
+            boxShadow: "0 -2px 10px rgba(0,0,0,0.05)",
           }}
         >
           <div
             style={{
-              maxWidth: "560px",
+              maxWidth: "540px",
               margin: "0 auto",
             }}
           >
@@ -646,20 +669,19 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  backgroundColor: "#1E3A2F",
-                  borderRadius: "14px",
-                  padding: "10px 16px",
+                  backgroundColor: "#18181B",
+                  borderRadius: "var(--radius-full, 9999px)",
+                  padding: "8px 16px",
                   color: "#FFFFFF",
-                  boxShadow: "0 4px 15px rgba(30, 58, 47, 0.3)",
                 }}
               >
                 <div>
-                  <div style={{ fontSize: "11px", color: "#A7F3D0", textTransform: "uppercase", fontWeight: 700 }}>
-                    {tableNumber} • {totalItemsCount} {totalItemsCount === 1 ? "Item" : "Items"}
+                  <div style={{ fontSize: "10.5px", color: "#9CA3AF", textTransform: "uppercase", fontWeight: 600 }}>
+                    {tableNumber} · {totalItemsCount} {totalItemsCount === 1 ? "Item" : "Items"}
                   </div>
-                  <div style={{ fontSize: "18px", fontWeight: 800 }}>
+                  <div style={{ fontSize: "16px", fontWeight: 700 }}>
                     ₹{cartSubtotal}
-                    <span style={{ fontSize: "11px", fontWeight: 500, color: "#CBD5E1", marginLeft: "4px" }}>
+                    <span style={{ fontSize: "11px", fontWeight: 400, color: "#9CA3AF", marginLeft: "4px" }}>
                       + GST
                     </span>
                   </div>
@@ -669,22 +691,21 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                   type="button"
                   onClick={() => setIsCartOpen(true)}
                   style={{
-                    backgroundColor: "#E5A93C",
-                    color: "#13271F",
+                    backgroundColor: "#FFFFFF",
+                    color: "#111827",
                     border: "none",
-                    borderRadius: "10px",
-                    padding: "9px 18px",
-                    fontSize: "14px",
-                    fontWeight: 700,
+                    borderRadius: "var(--radius-full, 9999px)",
+                    padding: "8px 16px",
+                    fontSize: "13px",
+                    fontWeight: 600,
                     cursor: "pointer",
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "6px",
-                    boxShadow: "0 2px 8px rgba(229, 169, 60, 0.4)",
                   }}
                 >
                   <span>View Order</span>
-                  <span style={{ fontSize: "16px" }}>→</span>
+                  <span style={{ fontSize: "14px" }}>→</span>
                 </button>
               </div>
             ) : (
@@ -697,70 +718,70 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                 }}
               >
                 <div>
-                  <div style={{ fontSize: "11px", color: "#6B7280", fontWeight: 600, textTransform: "uppercase" }}>
-                    Active Session
+                  <div style={{ fontSize: "10.5px", color: "#9CA3AF", fontWeight: 500 }}>
+                    Current Table
                   </div>
                   <button
                     type="button"
                     onClick={() => setIsEditingTable(true)}
                     style={{
-                      fontSize: "15px",
-                      fontWeight: 800,
-                      color: "#1E3A2F",
+                      fontSize: "14px",
+                      fontWeight: 650,
+                      color: "#111827",
                       background: "none",
                       border: "none",
                       padding: 0,
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
-                      gap: "5px",
+                      gap: "4px",
                     }}
                   >
                     <span>{tableNumber}</span>
-                    <EditIcon size={12} color="#6B7280" />
+                    <EditIcon size={11} color="#9CA3AF" />
                   </button>
                 </div>
 
                 <div style={{ display: "flex", gap: "8px" }}>
                   <button
                     type="button"
-                    onClick={() => showToast(`Staff notified for ${tableNumber}. Team on the way.`)}
+                    onClick={() => showToast(`Staff notified for ${tableNumber}.`)}
                     style={{
-                      backgroundColor: "#F3F4F6",
+                      backgroundColor: "#FFFFFF",
                       color: "#374151",
                       border: "1px solid #D1D5DB",
-                      padding: "8px 12px",
-                      borderRadius: "8px",
+                      padding: "6px 12px",
+                      borderRadius: "var(--radius-full, 9999px)",
                       fontSize: "12px",
-                      fontWeight: 600,
+                      fontWeight: 500,
                       cursor: "pointer",
                       display: "inline-flex",
                       alignItems: "center",
-                      gap: "6px",
+                      gap: "5px",
                     }}
                   >
-                    <BellIcon size={14} color="#374151" />
+                    <BellIcon size={13} color="#4B5563" />
                     <span>Call Staff</span>
                   </button>
 
                   <button
                     type="button"
-                    onClick={() => showToast(`Bill requested for ${tableNumber}. Cashier notified.`)}
+                    onClick={() => showToast(`Bill requested for ${tableNumber}.`)}
                     style={{
-                      backgroundColor: "#1E3A2F",
+                      backgroundColor: "#18181B",
                       color: "#FFFFFF",
                       border: "none",
-                      padding: "8px 14px",
-                      borderRadius: "8px",
+                      padding: "6px 14px",
+                      borderRadius: "var(--radius-full, 9999px)",
                       fontSize: "12px",
                       fontWeight: 600,
                       cursor: "pointer",
                       display: "inline-flex",
                       alignItems: "center",
-                      gap: "6px",
+                      gap: "5px",
                     }}
                   >
-                    <ReceiptIcon size={14} color="#FFFFFF" />
+                    <ReceiptIcon size={13} color="#FFFFFF" />
                     <span>Get Bill</span>
                   </button>
                 </div>
@@ -779,8 +800,9 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            backgroundColor: "rgba(17, 24, 39, 0.5)",
             backdropFilter: "blur(4px)",
+            WebkitBackdropFilter: "blur(4px)",
             zIndex: 120,
             display: "flex",
             flexDirection: "column",
@@ -791,15 +813,15 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
           <div
             style={{
               backgroundColor: "#FFFFFF",
-              borderTopLeftRadius: "24px",
-              borderTopRightRadius: "24px",
-              maxWidth: "560px",
+              borderTopLeftRadius: "20px",
+              borderTopRightRadius: "20px",
+              maxWidth: "540px",
               width: "100%",
               margin: "0 auto",
               maxHeight: "85vh",
               display: "flex",
               flexDirection: "column",
-              boxShadow: "0 -10px 40px rgba(0,0,0,0.25)",
+              boxShadow: "0 -8px 30px rgba(0,0,0,0.12)",
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -807,18 +829,18 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
             <div
               style={{
                 padding: "16px 20px",
-                borderBottom: "1px solid #E5E7EB",
+                borderBottom: "1px solid #F3F4F6",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
             >
               <div>
-                <h2 style={{ fontSize: "17px", fontWeight: 800, color: "#1E3A2F", margin: 0 }}>
-                  Table Order Details
+                <h2 style={{ fontSize: "16px", fontWeight: 650, color: "#111827", margin: 0 }}>
+                  Order Summary
                 </h2>
                 <div style={{ fontSize: "12px", color: "#6B7280" }}>
-                  Serving {tableNumber} • {restaurant.name}
+                  {tableNumber} · {restaurant.name}
                 </div>
               </div>
               <button
@@ -828,8 +850,8 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                   background: "#F3F4F6",
                   border: "none",
                   borderRadius: "50%",
-                  width: "32px",
-                  height: "32px",
+                  width: "28px",
+                  height: "28px",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
@@ -837,13 +859,13 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                 }}
                 aria-label="Close order details"
               >
-                <CloseIcon size={14} color="#4B5563" />
+                <CloseIcon size={13} color="#4B5563" />
               </button>
             </div>
 
             {/* Itemized Order List */}
             <div style={{ padding: "16px 20px", overflowY: "auto", flex: 1 }}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "16px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "16px" }}>
                 {cartItems.map(({ item, quantity }) => (
                   <div
                     key={item.id}
@@ -851,16 +873,16 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      paddingBottom: "12px",
-                      borderBottom: "1px dashed #E5E7EB",
+                      paddingBottom: "10px",
+                      borderBottom: "1px solid #F3F4F6",
                     }}
                   >
-                    <div style={{ flex: 1, paddingRight: "12px" }}>
+                    <div style={{ flex: 1, paddingRight: "10px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                         <span className={`food-symbol ${item.isVeg ? "veg" : "nonveg"}`}>
                           <span className="inner-dot" />
                         </span>
-                        <span style={{ fontSize: "14px", fontWeight: 700, color: "#1F2937" }}>
+                        <span style={{ fontSize: "13.5px", fontWeight: 600, color: "#111827" }}>
                           {item.name}
                         </span>
                       </div>
@@ -874,10 +896,9 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
-                        backgroundColor: "#F3F4F6",
-                        borderRadius: "8px",
-                        border: "1px solid #D1D5DB",
-                        marginRight: "14px",
+                        backgroundColor: "#F4F4F5",
+                        borderRadius: "var(--radius-full, 9999px)",
+                        marginRight: "12px",
                       }}
                     >
                       <button
@@ -886,15 +907,15 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                         style={{
                           background: "none",
                           border: "none",
-                          width: "26px",
-                          height: "26px",
-                          fontWeight: 700,
+                          width: "24px",
+                          height: "24px",
+                          fontWeight: 600,
                           cursor: "pointer",
                         }}
                       >
                         -
                       </button>
-                      <span style={{ fontSize: "12px", fontWeight: 700, minWidth: "18px", textAlign: "center" }}>
+                      <span style={{ fontSize: "11.5px", fontWeight: 600, minWidth: "16px", textAlign: "center" }}>
                         {quantity}
                       </span>
                       <button
@@ -903,9 +924,9 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                         style={{
                           background: "none",
                           border: "none",
-                          width: "26px",
-                          height: "26px",
-                          fontWeight: 700,
+                          width: "24px",
+                          height: "24px",
+                          fontWeight: 600,
                           cursor: "pointer",
                         }}
                       >
@@ -913,7 +934,7 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                       </button>
                     </div>
 
-                    <div style={{ fontSize: "14px", fontWeight: 800, color: "#1E3A2F", minWidth: "55px", textAlign: "right" }}>
+                    <div style={{ fontSize: "13.5px", fontWeight: 650, color: "#111827", minWidth: "50px", textAlign: "right" }}>
                       ₹{item.price * quantity}
                     </div>
                   </div>
@@ -921,21 +942,21 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
               </div>
 
               {/* Special Cooking Note */}
-              <div style={{ marginBottom: "18px" }}>
-                <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "#374151", marginBottom: "6px" }}>
-                  Special Cooking Instructions (Optional)
+              <div style={{ marginBottom: "16px" }}>
+                <label style={{ display: "block", fontSize: "12px", fontWeight: 600, color: "#374151", marginBottom: "5px" }}>
+                  Cooking Instructions (Optional)
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Less spicy, make extra crispy, no onions..."
+                  placeholder="e.g. Less spicy, no onion..."
                   value={cookingNote}
                   onChange={(e) => setCookingNote(e.target.value)}
                   style={{
                     width: "100%",
-                    padding: "9px 12px",
-                    border: "1px solid #D1D5DB",
-                    borderRadius: "8px",
-                    fontSize: "13px",
+                    padding: "8px 12px",
+                    border: "1px solid #E5E7EB",
+                    borderRadius: "var(--radius-sm, 8px)",
+                    fontSize: "12.5px",
                     backgroundColor: "#F9FAFB",
                     outline: "none",
                   }}
@@ -946,29 +967,29 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
               <div
                 style={{
                   backgroundColor: "#F9FAFB",
-                  borderRadius: "12px",
-                  padding: "14px 16px",
+                  borderRadius: "10px",
+                  padding: "12px 14px",
                   border: "1px solid #E5E7EB",
-                  fontSize: "13px",
+                  fontSize: "12.5px",
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px", color: "#4B5563" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px", color: "#4B5563" }}>
                   <span>Items Subtotal</span>
                   <span>₹{cartSubtotal}</span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px", color: "#4B5563" }}>
-                  <span>Restaurant GST (5%)</span>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px", color: "#4B5563" }}>
+                  <span>GST (5%)</span>
                   <span>₹{gstAmount}</span>
                 </div>
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    paddingTop: "8px",
+                    paddingTop: "6px",
                     borderTop: "1px solid #E5E7EB",
-                    fontSize: "16px",
-                    fontWeight: 800,
-                    color: "#1E3A2F",
+                    fontSize: "14.5px",
+                    fontWeight: 700,
+                    color: "#111827",
                   }}
                 >
                   <span>Grand Total</span>
@@ -980,48 +1001,45 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
             {/* Action Buttons in Drawer */}
             <div
               style={{
-                padding: "14px 20px 20px",
-                borderTop: "1px solid #E5E7EB",
+                padding: "12px 20px 20px",
+                borderTop: "1px solid #F3F4F6",
                 backgroundColor: "#FFFFFF",
                 display: "flex",
                 flexDirection: "column",
-                gap: "10px",
+                gap: "8px",
               }}
             >
-              {/* Primary Dispatch Action: WhatsApp to Kitchen */}
               <button
                 type="button"
                 onClick={handleSendWhatsAppOrder}
                 style={{
-                  backgroundColor: "#25D366",
+                  backgroundColor: "#059669",
                   color: "#FFFFFF",
                   border: "none",
-                  borderRadius: "12px",
-                  padding: "13px 20px",
-                  fontSize: "14px",
-                  fontWeight: 700,
+                  borderRadius: "var(--radius-full, 9999px)",
+                  padding: "11px 20px",
+                  fontSize: "13.5px",
+                  fontWeight: 600,
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "8px",
-                  boxShadow: "0 4px 14px rgba(37, 211, 102, 0.35)",
+                  gap: "7px",
                 }}
               >
-                <WhatsAppIcon size={18} color="#FFFFFF" />
-                <span>Send Order to Kitchen via WhatsApp</span>
+                <WhatsAppIcon size={16} color="#FFFFFF" />
+                <span>Send Order via WhatsApp</span>
               </button>
 
-              {/* Secondary: Direct Table Dispatch */}
               <button
                 type="button"
                 onClick={handlePlaceDirectOrder}
                 style={{
-                  backgroundColor: "#1E3A2F",
+                  backgroundColor: "#18181B",
                   color: "#FFFFFF",
                   border: "none",
-                  borderRadius: "12px",
-                  padding: "12px 20px",
+                  borderRadius: "var(--radius-full, 9999px)",
+                  padding: "11px 20px",
                   fontSize: "13px",
                   fontWeight: 600,
                   cursor: "pointer",
@@ -1031,8 +1049,8 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                   gap: "6px",
                 }}
               >
-                <OrderIcon size={15} color="#FFFFFF" />
-                <span>Place Direct Table Order</span>
+                <OrderIcon size={14} color="#FFFFFF" />
+                <span>Place Table Order</span>
               </button>
             </div>
           </div>
@@ -1048,12 +1066,12 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: "rgba(0,0,0,0.5)",
+            backgroundColor: "rgba(17, 24, 39, 0.5)",
             zIndex: 130,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "20px",
+            padding: "16px",
           }}
           onClick={() => setIsEditingTable(false)}
         >
@@ -1061,21 +1079,22 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
             style={{
               backgroundColor: "#FFFFFF",
               borderRadius: "16px",
-              maxWidth: "360px",
+              maxWidth: "340px",
               width: "100%",
-              padding: "22px 20px",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+              padding: "20px",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+              border: "1px solid #E5E7EB",
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 style={{ fontSize: "16px", fontWeight: 800, color: "#1E3A2F", marginBottom: "8px" }}>
-              Select or Enter Table Number
+            <h3 style={{ fontSize: "15px", fontWeight: 650, color: "#111827", marginBottom: "6px" }}>
+              Select Table Number
             </h3>
             <p style={{ fontSize: "12px", color: "#6B7280", marginBottom: "14px" }}>
-              Orders and service requests will be delivered directly to this table.
+              Dishes and bill requests are mapped to this table.
             </p>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", marginBottom: "16px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "6px", marginBottom: "14px" }}>
               {Array.from({ length: 8 }, (_, i) => {
                 const num = String(i + 1).padStart(2, "0");
                 const isSelected = tempTableInput === num;
@@ -1086,13 +1105,13 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                     type="button"
                     onClick={() => setTempTableInput(num)}
                     style={{
-                      padding: "8px 0",
-                      borderRadius: "8px",
-                      border: isSelected ? "2px solid #1E3A2F" : "1px solid #D1D5DB",
-                      backgroundColor: isSelected ? "#ECFDF5" : "#FFFFFF",
-                      color: isSelected ? "#065F46" : "#374151",
+                      padding: "7px 0",
+                      borderRadius: "6px",
+                      border: isSelected ? "1.5px solid #18181B" : "1px solid #E5E7EB",
+                      backgroundColor: isSelected ? "#F4F4F5" : "#FFFFFF",
+                      color: isSelected ? "#111827" : "#4B5563",
                       fontSize: "12px",
-                      fontWeight: 700,
+                      fontWeight: isSelected ? 650 : 500,
                       cursor: "pointer",
                     }}
                   >
@@ -1102,21 +1121,21 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
               })}
             </div>
 
-            <div style={{ marginBottom: "16px" }}>
-              <label style={{ fontSize: "11px", fontWeight: 700, color: "#4B5563", display: "block", marginBottom: "4px" }}>
-                Or Custom Table / Room / Booth:
+            <div style={{ marginBottom: "14px" }}>
+              <label style={{ fontSize: "11px", fontWeight: 600, color: "#4B5563", display: "block", marginBottom: "4px" }}>
+                Or Custom Table / Room:
               </label>
               <input
                 type="text"
                 value={tempTableInput}
                 onChange={(e) => setTempTableInput(e.target.value)}
-                placeholder="e.g. 04, VIP 2, Terrace"
+                placeholder="e.g. 04, VIP 2, Balcony"
                 style={{
                   width: "100%",
-                  padding: "9px 12px",
-                  borderRadius: "8px",
-                  border: "1px solid #D1D5DB",
-                  fontSize: "14px",
+                  padding: "8px 10px",
+                  borderRadius: "6px",
+                  border: "1px solid #E5E7EB",
+                  fontSize: "13px",
                   outline: "none",
                 }}
               />
@@ -1128,13 +1147,13 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                 onClick={() => setIsEditingTable(false)}
                 style={{
                   flex: 1,
-                  padding: "9px 0",
-                  borderRadius: "8px",
-                  border: "1px solid #D1D5DB",
+                  padding: "8px 0",
+                  borderRadius: "var(--radius-full, 9999px)",
+                  border: "1px solid #E5E7EB",
                   backgroundColor: "#FFFFFF",
                   color: "#4B5563",
-                  fontSize: "13px",
-                  fontWeight: 600,
+                  fontSize: "12.5px",
+                  fontWeight: 500,
                   cursor: "pointer",
                 }}
               >
@@ -1145,13 +1164,13 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
                 onClick={handleSaveTable}
                 style={{
                   flex: 1,
-                  padding: "9px 0",
-                  borderRadius: "8px",
+                  padding: "8px 0",
+                  borderRadius: "var(--radius-full, 9999px)",
                   border: "none",
-                  backgroundColor: "#1E3A2F",
+                  backgroundColor: "#18181B",
                   color: "#FFFFFF",
-                  fontSize: "13px",
-                  fontWeight: 700,
+                  fontSize: "12.5px",
+                  fontWeight: 600,
                   cursor: "pointer",
                 }}
               >
@@ -1171,73 +1190,71 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: "rgba(0,0,0,0.65)",
+            backgroundColor: "rgba(17, 24, 39, 0.6)",
             backdropFilter: "blur(4px)",
+            WebkitBackdropFilter: "blur(4px)",
             zIndex: 140,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "20px",
+            padding: "16px",
           }}
           onClick={() => setOrderPlacedData(null)}
         >
           <div
             style={{
               backgroundColor: "#FFFFFF",
-              borderRadius: "20px",
-              maxWidth: "420px",
+              borderRadius: "16px",
+              maxWidth: "380px",
               width: "100%",
-              padding: "28px 24px",
+              padding: "24px 20px",
               textAlign: "center",
-              boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
+              boxShadow: "0 10px 40px rgba(0,0,0,0.2)",
+              border: "1px solid #E5E7EB",
             }}
             onClick={(e) => e.stopPropagation()}
           >
             <div
               style={{
-                width: "56px",
-                height: "56px",
+                width: "48px",
+                height: "48px",
                 borderRadius: "50%",
                 backgroundColor: "#ECFDF5",
-                color: "#16A34A",
+                color: "#059669",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                marginBottom: "14px",
-                border: "2px solid #BBF7D0",
+                marginBottom: "12px",
               }}
             >
-              <CheckIcon size={26} color="#16A34A" strokeWidth={3} />
+              <CheckIcon size={22} color="#059669" strokeWidth={2.5} />
             </div>
 
-            <h3 style={{ fontSize: "19px", fontWeight: 800, color: "#1E3A2F", marginBottom: "6px" }}>
-              Order Received at Kitchen
+            <h3 style={{ fontSize: "17px", fontWeight: 650, color: "#111827", marginBottom: "4px" }}>
+              Order Received
             </h3>
-            <p style={{ fontSize: "13px", color: "#6B7280", marginBottom: "18px" }}>
-              Serving to <strong>{orderPlacedData.table}</strong> • Approx 15-20 Mins
+            <p style={{ fontSize: "12.5px", color: "#6B7280", marginBottom: "16px" }}>
+              Serving to <strong>{orderPlacedData.table}</strong> · Approx 15-20 mins
             </p>
 
             <div
               style={{
-                backgroundColor: "#FAF8F5",
-                borderRadius: "12px",
-                padding: "12px 16px",
-                border: "1px solid #ECE7E1",
+                backgroundColor: "#F9FAFB",
+                borderRadius: "10px",
+                padding: "10px 14px",
+                border: "1px solid #E5E7EB",
                 textAlign: "left",
                 fontSize: "12px",
-                marginBottom: "20px",
+                marginBottom: "16px",
               }}
             >
-              <div style={{ fontWeight: 700, color: "#1E3A2F", marginBottom: "8px" }}>
-                Summary:
-              </div>
               {orderPlacedData.items.map((i) => (
                 <div key={i.item.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
                   <span>{i.quantity}x {i.item.name}</span>
-                  <span style={{ fontWeight: 700 }}>₹{i.item.price * i.quantity}</span>
+                  <span style={{ fontWeight: 600 }}>₹{i.item.price * i.quantity}</span>
                 </div>
               ))}
-              <div style={{ borderTop: "1px dashed #D1D5DB", marginTop: "8px", paddingTop: "8px", display: "flex", justifyContent: "space-between", fontWeight: 800, fontSize: "13px", color: "#1E3A2F" }}>
+              <div style={{ borderTop: "1px solid #E5E7EB", marginTop: "6px", paddingTop: "6px", display: "flex", justifyContent: "space-between", fontWeight: 700, fontSize: "13px", color: "#111827" }}>
                 <span>Total Amount</span>
                 <span>₹{orderPlacedData.total}</span>
               </div>
@@ -1248,17 +1265,17 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
               onClick={() => setOrderPlacedData(null)}
               style={{
                 width: "100%",
-                backgroundColor: "#1E3A2F",
+                backgroundColor: "#18181B",
                 color: "#FFFFFF",
                 border: "none",
-                borderRadius: "10px",
-                padding: "12px 20px",
-                fontSize: "14px",
-                fontWeight: 700,
+                borderRadius: "var(--radius-full, 9999px)",
+                padding: "10px 20px",
+                fontSize: "13px",
+                fontWeight: 600,
                 cursor: "pointer",
               }}
             >
-              Done / Back to Menu
+              Done / Return to Menu
             </button>
           </div>
         </div>
@@ -1269,17 +1286,17 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
         <div
           style={{
             position: "fixed",
-            top: "52px",
+            top: "48px",
             left: "50%",
             transform: "translateX(-50%)",
-            backgroundColor: "#111827",
+            backgroundColor: "#18181B",
             color: "#FFFFFF",
-            padding: "9px 20px",
-            borderRadius: "30px",
+            padding: "7px 16px",
+            borderRadius: "var(--radius-full, 9999px)",
             fontSize: "12px",
-            fontWeight: 600,
+            fontWeight: 500,
             zIndex: 100,
-            boxShadow: "0 10px 25px rgba(0,0,0,0.3)",
+            boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
           }}
         >
           {toastMessage}

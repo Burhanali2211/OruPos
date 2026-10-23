@@ -8,39 +8,40 @@ export default function FaqSection() {
 
   const faqs = [
     {
-      q: "Do customers need to download an app or register?",
-      a: "No. Customers scan the QR stand with their regular phone camera (iPhone or Android), Google Lens, Paytm, PhonePe, or WhatsApp. The menu opens immediately in their mobile browser in under 1 second without any app or login.",
+      q: "Do customers need an app to scan?",
+      a: "No. Guests simply scan with their phone camera, Google Lens, or Paytm. The menu opens immediately in their mobile browser in under a second.",
     },
     {
-      q: "Does every table get an individual QR code?",
-      a: "Yes. Every single dining table gets its own physical stand with its specific table number clearly printed (e.g. Table 01, Table 02, Table 03). The QR code is tied directly to that table number.",
+      q: "Does each table get its own number and QR code?",
+      a: "Yes. Every stand has your restaurant name and table number printed clearly on both sides (e.g. Table 01, Table 02), with a dedicated QR code for each table.",
     },
     {
-      q: "What does the ₹199 per table price include?",
-      a: "Everything is included: the 3mm optical cast acrylic stand, dual-sided table number, unique high-contrast QR code, mobile digital menu website, custom restaurant branding, and 100% complete menu digitization done by our team.",
+      q: "What is included in the ₹199 price?",
+      a: "The acrylic stand, custom printing with your logo and table numbers, complete digital menu setup by our team, and lifetime hosting.",
     },
     {
-      q: "Can I update dish prices or items later without reprinting stands?",
-      a: "Yes. Whenever item prices change or a seasonal dish is added, your digital menu updates online in seconds. You never have to reprint the physical acrylic table stands or waste money reprinting paper booklets.",
+      q: "Can I change dish prices or add items later?",
+      a: "Yes. Just message us on WhatsApp whenever you want to update prices or add dishes. We update your online menu immediately without any reprint needed.",
     },
     {
-      q: "How does the ordering and delivery process work?",
-      a: "It takes under 3 minutes: Click 'Order Stands', select your number of tables, enter your restaurant details, and share photos of your current paper menu card on WhatsApp. Our team formats your dishes and ships your stands within 48 hours.",
-    },
-    {
-      q: "Can I have my own custom subdomain like myrestaurant.orupos.in?",
-      a: "Yes! Every restaurant gets its own dedicated address (e.g. yourrestaurant.orupos.in), so diners can bookmark or access your menu directly anytime.",
+      q: "How fast is delivery?",
+      a: "We print and dispatch within 48 hours. Doorstep delivery takes 3 to 5 business days across India.",
     },
   ];
 
   return (
-    <section className="section section-subtle" id="faq">
+    <section className="section section-white" id="faq">
       <div className="container container-narrow">
         <div className="section-header">
-          <span className="section-kicker">Frequent Questions</span>
-          <h2 className="section-title">Questions & answers.</h2>
+          <div className="section-kicker-pill">
+            <div className="kicker-dot" />
+            <span className="kicker-text">FAQ</span>
+          </div>
+          <h2 className="section-title">
+            Frequently asked questions.
+          </h2>
           <p className="section-desc">
-            Everything you need to know about OruPos table stands, digital menus, and pan-India delivery.
+            Simple answers to common questions about OruPos table stands and digital menus.
           </p>
         </div>
 
@@ -51,7 +52,7 @@ export default function FaqSection() {
               <div
                 key={idx}
                 style={{
-                  borderTop: "1px solid var(--color-border)",
+                  borderTop: "1px solid var(--border-subtle)",
                   padding: "20px 0",
                 }}
               >
@@ -64,9 +65,9 @@ export default function FaqSection() {
                     textAlign: "left",
                     background: "none",
                     border: "none",
-                    fontSize: "1.125rem",
+                    fontSize: "1.05rem",
                     fontWeight: 700,
-                    color: "var(--color-text-main)",
+                    color: "var(--zinc-950)",
                     cursor: "pointer",
                     display: "flex",
                     justifyContent: "space-between",
@@ -76,23 +77,37 @@ export default function FaqSection() {
                   }}
                 >
                   <span>{faq.q}</span>
-                  <ChevronDown
-                    size={18}
-                    color="#767676"
+                  <div
                     style={{
-                      transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                      transition: "transform 0.15s ease",
+                      width: "28px",
+                      height: "28px",
+                      borderRadius: "50%",
+                      backgroundColor: isOpen ? "var(--zinc-950)" : "var(--zinc-100)",
+                      color: isOpen ? "#FFFFFF" : "var(--zinc-500)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transition: "all 0.2s ease",
                       flexShrink: 0,
                     }}
-                  />
+                  >
+                    <ChevronDown
+                      size={14}
+                      style={{
+                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                        transition: "transform 0.2s ease",
+                      }}
+                    />
+                  </div>
                 </button>
                 {isOpen && (
                   <div
                     style={{
                       paddingTop: "12px",
-                      fontSize: "0.9375rem",
-                      color: "var(--color-text-muted)",
+                      fontSize: "0.95rem",
+                      color: "var(--zinc-500)",
                       lineHeight: 1.6,
+                      fontWeight: 500,
                     }}
                   >
                     {faq.a}

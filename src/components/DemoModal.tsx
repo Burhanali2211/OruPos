@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
+import { X, ExternalLink } from "lucide-react";
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -27,12 +28,14 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.85)",
+        backgroundColor: "rgba(17, 24, 39, 0.6)",
+        backdropFilter: "blur(6px)",
+        WebkitBackdropFilter: "blur(6px)",
         zIndex: 1000,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "20px",
+        padding: "16px",
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -42,31 +45,45 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
         style={{
           width: "440px",
           height: "90vh",
-          maxHeight: "750px",
+          maxHeight: "760px",
           backgroundColor: "#FFFFFF",
-          borderRadius: "24px",
+          borderRadius: "var(--radius-xl)",
           overflow: "hidden",
-          boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)",
+          boxShadow: "var(--shadow-modal)",
           position: "relative",
           display: "flex",
           flexDirection: "column",
+          border: "1px solid var(--color-border)",
         }}
       >
         <div
           style={{
-            backgroundColor: "#1E3A2F",
-            color: "#FFFFFF",
+            backgroundColor: "#FFFFFF",
+            color: "var(--color-text-main)",
             padding: "12px 18px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             fontSize: "13px",
+            borderBottom: "1px solid var(--color-border)",
           }}
         >
-          <span style={{ fontWeight: 600 }}>Live Customer Menu Preview</span>
+          <span style={{ fontWeight: 600 }}>Live Menu Preview</span>
           <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-            <Link href="/demo" target="_blank" style={{ color: "#E5A93C", textDecoration: "underline", fontWeight: 600 }}>
-              Open Fullscreen
+            <Link
+              href="/demo"
+              target="_blank"
+              style={{
+                color: "var(--color-text-muted)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+                fontSize: "12px",
+                fontWeight: 500,
+              }}
+            >
+              <span>Fullscreen</span>
+              <ExternalLink size={12} />
             </Link>
             <button
               type="button"
@@ -75,13 +92,15 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               style={{
                 background: "none",
                 border: "none",
-                color: "#FFFFFF",
-                fontSize: "20px",
+                color: "var(--color-text-muted)",
                 cursor: "pointer",
-                padding: "0 4px",
+                padding: "2px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              &times;
+              <X size={16} />
             </button>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 interface CardDesignsGalleryProps {
   onOpenOrder: () => void;
@@ -13,57 +13,74 @@ export default function CardDesignsGallery({ onOpenOrder }: CardDesignsGalleryPr
 
   const themes = {
     classic: {
-      name: "Signature Dining",
-      concept: "Spice Route Kitchen & Bar",
-      styleNote: "Bold typography, circular monogram emblem, high-contrast table number pill.",
+      name: "Classic",
       image: "/assets/card-designs-classic.png",
-      alt: "Spice Route restaurant table QR card designs in Charcoal, Forest, Ivory, Teal, Terracotta, and Saffron",
+      alt: "Restaurant table QR card designs in six colors",
     },
     cafe: {
-      name: "Modern Cafe & Bakery",
-      concept: "Bean & Bun Artisan Cafe",
-      styleNote: "Casual layout, action pills (Menu • Order • Pay), circular table number badge.",
+      name: "Cafe",
       image: "/assets/card-designs-cafe.png",
-      alt: "Bean & Bun cafe table QR card designs in Charcoal, Forest, Ivory, Terracotta, Teal, and Saffron",
+      alt: "Cafe table QR card designs in six colors",
     },
     bistro: {
-      name: "Heritage Bistro & Fine Dine",
-      concept: "Maison Alba Continental",
-      styleNote: "Double-line border framing, vintage serif typography, Roman numeral table styling.",
+      name: "Bistro",
       image: "/assets/card-designs-bistro.png",
-      alt: "Maison Alba bistro table QR card designs in Charcoal, Forest, Ivory, Teal, Terracotta, and Saffron",
+      alt: "Bistro table QR card designs in six colors",
     },
   };
 
   const currentTheme = themes[activeTab];
 
   const colorways = [
-    { name: "Forest Green", color: "#1E3A2F" },
-    { name: "Warm Saffron", color: "#E5A93C" },
-    { name: "Charcoal Black", color: "#1F1F1F" },
-    { name: "Warm Ivory", color: "#FAF6F0", border: "#D8D2C5" },
-    { name: "Terracotta Rust", color: "#A14324" },
-    { name: "Sage Teal", color: "#13534B" },
+    { name: "Forest", color: "#1E3A2F" },
+    { name: "Saffron", color: "#E5A93C" },
+    { name: "Charcoal", color: "#1F1F1F" },
+    { name: "Ivory", color: "#FAF6F0", border: "#D8D2C5" },
+    { name: "Terracotta", color: "#A14324" },
+    { name: "Teal", color: "#13534B" },
   ];
 
   return (
     <section className="section section-white" id="designs">
       <div className="container">
-        <div className="section-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "24px" }}>
+        <div
+          className="section-header"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            flexWrap: "wrap",
+            gap: "24px",
+          }}
+        >
           <div>
-            <span className="section-kicker">Card Styles & Colorways</span>
-            <h2 className="section-title">Three styles. Six colorways.</h2>
+            <div className="section-kicker-pill">
+              <div className="kicker-dot" />
+              <span className="kicker-text">STAND STYLES</span>
+            </div>
+            <h2 className="section-title">
+              Three clean styles. Six colors.
+            </h2>
             <p className="section-desc">
-              Custom-printed with your restaurant name, logo, table numbers, and high-contrast scannable QR.
+              Custom-printed with your restaurant name, logo, table numbers, and scannable QR.
             </p>
           </div>
 
-          {/* Minimalist Tabs */}
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+          {/* Segmented Pill Switcher */}
+          <div
+            style={{
+              display: "inline-flex",
+              backgroundColor: "var(--zinc-100)",
+              padding: "4px",
+              borderRadius: "9999px",
+              border: "1px solid var(--zinc-200)",
+              gap: "2px",
+            }}
+          >
             {[
-              { id: "classic", label: "Signature Dining" },
-              { id: "cafe", label: "Modern Cafe" },
-              { id: "bistro", label: "Heritage Bistro" },
+              { id: "classic", label: "Classic Dining" },
+              { id: "cafe", label: "Cafe & Bakery" },
+              { id: "bistro", label: "Bistro & Bar" },
             ].map((tab) => {
               const isSelected = activeTab === tab.id;
               return (
@@ -72,15 +89,18 @@ export default function CardDesignsGallery({ onOpenOrder }: CardDesignsGalleryPr
                   type="button"
                   onClick={() => setActiveTab(tab.id as "classic" | "cafe" | "bistro")}
                   style={{
-                    padding: "8px 16px",
-                    borderRadius: "var(--radius-sm)",
-                    border: isSelected ? "1px solid var(--color-primary)" : "1px solid var(--color-border)",
-                    backgroundColor: isSelected ? "var(--color-primary)" : "#FFFFFF",
-                    color: isSelected ? "#FFFFFF" : "var(--color-text-main)",
-                    fontSize: "13px",
-                    fontWeight: 600,
+                    padding: "8px 18px",
+                    borderRadius: "9999px",
+                    border: "none",
+                    backgroundColor: isSelected ? "#FFFFFF" : "transparent",
+                    color: isSelected ? "var(--zinc-950)" : "var(--zinc-500)",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.04em",
                     cursor: "pointer",
-                    transition: "all 0.15s ease",
+                    boxShadow: isSelected ? "0 2px 6px rgba(0,0,0,0.06)" : "none",
+                    transition: "all 0.2s ease",
                   }}
                 >
                   {tab.label}
@@ -90,27 +110,37 @@ export default function CardDesignsGallery({ onOpenOrder }: CardDesignsGalleryPr
           </div>
         </div>
 
-        {/* Minimal Image Container */}
+        {/* Display Frame */}
         <div
           style={{
-            border: "1px solid var(--color-border)",
-            borderRadius: "var(--radius-md)",
+            border: "1px solid var(--border-hairline)",
+            borderRadius: "clamp(20px, 3vw, 36px)",
             overflow: "hidden",
-            backgroundColor: "#FAF9F8",
+            backgroundColor: "var(--zinc-50)",
+            padding: "16px",
             marginBottom: "20px",
+            boxShadow: "var(--shadow-card)",
           }}
         >
-          <Image
-            src={currentTheme.image}
-            alt={currentTheme.alt}
-            width={1600}
-            height={360}
-            style={{ width: "100%", height: "auto", display: "block" }}
-            priority
-          />
+          <div
+            style={{
+              borderRadius: "clamp(16px, 2.5vw, 28px)",
+              overflow: "hidden",
+              backgroundColor: "#FFFFFF",
+            }}
+          >
+            <Image
+              src={currentTheme.image}
+              alt={currentTheme.alt}
+              width={1600}
+              height={360}
+              style={{ width: "100%", height: "auto", display: "block" }}
+              priority
+            />
+          </div>
         </div>
 
-        {/* Info & Colorway Strip */}
+        {/* Colorway & Checkout Strip */}
         <div
           style={{
             display: "flex",
@@ -118,25 +148,27 @@ export default function CardDesignsGallery({ onOpenOrder }: CardDesignsGalleryPr
             alignItems: "center",
             flexWrap: "wrap",
             gap: "16px",
-            fontSize: "13px",
-            color: "var(--color-text-muted)",
+            fontSize: "12.5px",
+            color: "var(--zinc-500)",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap" }}>
-            <span style={{ fontWeight: 600, color: "var(--color-text-main)" }}>Available Colorways:</span>
+            <span style={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--zinc-950)", fontSize: "11px" }}>
+              Colors:
+            </span>
             {colorways.map((c, idx) => (
               <span key={idx} style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
                 <span
                   style={{
-                    width: "12px",
-                    height: "12px",
+                    width: "11px",
+                    height: "11px",
                     borderRadius: "50%",
                     backgroundColor: c.color,
                     border: c.border ? `1px solid ${c.border}` : "none",
                     display: "inline-block",
                   }}
                 />
-                <span>{c.name}</span>
+                <span style={{ fontWeight: 500 }}>{c.name}</span>
               </span>
             ))}
           </div>
@@ -147,9 +179,11 @@ export default function CardDesignsGallery({ onOpenOrder }: CardDesignsGalleryPr
             style={{
               background: "none",
               border: "none",
-              color: "var(--color-primary)",
+              color: "var(--zinc-950)",
               fontWeight: 700,
-              fontSize: "13px",
+              fontSize: "12px",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
               cursor: "pointer",
               display: "inline-flex",
               alignItems: "center",
@@ -158,7 +192,7 @@ export default function CardDesignsGallery({ onOpenOrder }: CardDesignsGalleryPr
             }}
           >
             <span>Choose your style at checkout</span>
-            <ArrowRight size={14} />
+            <ArrowUpRight size={14} />
           </button>
         </div>
       </div>

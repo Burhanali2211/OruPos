@@ -7,6 +7,7 @@ import CardDesignsGallery from "@/components/CardDesignsGallery";
 import HowItWorks from "@/components/HowItWorks";
 import WhatYouGet from "@/components/WhatYouGet";
 import PricingCalculator from "@/components/PricingCalculator";
+import PricingComparison from "@/components/PricingComparison";
 import FaqSection from "@/components/FaqSection";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
@@ -30,9 +31,14 @@ export default function HomePage() {
 
   return (
     <>
+      {/* Easyio Ambient Radial Canvas and 80px Grid Lines */}
+      <div className="ambient-bg-grid" />
+      <div className="ambient-grid-lines" />
+
+      {/* Floating Island Header */}
       <Header onOpenOrder={() => handleOpenOrder(10)} />
 
-      <main>
+      <main style={{ position: "relative", zIndex: 10 }}>
         <Hero
           onOpenOrder={() => handleOpenOrder(10)}
           onOpenDemo={handleOpenDemo}
@@ -43,6 +49,8 @@ export default function HomePage() {
         <HowItWorks />
 
         <WhatYouGet />
+
+        <PricingComparison onOpenOrder={() => handleOpenOrder(10)} />
 
         <PricingCalculator onOpenOrder={handleOpenOrder} />
 

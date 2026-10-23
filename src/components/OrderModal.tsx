@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { MessageCircle, Phone, Send, Check } from "lucide-react";
+import { MessageCircle, Phone, Send, Check, X, Minus, Plus } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
 interface OrderModalProps {
@@ -76,8 +76,9 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(18, 34, 30, 0.75)",
-        backdropFilter: "blur(4px)",
+        backgroundColor: "rgba(17, 24, 39, 0.6)",
+        backdropFilter: "blur(6px)",
+        WebkitBackdropFilter: "blur(6px)",
         zIndex: 1000,
         display: "flex",
         alignItems: "center",
@@ -92,7 +93,7 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
         style={{
           backgroundColor: "#FFFFFF",
           borderRadius: "var(--radius-xl)",
-          maxWidth: "520px",
+          maxWidth: "480px",
           width: "100%",
           maxHeight: "90vh",
           overflowY: "auto",
@@ -103,14 +104,14 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
         {/* Modal Header */}
         <div
           style={{
-            padding: "20px 24px",
-            borderBottom: "1px solid var(--color-border)",
+            padding: "18px 24px",
+            borderBottom: "1px solid var(--color-border-subtle)",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <h3 style={{ fontSize: "1.125rem", fontWeight: 700 }}>Get Your Digital Menu</h3>
+          <h3 style={{ fontSize: "1.05rem", fontWeight: 650 }}>Order Table Stands</h3>
           <button
             type="button"
             onClick={onClose}
@@ -118,13 +119,15 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
             style={{
               background: "none",
               border: "none",
-              fontSize: "24px",
               color: "var(--color-text-muted)",
               cursor: "pointer",
-              lineHeight: 1,
+              padding: "4px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            &times;
+            <X size={18} />
           </button>
         </div>
 
@@ -133,26 +136,26 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
             <div style={{ textAlign: "center", padding: "24px 8px" }}>
               <div
                 style={{
-                  width: "64px",
-                  height: "64px",
+                  width: "56px",
+                  height: "56px",
                   borderRadius: "50%",
-                  backgroundColor: "#DCFCE7",
-                  color: "#15803D",
+                  backgroundColor: "#ECFDF5",
+                  color: "#059669",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   margin: "0 auto 16px",
                 }}
               >
-                <Check size={36} strokeWidth={3} />
+                <Check size={28} strokeWidth={2.5} />
               </div>
-              <h3 style={{ fontSize: "1.25rem", marginBottom: "8px" }}>Request Received!</h3>
-              <p style={{ fontSize: "0.875rem", color: "var(--color-text-body)", marginBottom: "24px", lineHeight: 1.5 }}>
+              <h3 style={{ fontSize: "1.15rem", fontWeight: 650, marginBottom: "8px" }}>Request Received</h3>
+              <p style={{ fontSize: "0.875rem", color: "var(--color-text-body)", marginBottom: "24px", lineHeight: 1.6 }}>
                 {method === "whatsapp"
-                  ? `Your order details for ${restaurantName} (${tables} tables) have been generated. We will reply to your WhatsApp within 15 minutes!`
-                  : `Thank you ${ownerName || "Restaurant Owner"}! Our team will contact you at ${phone} shortly to collect your menu and confirm your table stand order.`}
+                  ? `Your order summary for ${restaurantName} (${tables} tables) has been prepared. Our team will message you back on WhatsApp shortly!`
+                  : `Thank you ${ownerName || "Restaurant Owner"}! Our specialist will reach out to you at ${phone} to confirm your order.`}
               </p>
-              <button type="button" className="btn btn-primary" onClick={onClose}>
+              <button type="button" className="btn btn-primary" onClick={onClose} style={{ minWidth: "120px" }}>
                 Done
               </button>
             </div>
@@ -165,51 +168,31 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                   justifyContent: "space-between",
                   marginBottom: "24px",
                   position: "relative",
+                  borderBottom: "1px solid var(--color-border-subtle)",
+                  paddingBottom: "14px",
                 }}
               >
                 {[
                   { num: 1, label: "Tables" },
                   { num: 2, label: "Details" },
-                  { num: 3, label: "Proceed" },
+                  { num: 3, label: "Confirm" },
                 ].map((s) => {
                   const isActive = step === s.num;
                   const isCompleted = step > s.num;
                   return (
                     <div key={s.num} style={{ textAlign: "center", flex: 1 }}>
-                      <div
-                        style={{
-                          width: "28px",
-                          height: "28px",
-                          borderRadius: "50%",
-                          backgroundColor: isActive
-                            ? "var(--color-primary)"
-                            : isCompleted
-                            ? "var(--color-success)"
-                            : "#FFFFFF",
-                          border: isActive
-                            ? "2px solid var(--color-primary)"
-                            : isCompleted
-                            ? "2px solid var(--color-success)"
-                            : "2px solid var(--color-border)",
-                          color: isActive || isCompleted ? "#FFFFFF" : "var(--color-text-muted)",
-                          fontSize: "12px",
-                          fontWeight: 700,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          margin: "0 auto 4px",
-                        }}
-                      >
-                        {isCompleted ? <Check size={12} color="#FFFFFF" strokeWidth={3} /> : s.num}
-                      </div>
                       <span
                         style={{
-                          fontSize: "11px",
-                          fontWeight: 600,
-                          color: isActive ? "var(--color-primary)" : "var(--color-text-muted)",
+                          fontSize: "12px",
+                          fontWeight: isActive ? 650 : 500,
+                          color: isActive
+                            ? "var(--color-text-main)"
+                            : isCompleted
+                            ? "var(--color-whatsapp)"
+                            : "var(--color-text-light)",
                         }}
                       >
-                        {s.label}
+                        {isCompleted ? "✓ " : `${s.num}. `}{s.label}
                       </span>
                     </div>
                   );
@@ -219,84 +202,88 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
               {/* STEP 1: Table Count */}
               {step === 1 && (
                 <div>
-                  <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 600, marginBottom: "8px" }}>
+                  <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 600, marginBottom: "8px", color: "var(--color-text-main)" }}>
                     How many dining tables do you have?
                   </label>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", margin: "16px 0" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", margin: "20px 0" }}>
                     <button
                       type="button"
                       onClick={() => tables > 1 && setTables(tables - 1)}
                       style={{
-                        width: "48px",
-                        height: "48px",
-                        borderRadius: "var(--radius-md)",
+                        width: "42px",
+                        height: "42px",
+                        borderRadius: "var(--radius-full)",
                         backgroundColor: "#FFFFFF",
                         border: "1px solid var(--color-border)",
-                        fontSize: "20px",
-                        fontWeight: 700,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "var(--color-text-main)",
                         cursor: "pointer",
                       }}
                     >
-                      −
+                      <Minus size={16} />
                     </button>
                     <input
                       type="number"
                       value={tables}
                       onChange={(e) => setTables(Math.max(1, Math.min(200, parseInt(e.target.value, 10) || 1)))}
                       style={{
-                        width: "90px",
-                        height: "48px",
+                        width: "80px",
+                        height: "42px",
                         textAlign: "center",
-                        fontSize: "20px",
-                        fontWeight: 700,
+                        fontSize: "1.25rem",
+                        fontWeight: 650,
                         border: "1px solid var(--color-border)",
-                        borderRadius: "var(--radius-md)",
+                        borderRadius: "var(--radius-sm)",
                       }}
                     />
                     <button
                       type="button"
                       onClick={() => tables < 200 && setTables(tables + 1)}
                       style={{
-                        width: "48px",
-                        height: "48px",
-                        borderRadius: "var(--radius-md)",
+                        width: "42px",
+                        height: "42px",
+                        borderRadius: "var(--radius-full)",
                         backgroundColor: "#FFFFFF",
                         border: "1px solid var(--color-border)",
-                        fontSize: "20px",
-                        fontWeight: 700,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "var(--color-text-main)",
                         cursor: "pointer",
                       }}
                     >
-                      +
+                      <Plus size={16} />
                     </button>
                   </div>
 
                   <div
                     style={{
                       backgroundColor: "var(--bg-subtle)",
-                      border: "1px solid var(--color-border)",
+                      border: "1px solid var(--color-border-subtle)",
                       borderRadius: "var(--radius-md)",
                       padding: "14px 18px",
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      margin: "16px 0",
+                      margin: "18px 0",
                     }}
                   >
                     <div>
-                      <span style={{ fontSize: "14px", color: "var(--color-text-muted)" }}>Your Estimated Total:</span>
+                      <span style={{ fontSize: "13px", color: "var(--color-text-body)" }}>Estimated Total:</span>
                       <div style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>
-                        {tables} Tables × ₹{ORUPOS_CONFIG.pricing.pricePerTable} (No Hidden Charges)
+                        {tables} Tables × ₹{ORUPOS_CONFIG.pricing.pricePerTable} (Pay once)
                       </div>
                     </div>
-                    <strong style={{ fontSize: "1.5rem", color: "var(--color-primary)" }}>
+                    <strong style={{ fontSize: "1.35rem", color: "var(--color-text-main)", fontWeight: 700 }}>
                       ₹{total.toLocaleString("en-IN")}
                     </strong>
                   </div>
 
                   <p style={{ fontSize: "12px", color: "var(--color-text-muted)", marginBottom: "20px", display: "flex", alignItems: "center", gap: "6px" }}>
-                    <Check size={13} color="var(--color-primary)" />
-                    <span>Includes physical acrylic stand + QR code + table number for each table.</span>
+                    <Check size={13} color="var(--color-whatsapp)" />
+                    <span>Includes physical acrylic stand + QR code + menu setup.</span>
                   </p>
 
                   <button
@@ -304,7 +291,7 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                     className="btn btn-primary btn-block btn-lg"
                     onClick={() => setStep(2)}
                   >
-                    Next: Enter Restaurant Details →
+                    <span>Next: Restaurant Details</span>
                   </button>
                 </div>
               )}
@@ -312,46 +299,46 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
               {/* STEP 2: Restaurant & Owner Details */}
               {step === 2 && (
                 <div>
-                  <div style={{ marginBottom: "16px" }}>
-                    <label style={{ display: "block", fontSize: "14px", fontWeight: 600, marginBottom: "6px" }}>
+                  <div style={{ marginBottom: "14px" }}>
+                    <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px", color: "var(--color-text-main)" }}>
                       Restaurant / Business Name *
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Royal Punjab Dhaba, Cafe Bliss..."
+                      placeholder="e.g. Royal Spice, Cafe Bistro..."
                       value={restaurantName}
                       onChange={(e) => setRestaurantName(e.target.value)}
                       style={{
                         width: "100%",
-                        padding: "12px 14px",
+                        padding: "10px 14px",
                         border: "1px solid var(--color-border)",
-                        borderRadius: "var(--radius-md)",
+                        borderRadius: "var(--radius-sm)",
                         fontSize: "14px",
                       }}
                     />
                   </div>
 
-                  <div style={{ marginBottom: "16px" }}>
-                    <label style={{ display: "block", fontSize: "14px", fontWeight: 600, marginBottom: "6px" }}>
-                      Owner / Manager Name
+                  <div style={{ marginBottom: "14px" }}>
+                    <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px", color: "var(--color-text-main)" }}>
+                      Contact Person Name
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Rajesh Sharma"
+                      placeholder="e.g. Rahul Sharma"
                       value={ownerName}
                       onChange={(e) => setOwnerName(e.target.value)}
                       style={{
                         width: "100%",
-                        padding: "12px 14px",
+                        padding: "10px 14px",
                         border: "1px solid var(--color-border)",
-                        borderRadius: "var(--radius-md)",
+                        borderRadius: "var(--radius-sm)",
                         fontSize: "14px",
                       }}
                     />
                   </div>
 
-                  <div style={{ marginBottom: "16px" }}>
-                    <label style={{ display: "block", fontSize: "14px", fontWeight: 600, marginBottom: "6px" }}>
+                  <div style={{ marginBottom: "14px" }}>
+                    <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px", color: "var(--color-text-main)" }}>
                       WhatsApp / Mobile Number *
                     </label>
                     <input
@@ -362,39 +349,39 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                       onChange={(e) => setPhone(e.target.value)}
                       style={{
                         width: "100%",
-                        padding: "12px 14px",
+                        padding: "10px 14px",
                         border: "1px solid var(--color-border)",
-                        borderRadius: "var(--radius-md)",
+                        borderRadius: "var(--radius-sm)",
                         fontSize: "14px",
                       }}
                     />
-                    <div style={{ fontSize: "12px", color: "var(--color-text-muted)", marginTop: "4px" }}>
-                      We will send your digital menu preview on this number.
+                    <div style={{ fontSize: "11.5px", color: "var(--color-text-muted)", marginTop: "3px" }}>
+                      We will share your digital menu link here.
                     </div>
                   </div>
 
-                  <div style={{ marginBottom: "24px" }}>
-                    <label style={{ display: "block", fontSize: "14px", fontWeight: 600, marginBottom: "6px" }}>
+                  <div style={{ marginBottom: "22px" }}>
+                    <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "6px", color: "var(--color-text-main)" }}>
                       City / Location
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Jaipur, Lucknow, Pune, Bengaluru..."
+                      placeholder="e.g. Mumbai, Delhi, Bengaluru..."
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       style={{
                         width: "100%",
-                        padding: "12px 14px",
+                        padding: "10px 14px",
                         border: "1px solid var(--color-border)",
-                        borderRadius: "var(--radius-md)",
+                        borderRadius: "var(--radius-sm)",
                         fontSize: "14px",
                       }}
                     />
                   </div>
 
-                  <div style={{ display: "flex", justifyContent: "space-between", gap: "12px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
                     <button type="button" className="btn btn-secondary" onClick={() => setStep(1)}>
-                      ← Back
+                      Back
                     </button>
                     <button
                       type="button"
@@ -402,7 +389,7 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                       style={{ flex: 1 }}
                       onClick={handleStep2Next}
                     >
-                      Continue →
+                      Continue
                     </button>
                   </div>
                 </div>
@@ -413,11 +400,11 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                 <div>
                   <div
                     style={{
-                      background: "var(--bg-page)",
-                      border: "1px solid var(--color-border)",
-                      borderRadius: "8px",
-                      padding: "12px",
-                      fontSize: "13px",
+                      background: "var(--bg-subtle)",
+                      border: "1px solid var(--color-border-subtle)",
+                      borderRadius: "var(--radius-sm)",
+                      padding: "12px 14px",
+                      fontSize: "12.5px",
                       lineHeight: 1.6,
                       marginBottom: "16px",
                     }}
@@ -426,32 +413,31 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                       <strong>Restaurant:</strong> {restaurantName} {city ? `(${city})` : ""}
                     </div>
                     <div>
-                      <strong>Contact:</strong> {ownerName ? `${ownerName} • ` : ""}
-                      {phone}
+                      <strong>Contact:</strong> {ownerName ? `${ownerName} · ` : ""}{phone}
                     </div>
                     <div>
-                      <strong>Order:</strong> {tables} Tables •{" "}
-                      <strong>Total: ₹{total.toLocaleString("en-IN")}</strong>
+                      <strong>Order:</strong> {tables} Tables · <strong>Total: ₹{total.toLocaleString("en-IN")}</strong>
                     </div>
                   </div>
 
-                  <label style={{ display: "block", fontSize: "14px", fontWeight: 700, marginBottom: "10px" }}>
-                    How would you like to proceed?
+                  <label style={{ display: "block", fontSize: "13px", fontWeight: 600, marginBottom: "10px", color: "var(--color-text-main)" }}>
+                    How would you like to connect?
                   </label>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
                     {/* WhatsApp */}
                     <div
                       onClick={() => setMethod("whatsapp")}
                       style={{
-                        border: method === "whatsapp" ? "2px solid var(--color-whatsapp)" : "2px solid var(--color-border)",
-                        backgroundColor: method === "whatsapp" ? "var(--color-whatsapp-light)" : "#FFFFFF",
-                        borderRadius: "var(--radius-md)",
-                        padding: "14px 16px",
+                        border: method === "whatsapp" ? "1.5px solid var(--color-primary)" : "1px solid var(--color-border)",
+                        backgroundColor: method === "whatsapp" ? "var(--bg-subtle)" : "#FFFFFF",
+                        borderRadius: "var(--radius-sm)",
+                        padding: "12px 14px",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
                         gap: "12px",
+                        transition: "all 0.15s ease",
                       }}
                     >
                       <input
@@ -460,13 +446,13 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                         checked={method === "whatsapp"}
                         onChange={() => setMethod("whatsapp")}
                       />
-                      <MessageCircle size={22} color="#15803D" />
+                      <MessageCircle size={18} color="#059669" />
                       <div>
-                        <h4 style={{ fontSize: "14px", fontWeight: 700, margin: 0 }}>
+                        <h4 style={{ fontSize: "13px", fontWeight: 600, margin: 0, color: "var(--color-text-main)" }}>
                           Send on WhatsApp (Fastest)
                         </h4>
-                        <p style={{ fontSize: "12px", color: "var(--color-text-muted)", margin: 0 }}>
-                          Chat directly with our onboarding team & share your menu photos.
+                        <p style={{ fontSize: "11.5px", color: "var(--color-text-muted)", margin: 0 }}>
+                          Chat directly with our team & send your menu card photos.
                         </p>
                       </div>
                     </div>
@@ -475,14 +461,15 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                     <div
                       onClick={() => setMethod("call")}
                       style={{
-                        border: method === "call" ? "2px solid var(--color-primary)" : "2px solid var(--color-border)",
-                        backgroundColor: method === "call" ? "var(--color-primary-light)" : "#FFFFFF",
-                        borderRadius: "var(--radius-md)",
-                        padding: "14px 16px",
+                        border: method === "call" ? "1.5px solid var(--color-primary)" : "1px solid var(--color-border)",
+                        backgroundColor: method === "call" ? "var(--bg-subtle)" : "#FFFFFF",
+                        borderRadius: "var(--radius-sm)",
+                        padding: "12px 14px",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
                         gap: "12px",
+                        transition: "all 0.15s ease",
                       }}
                     >
                       <input
@@ -491,13 +478,13 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                         checked={method === "call"}
                         onChange={() => setMethod("call")}
                       />
-                      <Phone size={22} color="#1E3A2F" />
+                      <Phone size={18} color="var(--color-text-main)" />
                       <div>
-                        <h4 style={{ fontSize: "14px", fontWeight: 700, margin: 0 }}>
-                          Call Me on Phone
+                        <h4 style={{ fontSize: "13px", fontWeight: 600, margin: 0, color: "var(--color-text-main)" }}>
+                          Request a Phone Call
                         </h4>
-                        <p style={{ fontSize: "12px", color: "var(--color-text-muted)", margin: 0 }}>
-                          Speak directly to our specialist to clarify details.
+                        <p style={{ fontSize: "11.5px", color: "var(--color-text-muted)", margin: 0 }}>
+                          Speak directly to our specialist.
                         </p>
                       </div>
                     </div>
@@ -506,14 +493,15 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                     <div
                       onClick={() => setMethod("submit")}
                       style={{
-                        border: method === "submit" ? "2px solid var(--color-primary)" : "2px solid var(--color-border)",
-                        backgroundColor: method === "submit" ? "var(--color-primary-light)" : "#FFFFFF",
-                        borderRadius: "var(--radius-md)",
-                        padding: "14px 16px",
+                        border: method === "submit" ? "1.5px solid var(--color-primary)" : "1px solid var(--color-border)",
+                        backgroundColor: method === "submit" ? "var(--bg-subtle)" : "#FFFFFF",
+                        borderRadius: "var(--radius-sm)",
+                        padding: "12px 14px",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
                         gap: "12px",
+                        transition: "all 0.15s ease",
                       }}
                     >
                       <input
@@ -522,21 +510,21 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                         checked={method === "submit"}
                         onChange={() => setMethod("submit")}
                       />
-                      <Send size={22} color="#1E3A2F" />
+                      <Send size={18} color="var(--color-text-main)" />
                       <div>
-                        <h4 style={{ fontSize: "14px", fontWeight: 700, margin: 0 }}>
-                          Submit Request Online
+                        <h4 style={{ fontSize: "13px", fontWeight: 600, margin: 0, color: "var(--color-text-main)" }}>
+                          Submit Online Inquiry
                         </h4>
-                        <p style={{ fontSize: "12px", color: "var(--color-text-muted)", margin: 0 }}>
-                          We will contact you via WhatsApp / Call within 15 minutes.
+                        <p style={{ fontSize: "11.5px", color: "var(--color-text-muted)", margin: 0 }}>
+                          We will reach out to your phone within 15 minutes.
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div style={{ display: "flex", justifyContent: "space-between", gap: "12px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
                     <button type="button" className="btn btn-secondary" onClick={() => setStep(2)}>
-                      ← Back
+                      Back
                     </button>
                     <button
                       type="button"
@@ -544,7 +532,7 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                       style={{ flex: 1 }}
                       onClick={handleFinalSubmit}
                     >
-                      Confirm & Proceed
+                      Confirm Order
                     </button>
                   </div>
                 </div>
