@@ -53,7 +53,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: "2025-01-20",
     updatedAt: "2026-03-24",
     author: {
-      name: "Faheem Ahmad",
+      name: "Burhan Ali",
       role: "Lead Restaurant Technology Architect",
       avatarInitials: "FA",
       bio: "Hospitality systems engineer helping 200+ restaurants and cafes across Jammu & Kashmir and India cut software costs and streamline kitchen operations."
@@ -189,7 +189,7 @@ Here is how modernizing your table workflow transforms the diner experience:
     publishedAt: "2025-02-05",
     updatedAt: "2026-03-24",
     author: {
-      name: "Faheem Ahmad",
+      name: "Burhan Ali",
       role: "Lead Restaurant Technology Architect",
       avatarInitials: "FA",
       bio: "Hospitality systems engineer helping 200+ restaurants and cafes across Jammu & Kashmir and India cut software costs and streamline kitchen operations."
@@ -323,7 +323,7 @@ With OruPOS, you retain **over 95% of your software expenditure** while providin
     publishedAt: "2025-02-18",
     updatedAt: "2026-03-24",
     author: {
-      name: "Faheem Ahmad",
+      name: "Burhan Ali",
       role: "Lead Restaurant Technology Architect",
       avatarInitials: "FA",
       bio: "Hospitality systems engineer helping 200+ restaurants and cafes across Jammu & Kashmir and India cut software costs and streamline kitchen operations."
@@ -452,7 +452,7 @@ Consider simple restaurant mathematics:
     publishedAt: "2025-02-28",
     updatedAt: "2026-03-24",
     author: {
-      name: "Faheem Ahmad",
+      name: "Burhan Ali",
       role: "Lead Restaurant Technology Architect",
       avatarInitials: "FA",
       bio: "Hospitality systems engineer helping 200+ restaurants and cafes across Jammu & Kashmir and India cut software costs and streamline kitchen operations."

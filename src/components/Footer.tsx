@@ -26,34 +26,28 @@ export default function Footer() {
         >
           {/* Brand Column (Easyio style) */}
           <div>
-            <Link href="#hero" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
-              <div
+            <Link href="/" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+              <img
+                src="/assets/logo.png"
+                alt="OruPos Logo"
                 style={{
-                  width: "40px",
-                  height: "40px",
-                  backgroundColor: "var(--zinc-950)",
-                  color: "#FFFFFF",
-                  borderRadius: "10px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: 900,
-                  fontSize: "18px",
+                  height: "36px",
+                  width: "auto",
+                  objectFit: "contain",
+                  display: "block",
                 }}
-              >
-                O
-              </div>
+              />
               <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
                 <span
                   style={{
-                    fontSize: "1.4rem",
+                    fontSize: "1.35rem",
                     fontWeight: 900,
                     letterSpacing: "-0.04em",
                     color: "var(--zinc-950)",
                     textTransform: "uppercase",
                   }}
                 >
-                  ORUPOS
+                  POS
                 </span>
                 <span
                   style={{
@@ -62,10 +56,10 @@ export default function Footer() {
                     letterSpacing: "0.12em",
                     color: "var(--zinc-400)",
                     textTransform: "uppercase",
-                    marginTop: "3px",
+                    marginTop: "2px",
                   }}
                 >
-                  Zero-Subscription POS
+                  Zero-Subscription
                 </span>
               </div>
             </Link>

@@ -45,33 +45,25 @@ export default function Header({ onOpenOrder }: HeaderProps) {
         >
           {/* Brand Logo */}
           <Link
-            href="#hero"
+            href="/"
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "10px",
+              gap: "8px",
               textDecoration: "none",
             }}
           >
-            <div
+            <img
+              src="/assets/logo.png"
+              alt="OruPos"
               style={{
-                width: "36px",
-                height: "36px",
-                backgroundColor: "var(--zinc-950)",
-                color: "#FFFFFF",
-                borderRadius: "10px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 900,
-                fontSize: "16px",
-                boxShadow: "0 2px 8px rgba(9, 9, 11, 0.12)",
-                flexShrink: 0,
+                height: "30px",
+                width: "auto",
+                objectFit: "contain",
+                display: "block",
               }}
-            >
-              O
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
+            />
+            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
               <span
                 style={{
                   fontWeight: 900,
@@ -81,18 +73,18 @@ export default function Header({ onOpenOrder }: HeaderProps) {
                   textTransform: "uppercase",
                 }}
               >
-                ORUPOS
+                POS
               </span>
               <span
                 style={{
-                  fontSize: "9.5px",
-                  fontWeight: 700,
+                  fontSize: "9px",
+                  fontWeight: 750,
                   letterSpacing: "0.08em",
                   color: "var(--zinc-400)",
                   textTransform: "uppercase",
                 }}
               >
-                Zero-Subscription POS
+                Zero-Subscription
               </span>
             </div>
           </Link>

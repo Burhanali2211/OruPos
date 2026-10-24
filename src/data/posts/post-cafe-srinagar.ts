@@ -10,7 +10,7 @@ export const postCafeSrinagar: BlogPost = {
   publishedAt: "2025-03-01",
   updatedAt: "2026-03-24",
   author: {
-    name: "Faheem Ahmad",
+    name: "Burhan Ali",
     role: "Lead Restaurant Technology Architect",
     avatarInitials: "FA",
     bio: "Hospitality systems engineer helping 200+ restaurants and cafes across Jammu & Kashmir and India cut software costs and streamline kitchen operations."
