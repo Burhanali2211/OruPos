@@ -35,14 +35,14 @@ export default function MobileStickyBar({ onOpenOrder }: MobileStickyBarProps) {
       <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
           <span style={{ fontSize: "16px", fontWeight: 900, color: "#FFFFFF", letterSpacing: "-0.02em" }}>
-            ₹199
+            ₹0
           </span>
           <span style={{ fontSize: "11px", color: "var(--zinc-400)", fontWeight: 600 }}>
-            / table
+            monthly fee
           </span>
         </div>
         <span style={{ fontSize: "10px", color: "var(--emerald-500)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>
-          Acrylic Stand + Menu Included
+          Complete Restaurant POS
         </span>
       </div>
 
@@ -89,7 +89,7 @@ export default function MobileStickyBar({ onOpenOrder }: MobileStickyBarProps) {
             boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)",
           }}
         >
-          <span>Order Now</span>
+          <span>Get POS</span>
           <ArrowUpRight size={13} />
         </button>
       </div>

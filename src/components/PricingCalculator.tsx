@@ -11,8 +11,7 @@ interface PricingCalculatorProps {
 export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProps) {
   const [tables, setTables] = useState<number>(10);
   const pricePerTable = ORUPOS_CONFIG.pricing.pricePerTable;
-
-  const presets = [5, 10, 15, 20, 30, 50];
+  const presets = [5, 10, 15, 20, 30];
 
   const handleMinus = () => {
     if (tables > 1) setTables(tables - 1);
@@ -28,15 +27,12 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
     <section className="section section-subtle" id="pricing">
       <div className="container container-narrow">
         <div className="section-header" style={{ textAlign: "center" }}>
-          <div className="section-kicker-pill" style={{ justifyContent: "center" }}>
-            <div className="kicker-dot" />
-            <span className="kicker-text">PRICING</span>
-          </div>
+          <span className="section-kicker">PRICING</span>
           <h2 className="section-title">
-            ₹199 per table. Pay once, use forever.
+            Zero monthly software fees.
           </h2>
           <p className="section-desc" style={{ margin: "0 auto" }}>
-            No monthly fees. No commissions on your food sales. Pay only for the tables you have.
+            The cloud POS software is 100% free forever. Pay only a one-time ₹199/table for custom acrylic hardware and complete menu onboarding.
           </p>
         </div>
 
@@ -45,8 +41,8 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
           style={{
             backgroundColor: "#FFFFFF",
             border: "1px solid var(--border-hairline)",
-            borderRadius: "clamp(24px, 4vw, 40px)",
-            padding: "clamp(28px, 4vw, 44px)",
+            borderRadius: "clamp(20px, 3vw, 32px)",
+            padding: "clamp(20px, 3.5vw, 36px)",
             boxShadow: "var(--shadow-card)",
           }}
         >
@@ -54,9 +50,9 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
           <div
             style={{
               textAlign: "center",
-              paddingBottom: "28px",
+              paddingBottom: "20px",
               borderBottom: "1px solid var(--border-subtle)",
-              marginBottom: "32px",
+              marginBottom: "24px",
             }}
           >
             <div
@@ -64,14 +60,14 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                 display: "inline-flex",
                 alignItems: "baseline",
                 justifyContent: "center",
-                gap: "4px",
-                marginBottom: "8px",
+                gap: "3px",
+                marginBottom: "4px",
               }}
             >
-              <span style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--zinc-950)" }}>₹</span>
+              <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--zinc-950)" }}>₹</span>
               <span
                 style={{
-                  fontSize: "clamp(3.2rem, 6vw, 4.2rem)",
+                  fontSize: "clamp(2.8rem, 5vw, 3.8rem)",
                   fontWeight: 900,
                   lineHeight: 1,
                   color: "var(--zinc-950)",
@@ -80,30 +76,30 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
               >
                 199
               </span>
-              <span style={{ fontSize: "1.1rem", color: "var(--zinc-400)", fontWeight: 600 }}>
-                / table
+              <span style={{ fontSize: "1rem", color: "var(--zinc-400)", fontWeight: 600 }}>
+                / table (one-time)
               </span>
             </div>
 
-            <p style={{ fontSize: "0.925rem", color: "var(--zinc-500)", margin: 0, fontWeight: 500 }}>
-              Acrylic Stand + Table Number + QR Code + Digital Menu Setup
+            <p style={{ fontSize: "0.875rem", color: "var(--zinc-500)", margin: 0, fontWeight: 500 }}>
+              Free Lifetime POS License + 3mm Cast Acrylic Stand + Full Menu Setup
             </p>
           </div>
 
           {/* Stepper Control */}
-          <div style={{ textAlign: "center", marginBottom: "32px" }}>
+          <div style={{ textAlign: "center", marginBottom: "24px" }}>
             <span
               style={{
-                fontSize: "12px",
+                fontSize: "11px",
                 fontWeight: 700,
                 textTransform: "uppercase",
-                letterSpacing: "0.1em",
+                letterSpacing: "0.08em",
                 color: "var(--zinc-400)",
                 display: "block",
-                marginBottom: "16px",
+                marginBottom: "12px",
               }}
             >
-              Select number of tables
+              Number of tables
             </span>
 
             <div
@@ -111,8 +107,8 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "24px",
-                marginBottom: "24px",
+                gap: "20px",
+                marginBottom: "20px",
               }}
             >
               <button
@@ -120,8 +116,8 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                 onClick={handleMinus}
                 aria-label="Decrease tables"
                 style={{
-                  width: "46px",
-                  height: "46px",
+                  width: "42px",
+                  height: "42px",
                   borderRadius: "50%",
                   border: "1px solid var(--zinc-200)",
                   backgroundColor: "#FFFFFF",
@@ -131,16 +127,15 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                   color: "var(--zinc-950)",
                   cursor: "pointer",
                   transition: "all 0.15s ease",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.04)",
                 }}
               >
-                <Minus size={16} />
+                <Minus size={15} />
               </button>
 
-              <div style={{ minWidth: "100px", textAlign: "center" }}>
+              <div style={{ minWidth: "80px", textAlign: "center" }}>
                 <span
                   style={{
-                    fontSize: "2.75rem",
+                    fontSize: "2.4rem",
                     fontWeight: 900,
                     color: "var(--zinc-950)",
                     lineHeight: 1,
@@ -152,12 +147,12 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                 <span
                   style={{
                     display: "block",
-                    fontSize: "11px",
+                    fontSize: "10.5px",
                     color: "var(--zinc-400)",
                     textTransform: "uppercase",
                     fontWeight: 700,
                     letterSpacing: "0.08em",
-                    marginTop: "4px",
+                    marginTop: "2px",
                   }}
                 >
                   Tables
@@ -169,8 +164,8 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                 onClick={handlePlus}
                 aria-label="Increase tables"
                 style={{
-                  width: "46px",
-                  height: "46px",
+                  width: "42px",
+                  height: "42px",
                   borderRadius: "50%",
                   border: "1px solid var(--zinc-200)",
                   backgroundColor: "#FFFFFF",
@@ -180,21 +175,20 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                   color: "var(--zinc-950)",
                   cursor: "pointer",
                   transition: "all 0.15s ease",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.04)",
                 }}
               >
-                <Plus size={16} />
+                <Plus size={15} />
               </button>
             </div>
 
-            {/* Quick Presets Pills */}
+            {/* Quick Presets */}
             <div
               style={{
                 display: "flex",
                 justifyContent: "center",
-                gap: "8px",
+                gap: "6px",
                 flexWrap: "wrap",
-                marginBottom: "32px",
+                marginBottom: "24px",
               }}
             >
               {presets.map((num) => {
@@ -205,12 +199,12 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
                     type="button"
                     onClick={() => setTables(num)}
                     style={{
-                      padding: "6px 16px",
+                      padding: "5px 14px",
                       borderRadius: "9999px",
                       border: isSelected ? "1px solid var(--zinc-950)" : "1px solid var(--zinc-200)",
                       backgroundColor: isSelected ? "var(--zinc-950)" : "#FFFFFF",
                       color: isSelected ? "#FFFFFF" : "var(--zinc-600)",
-                      fontSize: "12px",
+                      fontSize: "11.5px",
                       fontWeight: 700,
                       cursor: "pointer",
                       transition: "all 0.15s ease",
@@ -223,29 +217,29 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
             </div>
           </div>
 
-          {/* Minimalist Summary Strip */}
+          {/* Minimal Summary Strip */}
           <div
             style={{
-              padding: "18px 24px",
+              padding: "14px 18px",
               backgroundColor: "var(--zinc-50)",
-              borderRadius: "var(--radius-lg)",
+              borderRadius: "14px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: "24px",
+              marginBottom: "20px",
               border: "1px solid var(--border-subtle)",
             }}
           >
             <div>
-              <span style={{ fontWeight: 800, color: "var(--zinc-950)", fontSize: "15px" }}>
-                {tables} Table Stands
+              <span style={{ fontWeight: 800, color: "var(--zinc-950)", fontSize: "14px" }}>
+                {tables} Tables Setup
               </span>
-              <div style={{ fontSize: "12px", color: "var(--zinc-400)", fontWeight: 500 }}>
-                One-time payment · Free lifetime menu hosting
+              <div style={{ fontSize: "11px", color: "var(--zinc-400)", fontWeight: 500 }}>
+                One-time hardware setup · ₹0 monthly fee forever
               </div>
             </div>
 
-            <strong style={{ fontSize: "1.65rem", color: "var(--zinc-950)", fontWeight: 900 }}>
+            <strong style={{ fontSize: "1.5rem", color: "var(--zinc-950)", fontWeight: 900 }}>
               ₹{total.toLocaleString("en-IN")}
             </strong>
           </div>
@@ -255,11 +249,11 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
             type="button"
             className="btn-easyio"
             onClick={() => onOpenOrder(tables)}
-            style={{ width: "100%", height: "54px", fontSize: "14px" }}
+            style={{ width: "100%", height: "50px", fontSize: "13.5px" }}
           >
-            <span>Order {tables} Stands — ₹{total.toLocaleString("en-IN")}</span>
+            <span>Get OruPos POS for {tables} Tables</span>
             <div className="arrow-circle">
-              <ArrowUpRight size={18} />
+              <ArrowUpRight size={16} />
             </div>
           </button>
         </div>

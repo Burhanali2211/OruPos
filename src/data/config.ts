@@ -57,14 +57,14 @@ export interface OruPosConfig {
 
 export const ORUPOS_CONFIG: OruPosConfig = {
   businessName: "OruPos",
-  tagline: "Digital Menu & QR Table Stands for Indian Food Businesses",
-  legalEntity: "OruPos Hospitality Solutions",
+  tagline: "The Zero-Subscription Restaurant POS & Table Management System",
+  legalEntity: "OruPos Hospitality Technologies",
 
   pricing: {
     pricePerTable: 199,
     currencySymbol: "₹",
     setupFee: 0,
-    unitText: "per table",
+    unitText: "per table (one-time)",
     defaultTables: 10,
     minTables: 1,
     maxTables: 200,
@@ -83,7 +83,7 @@ export const ORUPOS_CONFIG: OruPosConfig = {
       state: "Karnataka",
       country: "India",
       pincode: "560001",
-      note: "Doorstep delivery across all Indian states and union territories."
+      note: "Doorstep delivery & remote POS onboarding across all Indian states and union territories."
     },
     operatingHours: "Monday to Sunday: 9:00 AM – 9:00 PM IST",
     responseTime: "Usually replies in under 15 minutes on WhatsApp"
@@ -97,34 +97,34 @@ export const ORUPOS_CONFIG: OruPosConfig = {
 
   packageIncludes: [
     {
+      id: "pos-software",
+      title: "Full Restaurant POS Software",
+      desc: "Cloud POS for dine-in table management, staff order punching, bill generation, GST calculation, and daily sales tracking with zero monthly subscription fees."
+    },
+    {
+      id: "kot-system",
+      title: "Real-Time Kitchen KOT Routing",
+      desc: "Orders punch directly into the kitchen display with table number and special cooking notes, eliminating lost paper slips and waiter confusion."
+    },
+    {
+      id: "qr-ordering",
+      title: "Contactless QR Table Ordering",
+      desc: "Diners scan the table QR code to browse high-res photos and place orders in 1 second on mobile without downloading any app."
+    },
+    {
       id: "table-stand",
-      title: "Physical QR Table Stand",
-      desc: "Durable clear acrylic T-stand built to withstand spills, hot food, and daily restaurant cleaning."
+      title: "Physical Acrylic Table Station",
+      desc: "Durable clear 3mm acrylic T-stand built to withstand spills, hot food, and restaurant cleaning, featuring clear dual-sided table numbers."
     },
     {
-      id: "table-number",
-      title: "Table Number Printed",
-      desc: "Clear individual table numbers (Table 01, Table 02...) printed on each stand so staff knows where orders come from."
-    },
-    {
-      id: "qr-code",
-      title: "Dedicated QR Code",
-      desc: "Scannable with any phone camera, Google Lens, Paytm, PhonePe, or browser without installing any app."
-    },
-    {
-      id: "digital-menu",
-      title: "Digital Menu Website",
-      desc: "Opens instantly in 1 second on your customer's mobile browser with full dish photos, categories, and prices."
-    },
-    {
-      id: "restaurant-branding",
-      title: "Restaurant Branding",
-      desc: "Your restaurant name, logo, banner, address, phone number, and timings customized cleanly."
+      id: "gst-billing",
+      title: "GST Billing & Digital Invoices",
+      desc: "Automated 5% restaurant GST calculations, split-bills, WhatsApp digital receipts, and UPI payment reconciliation."
     },
     {
       id: "menu-setup",
-      title: "Menu Setup Done For You",
-      desc: "Send us a photo of your current paper menu on WhatsApp. Our team enters all your dishes, categories, and prices for you."
+      title: "100% Done-For-You Menu Setup",
+      desc: "Send us photos of your paper menu on WhatsApp. Our onboarding specialists digitize your dishes, categories, dietary tags, and prices for you."
     }
   ],
 
@@ -144,13 +144,14 @@ export const ORUPOS_CONFIG: OruPosConfig = {
     const ownerName = data.ownerName ? `Owner: ${data.ownerName}` : "";
     const city = data.city ? `City: ${data.city}` : "";
 
-    let text = `Namaste OruPos Team!\nI am interested in getting digital menus and QR table stands for my food business.\n\n`;
-    text += `• Tables needed: ${tables} tables\n`;
-    text += `• Estimated Total: ${this.formatCurrency(total)} (@ ₹199/table)\n`;
+    let text = `Namaste OruPos Team!\nI am interested in getting the OruPos Zero-Subscription POS System for my restaurant.\n\n`;
+    text += `• Tables in my restaurant: ${tables} tables\n`;
+    text += `• Total One-Time Setup: ${this.formatCurrency(total)} (@ ₹199/table)\n`;
+    text += `• Includes: Complete POS software + KOT + QR table stands + Menu setup\n`;
     if (restaurantName) text += `• ${restaurantName}\n`;
     if (ownerName) text += `• ${ownerName}\n`;
     if (city) text += `• ${city}\n`;
-    text += `\nPlease guide me on how to send my menu and get started.`;
+    text += `\nPlease guide me on the onboarding process to get our restaurant POS live.`;
 
     return `${this.urls.whatsappBase}${this.contact.whatsappNumber}?text=${encodeURIComponent(text)}`;
   }

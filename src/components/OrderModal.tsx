@@ -111,7 +111,10 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
             alignItems: "center",
           }}
         >
-          <h3 style={{ fontSize: "1.05rem", fontWeight: 650 }}>Order Table Stands</h3>
+          <div>
+            <h3 style={{ fontSize: "1.05rem", fontWeight: 700, margin: 0 }}>Get OruPos POS System</h3>
+            <span style={{ fontSize: "11px", color: "var(--color-text-muted)" }}>Zero Monthly Subscription · Hardware Included</span>
+          </div>
           <button
             type="button"
             onClick={onClose}
@@ -149,11 +152,11 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
               >
                 <Check size={28} strokeWidth={2.5} />
               </div>
-              <h3 style={{ fontSize: "1.15rem", fontWeight: 650, marginBottom: "8px" }}>Request Received</h3>
+              <h3 style={{ fontSize: "1.15rem", fontWeight: 650, marginBottom: "8px" }}>POS Request Received</h3>
               <p style={{ fontSize: "0.875rem", color: "var(--color-text-body)", marginBottom: "24px", lineHeight: 1.6 }}>
                 {method === "whatsapp"
-                  ? `Your order summary for ${restaurantName} (${tables} tables) has been prepared. Our team will message you back on WhatsApp shortly!`
-                  : `Thank you ${ownerName || "Restaurant Owner"}! Our specialist will reach out to you at ${phone} to confirm your order.`}
+                  ? `Your POS onboarding summary for ${restaurantName} (${tables} tables) has been prepared. Our team will message you back on WhatsApp shortly to configure your restaurant!`
+                  : `Thank you ${ownerName || "Restaurant Owner"}! Our restaurant POS specialist will reach out to you at ${phone} to complete your setup.`}
               </p>
               <button type="button" className="btn btn-primary" onClick={onClose} style={{ minWidth: "120px" }}>
                 Done
@@ -283,7 +286,7 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
 
                   <p style={{ fontSize: "12px", color: "var(--color-text-muted)", marginBottom: "20px", display: "flex", alignItems: "center", gap: "6px" }}>
                     <Check size={13} color="var(--color-whatsapp)" />
-                    <span>Includes physical acrylic stand + QR code + menu setup.</span>
+                    <span>Includes Cloud POS Software + Kitchen KOT + Custom Acrylic Stands.</span>
                   </p>
 
                   <button
@@ -449,10 +452,10 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                       <MessageCircle size={18} color="#059669" />
                       <div>
                         <h4 style={{ fontSize: "13px", fontWeight: 600, margin: 0, color: "var(--color-text-main)" }}>
-                          Send on WhatsApp (Fastest)
+                          Connect on WhatsApp (Fastest)
                         </h4>
                         <p style={{ fontSize: "11.5px", color: "var(--color-text-muted)", margin: 0 }}>
-                          Chat directly with our team & send your menu card photos.
+                          Chat directly with our POS specialists to start your restaurant onboarding.
                         </p>
                       </div>
                     </div>

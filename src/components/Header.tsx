@@ -15,32 +15,35 @@ export default function Header({ onOpenOrder }: HeaderProps) {
   return (
     <>
       <header
+        className="site-sticky-header"
         style={{
           position: "fixed",
-          top: "14px",
-          left: "50%",
-          transform: "translateX(-50%)",
+          top: 0,
+          left: 0,
+          right: 0,
+          width: "100%",
           zIndex: 100,
-          width: "calc(100% - 24px)",
-          maxWidth: "1140px",
-          backgroundColor: "rgba(255, 255, 255, 0.85)",
+          backgroundColor: "rgba(255, 255, 255, 0.94)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
-          border: "1px solid rgba(228, 228, 231, 0.7)",
-          borderRadius: "9999px",
-          padding: "10px 18px",
-          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.03)",
-          transition: "all 0.3s ease",
+          borderBottom: "1px solid var(--border-hairline)",
+          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.02)",
+          transition: "all 0.2s ease",
         }}
       >
         <div
+          className="header-inner-container"
           style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "0 24px",
+            height: "64px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
           }}
         >
-          {/* Brand Logo (Easyio style) */}
+          {/* Brand Logo */}
           <Link
             href="#hero"
             style={{
@@ -62,12 +65,13 @@ export default function Header({ onOpenOrder }: HeaderProps) {
                 justifyContent: "center",
                 fontWeight: 900,
                 fontSize: "16px",
-                boxShadow: "0 4px 12px rgba(9, 9, 11, 0.15)",
+                boxShadow: "0 2px 8px rgba(9, 9, 11, 0.12)",
+                flexShrink: 0,
               }}
             >
               O
             </div>
-            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
+            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
               <span
                 style={{
                   fontWeight: 900,
@@ -81,62 +85,42 @@ export default function Header({ onOpenOrder }: HeaderProps) {
               </span>
               <span
                 style={{
-                  fontSize: "10px",
+                  fontSize: "9.5px",
                   fontWeight: 700,
                   letterSpacing: "0.08em",
                   color: "var(--zinc-400)",
                   textTransform: "uppercase",
                 }}
               >
-                QR Stands & Digital Menus
+                Zero-Subscription POS
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Pill Capsule */}
+          {/* Desktop Navigation Links */}
           <nav aria-label="Main Navigation" className="hidden-mobile">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "rgba(244, 244, 245, 0.65)",
-                padding: "4px",
-                borderRadius: "9999px",
-                border: "1px solid rgba(228, 228, 231, 0.5)",
-                backdropFilter: "blur(8px)",
-                gap: "2px",
-              }}
-            >
+            <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
               {[
-                { href: "#designs", label: "Styles" },
+                { href: "#features", label: "POS Features" },
                 { href: "#how-it-works", label: "How It Works" },
-                { href: "#comparison", label: "Comparison" },
+                { href: "#comparison", label: "POS vs Others" },
                 { href: "#pricing", label: "Pricing" },
+                { href: "/blog", label: "Blog & Guides" },
                 { href: "#faq", label: "FAQ" },
               ].map((item, idx) => (
                 <a
                   key={idx}
                   href={item.href}
                   style={{
-                    padding: "7px 16px",
-                    fontSize: "12px",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.03em",
+                    fontSize: "13px",
+                    fontWeight: 650,
+                    letterSpacing: "-0.01em",
                     color: "var(--zinc-600)",
-                    backgroundColor: "transparent",
-                    borderRadius: "9999px",
                     textDecoration: "none",
-                    transition: "all 0.15s ease",
+                    transition: "color 0.15s ease",
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "var(--zinc-950)";
-                    e.currentTarget.style.backgroundColor = "#FFFFFF";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "var(--zinc-600)";
-                    e.currentTarget.style.backgroundColor = "transparent";
-                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--zinc-950)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--zinc-600)")}
                 >
                   {item.label}
                 </a>
@@ -144,8 +128,8 @@ export default function Header({ onOpenOrder }: HeaderProps) {
             </div>
           </nav>
 
-          {/* Right Action Buttons (Easyio style) */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          {/* Right Actions */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <a
               href={ORUPOS_CONFIG.getWhatsAppUrl()}
               target="_blank"
@@ -153,49 +137,59 @@ export default function Header({ onOpenOrder }: HeaderProps) {
               aria-label="WhatsApp Inquiry"
               className="hidden-mobile"
               style={{
-                width: "38px",
                 height: "38px",
-                borderRadius: "50%",
+                padding: "0 14px",
+                borderRadius: "9999px",
                 border: "1px solid var(--zinc-200)",
                 backgroundColor: "#FFFFFF",
                 display: "inline-flex",
                 alignItems: "center",
-                justifyContent: "center",
-                color: "var(--emerald-600)",
+                gap: "6px",
+                color: "var(--zinc-700)",
                 textDecoration: "none",
+                fontSize: "12px",
+                fontWeight: 650,
                 transition: "all 0.15s ease",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--zinc-50)")}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#FFFFFF")}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "var(--zinc-50)";
+                e.currentTarget.style.borderColor = "var(--zinc-300)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#FFFFFF";
+                e.currentTarget.style.borderColor = "var(--zinc-200)";
+              }}
             >
-              <MessageCircle size={15} />
+              <MessageCircle size={15} color="var(--emerald-600)" />
+              <span>WhatsApp</span>
             </a>
 
             <button
               type="button"
               onClick={onOpenOrder}
+              className="header-order-btn"
               style={{
                 height: "38px",
                 padding: "0 18px",
                 backgroundColor: "var(--zinc-950)",
                 color: "#FFFFFF",
-                fontSize: "11px",
-                fontWeight: 800,
-                textTransform: "uppercase",
-                letterSpacing: "0.12em",
+                fontSize: "12px",
+                fontWeight: 700,
                 borderRadius: "9999px",
                 border: "none",
                 cursor: "pointer",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
-                boxShadow: "0 8px 16px rgba(9, 9, 11, 0.12)",
+                boxShadow: "0 4px 12px rgba(9, 9, 11, 0.1)",
                 transition: "all 0.2s ease",
+                whiteSpace: "nowrap",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--zinc-800)")}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--zinc-950)")}
             >
-              <span>Order Stands</span>
+              <span className="hidden-mobile">Get OruPos POS</span>
+              <span className="show-mobile" style={{ display: "none" }}>Get POS</span>
               <ArrowUpRight size={13} />
             </button>
 
@@ -210,12 +204,13 @@ export default function Header({ onOpenOrder }: HeaderProps) {
                 height: "38px",
                 borderRadius: "50%",
                 border: "1px solid var(--zinc-200)",
-                backgroundColor: "rgba(255, 255, 255, 0.8)",
+                backgroundColor: "#FFFFFF",
                 display: "none",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "var(--zinc-950)",
                 cursor: "pointer",
+                flexShrink: 0,
               }}
             >
               {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -224,29 +219,34 @@ export default function Header({ onOpenOrder }: HeaderProps) {
         </div>
       </header>
 
-      {/* Mobile Drawer (Easyio style) */}
+      {/* Mobile Navigation Drawer attached right below sticky header */}
       {mobileMenuOpen && (
         <div
           style={{
             position: "fixed",
-            top: 0,
+            top: "58px",
             left: 0,
             right: 0,
             bottom: 0,
             backgroundColor: "rgba(255, 255, 255, 0.98)",
             backdropFilter: "blur(20px)",
-            zIndex: 95,
-            padding: "90px 24px 32px",
+            WebkitBackdropFilter: "blur(20px)",
+            zIndex: 99,
+            padding: "20px 20px 32px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
+            borderTop: "1px solid var(--zinc-200)",
+            overflowY: "auto",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             {[
-              { href: "#designs", label: "Styles" },
+              { href: "#features", label: "POS Features" },
               { href: "#how-it-works", label: "How It Works" },
-              { href: "#pricing", label: "Pricing (₹199 / Table)" },
+              { href: "#comparison", label: "POS vs Others" },
+              { href: "#pricing", label: "Pricing & Calculator" },
+              { href: "/blog", label: "Blog & Regional Guides" },
               { href: "#faq", label: "FAQ" },
             ].map((item, idx) => (
               <a
@@ -254,22 +254,25 @@ export default function Header({ onOpenOrder }: HeaderProps) {
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 style={{
-                  fontSize: "18px",
-                  fontWeight: 800,
+                  fontSize: "16px",
+                  fontWeight: 700,
                   color: "var(--zinc-950)",
-                  textTransform: "uppercase",
-                  letterSpacing: "-0.02em",
-                  padding: "12px 0",
+                  letterSpacing: "-0.01em",
+                  padding: "15px 4px",
                   borderBottom: "1px solid var(--zinc-100)",
                   textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
               >
-                {item.label}
+                <span>{item.label}</span>
+                <ArrowUpRight size={15} color="var(--zinc-400)" />
               </a>
             ))}
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "24px" }}>
             <button
               type="button"
               onClick={() => {
@@ -277,11 +280,11 @@ export default function Header({ onOpenOrder }: HeaderProps) {
                 onOpenOrder();
               }}
               className="btn-easyio"
-              style={{ width: "100%", height: "54px" }}
+              style={{ width: "100%", height: "50px", fontSize: "13px" }}
             >
-              <span>Order Table Stands — ₹199 / Table</span>
+              <span>Get OruPos POS</span>
               <div className="arrow-circle">
-                <ArrowUpRight size={18} />
+                <ArrowUpRight size={16} />
               </div>
             </button>
 
@@ -290,7 +293,7 @@ export default function Header({ onOpenOrder }: HeaderProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-easyio-ghost"
-              style={{ width: "100%", height: "48px", justifyContent: "center" }}
+              style={{ width: "100%", height: "46px", justifyContent: "center", fontSize: "13px" }}
             >
               <MessageCircle size={16} color="var(--emerald-600)" />
               <span>Chat on WhatsApp</span>
@@ -298,17 +301,6 @@ export default function Header({ onOpenOrder }: HeaderProps) {
           </div>
         </div>
       )}
-
-      <style jsx>{`
-        @media (max-width: 900px) {
-          .hidden-mobile {
-            display: none !important;
-          }
-          .show-mobile {
-            display: flex !important;
-          }
-        }
-      `}</style>
     </>
   );
 }

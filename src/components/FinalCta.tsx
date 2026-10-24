@@ -12,86 +12,60 @@ export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
   return (
     <section className="section section-white">
       <div className="container">
-        {/* Minimalist Dark Banner */}
         <div
           style={{
-            borderRadius: "clamp(24px, 4vw, 44px)",
+            borderRadius: "clamp(20px, 3vw, 36px)",
             backgroundColor: "var(--zinc-950)",
             color: "#FFFFFF",
-            padding: "clamp(36px, 6vw, 64px) clamp(24px, 5vw, 56px)",
+            padding: "clamp(32px, 5vw, 56px) clamp(20px, 4vw, 48px)",
             position: "relative",
             overflow: "hidden",
             display: "flex",
-            flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
             flexWrap: "wrap",
-            gap: "32px",
-            boxShadow: "0 25px 60px rgba(9, 9, 11, 0.25)",
+            gap: "24px",
+            boxShadow: "0 16px 40px rgba(9, 9, 11, 0.2)",
           }}
         >
-          {/* Subtle Ambient Corner Glow */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              width: "350px",
-              height: "350px",
-              backgroundColor: "rgba(16, 185, 129, 0.15)",
-              filter: "blur(100px)",
-              marginRight: "-100px",
-              marginTop: "-100px",
-              pointerEvents: "none",
-            }}
-          />
-
-          <div style={{ position: "relative", zIndex: 10, maxWidth: "560px" }}>
-            <div
+          <div style={{ position: "relative", zIndex: 10, maxWidth: "520px" }}>
+            <span
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                marginBottom: "14px",
+                fontSize: "11px",
+                fontWeight: 800,
+                letterSpacing: "0.12em",
+                color: "var(--zinc-400)",
+                textTransform: "uppercase",
+                display: "block",
+                marginBottom: "10px",
               }}
             >
-              <div style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--emerald-500)" }} />
-              <span
-                style={{
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  letterSpacing: "0.15em",
-                  color: "var(--zinc-400)",
-                  textTransform: "uppercase",
-                }}
-              >
-                GET STARTED
-              </span>
-            </div>
+              GET STARTED
+            </span>
 
             <h2
               style={{
-                fontSize: "clamp(2rem, 4vw, 3.2rem)",
+                fontSize: "clamp(1.8rem, 3.2vw, 2.6rem)",
                 fontWeight: 900,
                 color: "#FFFFFF",
-                letterSpacing: "-0.035em",
-                lineHeight: 1.15,
-                marginBottom: "14px",
+                letterSpacing: "-0.03em",
+                lineHeight: 1.18,
+                marginBottom: "10px",
               }}
             >
-              Ready to upgrade your dining tables?
+              Switch to a zero-subscription POS.
             </h2>
 
             <p
               style={{
-                fontSize: "1rem",
+                fontSize: "0.95rem",
                 color: "var(--zinc-400)",
-                lineHeight: 1.6,
+                lineHeight: 1.55,
                 margin: 0,
                 fontWeight: 500,
               }}
             >
-              Custom acrylic QR stands and a fast mobile menu for just ₹199 per table. Delivered to your doorstep across India.
+              Run your floor, kitchen KOTs, and GST billing on your existing devices with zero monthly software fees.
             </p>
           </div>
 
@@ -101,7 +75,7 @@ export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
               zIndex: 10,
               display: "flex",
               alignItems: "center",
-              gap: "12px",
+              gap: "10px",
               flexWrap: "wrap",
             }}
           >
@@ -109,34 +83,25 @@ export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
               type="button"
               onClick={onOpenOrder}
               style={{
-                height: "52px",
-                padding: "0 28px",
+                height: "48px",
+                padding: "0 24px",
                 backgroundColor: "#FFFFFF",
                 color: "var(--zinc-950)",
                 borderRadius: "9999px",
                 fontWeight: 800,
-                fontSize: "13px",
-                textTransform: "uppercase",
-                letterSpacing: "0.06em",
+                fontSize: "12.5px",
                 border: "none",
                 cursor: "pointer",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "10px",
-                transition: "all 0.25s ease",
-                boxShadow: "0 8px 24px rgba(255, 255, 255, 0.15)",
+                gap: "8px",
+                transition: "all 0.15s ease",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--butter-yellow)";
-                e.currentTarget.style.transform = "scale(1.02)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#FFFFFF";
-                e.currentTarget.style.transform = "scale(1)";
-              }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--butter-yellow)")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#FFFFFF")}
             >
-              <span>Order Yours Today</span>
-              <ArrowUpRight size={16} />
+              <span>Get OruPos POS</span>
+              <ArrowUpRight size={15} />
             </button>
 
             <a
@@ -144,24 +109,22 @@ export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                height: "52px",
-                padding: "0 22px",
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                height: "48px",
+                padding: "0 18px",
+                backgroundColor: "rgba(255, 255, 255, 0.08)",
                 color: "#FFFFFF",
                 borderRadius: "9999px",
                 fontWeight: 700,
-                fontSize: "13px",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                backdropFilter: "blur(8px)",
-                cursor: "pointer",
+                fontSize: "12.5px",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "8px",
+                gap: "6px",
                 textDecoration: "none",
-                transition: "all 0.2s ease",
+                transition: "all 0.15s ease",
               }}
             >
-              <MessageCircle size={16} color="var(--emerald-500)" />
+              <MessageCircle size={15} color="var(--emerald-500)" />
               <span>WhatsApp</span>
             </a>
           </div>

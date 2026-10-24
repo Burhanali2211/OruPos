@@ -65,7 +65,7 @@ export default function Footer() {
                     marginTop: "3px",
                   }}
                 >
-                  QR Stands & Digital Menus
+                  Zero-Subscription POS
                 </span>
               </div>
             </Link>
@@ -80,7 +80,7 @@ export default function Footer() {
                 maxWidth: "340px",
               }}
             >
-              Simple QR stands and digital menus for restaurants and cafes across India.
+              The complete zero-subscription restaurant POS system. Floor table management, kitchen KOT, contactless QR ordering, and GST billing.
             </h3>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
@@ -158,36 +158,40 @@ export default function Footer() {
                 marginBottom: "24px",
               }}
             >
-              Navigation
+              POS Navigation
             </h4>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
-              {["Styles", "How It Works", "Pricing", "FAQ"].map((label, idx) => {
-                const hrefs = ["#designs", "#how-it-works", "#pricing", "#faq"];
-                return (
-                  <li key={idx}>
-                    <a
-                      href={hrefs[idx]}
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: 600,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.03em",
-                        color: "var(--zinc-400)",
-                        textDecoration: "none",
-                        transition: "color 0.15s ease",
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--zinc-950)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--zinc-400)")}
-                    >
-                      {label}
-                    </a>
-                  </li>
-                );
-              })}
+              {[
+                { label: "POS Features", href: "#features" },
+                { label: "How It Works", href: "#how-it-works" },
+                { label: "POS vs Others", href: "#comparison" },
+                { label: "Pricing", href: "#pricing" },
+                { label: "Blog & Guides", href: "/blog" },
+                { label: "FAQ", href: "#faq" },
+              ].map((item, idx) => (
+                <li key={idx}>
+                  <a
+                    href={item.href}
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: 600,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.03em",
+                      color: "var(--zinc-400)",
+                      textDecoration: "none",
+                      transition: "color 0.15s ease",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--zinc-950)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--zinc-400)")}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Hardware Specs */}
+          {/* Hardware & Software Specs */}
           <div>
             <h4
               style={{
@@ -199,14 +203,15 @@ export default function Footer() {
                 marginBottom: "24px",
               }}
             >
-              What You Get
+              The POS Package
             </h4>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "14px", color: "var(--zinc-500)", fontSize: "13px", fontWeight: 500 }}>
-              <li><span>Sturdy acrylic stands</span></li>
-              <li><span>Dual-sided table numbers</span></li>
-              <li><span>Individual table QR codes</span></li>
-              <li><span>Instant mobile digital menu</span></li>
-              <li><span>Zero monthly subscription fees</span></li>
+              <li><span>Full Cloud POS Software</span></li>
+              <li><span>Real-Time Kitchen KOT Engine</span></li>
+              <li><span>Contactless Table QR Ordering</span></li>
+              <li><span>GST Invoicing & WhatsApp Bills</span></li>
+              <li><span>3mm Cast Acrylic Table Stations</span></li>
+              <li><span>Zero Monthly Subscription</span></li>
             </ul>
           </div>
 
@@ -241,10 +246,29 @@ export default function Footer() {
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
                 color: "var(--zinc-950)",
+                marginBottom: "20px",
               }}
             >
               <span>Dispatched in 48 Hours</span>
               <ArrowUpRight size={12} />
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--zinc-950)", marginBottom: "4px" }}>
+                Restaurant Guides
+              </span>
+              <Link href="/blog/best-restaurant-pos-software-kashmir-srinagar" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
+                • Kashmir & Srinagar POS Guide
+              </Link>
+              <Link href="/blog/petpooja-vs-posist-vs-orupos-restaurant-billing-comparison" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
+                • Petpooja vs OruPOS Pricing
+              </Link>
+              <Link href="/blog/how-kashmir-cafes-restaurants-streamline-kot-billing-offline" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
+                • Offline KOT & Peak Rush Guide
+              </Link>
+              <Link href="/blog/complete-guide-restaurant-gst-billing-compliance-india" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
+                • 5% Restaurant GST Guide
+              </Link>
             </div>
           </div>
         </div>

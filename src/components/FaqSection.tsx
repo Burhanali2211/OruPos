@@ -8,40 +8,37 @@ export default function FaqSection() {
 
   const faqs = [
     {
-      q: "Do customers need an app to scan?",
-      a: "No. Guests simply scan with their phone camera, Google Lens, or Paytm. The menu opens immediately in their mobile browser in under a second.",
+      q: "Is OruPos a complete Restaurant POS system?",
+      a: "Yes. OruPos handles table management, live kitchen KOT routing, 5% restaurant GST billing, sales analytics, and contactless table ordering with zero monthly software fees.",
     },
     {
-      q: "Does each table get its own number and QR code?",
-      a: "Yes. Every stand has your restaurant name and table number printed clearly on both sides (e.g. Table 01, Table 02), with a dedicated QR code for each table.",
+      q: "Why is there zero monthly subscription?",
+      a: "Legacy POS software charges ₹1,500 to ₹4,000 every month in recurring rent. OruPos charges a one-time setup of ₹199 per table for hardware and onboarding, with zero monthly retainers.",
     },
     {
-      q: "What is included in the ₹199 price?",
-      a: "The acrylic stand, custom printing with your logo and table numbers, complete digital menu setup by our team, and lifetime hosting.",
+      q: "Do I need special billing machines or monitors?",
+      a: "No. OruPos runs in the cloud on any device you already have — Android phones, iPhones, iPads, Android tablets, laptops, or desktop computers.",
     },
     {
-      q: "Can I change dish prices or add items later?",
-      a: "Yes. Just message us on WhatsApp whenever you want to update prices or add dishes. We update your online menu immediately without any reprint needed.",
+      q: "How does the Kitchen KOT work?",
+      a: "When an order is placed from a table or by staff, the KOT appears immediately on your kitchen display, tablet, or WhatsApp with table numbers and chef notes.",
     },
     {
-      q: "How fast is delivery?",
-      a: "We print and dispatch within 48 hours. Doorstep delivery takes 3 to 5 business days across India.",
+      q: "Are physical acrylic table stands included?",
+      a: "Yes. Every table gets a heavy-duty 3mm optical cast acrylic QR station printed with your logo, table number, and dedicated table QR, delivered to your door.",
     },
   ];
 
   return (
     <section className="section section-white" id="faq">
       <div className="container container-narrow">
-        <div className="section-header">
-          <div className="section-kicker-pill">
-            <div className="kicker-dot" />
-            <span className="kicker-text">FAQ</span>
-          </div>
+        <div className="section-header" style={{ textAlign: "center" }}>
+          <span className="section-kicker">FAQ</span>
           <h2 className="section-title">
             Frequently asked questions.
           </h2>
-          <p className="section-desc">
-            Simple answers to common questions about OruPos table stands and digital menus.
+          <p className="section-desc" style={{ margin: "0 auto" }}>
+            Answers about our zero-subscription POS software and table hardware.
           </p>
         </div>
 
@@ -53,7 +50,7 @@ export default function FaqSection() {
                 key={idx}
                 style={{
                   borderTop: "1px solid var(--border-subtle)",
-                  padding: "20px 0",
+                  padding: "16px 0",
                 }}
               >
                 <button
@@ -65,37 +62,37 @@ export default function FaqSection() {
                     textAlign: "left",
                     background: "none",
                     border: "none",
-                    fontSize: "1.05rem",
+                    fontSize: "0.98rem",
                     fontWeight: 700,
                     color: "var(--zinc-950)",
                     cursor: "pointer",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    gap: "16px",
+                    gap: "12px",
                     padding: 0,
                   }}
                 >
                   <span>{faq.q}</span>
                   <div
                     style={{
-                      width: "28px",
-                      height: "28px",
+                      width: "24px",
+                      height: "24px",
                       borderRadius: "50%",
                       backgroundColor: isOpen ? "var(--zinc-950)" : "var(--zinc-100)",
                       color: isOpen ? "#FFFFFF" : "var(--zinc-500)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      transition: "all 0.2s ease",
+                      transition: "all 0.15s ease",
                       flexShrink: 0,
                     }}
                   >
                     <ChevronDown
-                      size={14}
+                      size={13}
                       style={{
                         transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                        transition: "transform 0.2s ease",
+                        transition: "transform 0.15s ease",
                       }}
                     />
                   </div>
@@ -103,10 +100,10 @@ export default function FaqSection() {
                 {isOpen && (
                   <div
                     style={{
-                      paddingTop: "12px",
-                      fontSize: "0.95rem",
+                      paddingTop: "10px",
+                      fontSize: "0.9rem",
                       color: "var(--zinc-500)",
-                      lineHeight: 1.6,
+                      lineHeight: 1.55,
                       fontWeight: 500,
                     }}
                   >

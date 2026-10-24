@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import CardDesignsGallery from "@/components/CardDesignsGallery";
-import HowItWorks from "@/components/HowItWorks";
 import WhatYouGet from "@/components/WhatYouGet";
-import PricingCalculator from "@/components/PricingCalculator";
+import HowItWorks from "@/components/HowItWorks";
+import CardDesignsGallery from "@/components/CardDesignsGallery";
 import PricingComparison from "@/components/PricingComparison";
+import PricingCalculator from "@/components/PricingCalculator";
 import FaqSection from "@/components/FaqSection";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
@@ -31,7 +31,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Easyio Ambient Radial Canvas and 80px Grid Lines */}
+      {/* Ambient Radial Canvas and 80px Grid Lines */}
       <div className="ambient-bg-grid" />
       <div className="ambient-grid-lines" />
 
@@ -44,11 +44,11 @@ export default function HomePage() {
           onOpenDemo={handleOpenDemo}
         />
 
-        <CardDesignsGallery onOpenOrder={() => handleOpenOrder(10)} />
+        <WhatYouGet />
 
         <HowItWorks />
 
-        <WhatYouGet />
+        <CardDesignsGallery onOpenOrder={() => handleOpenOrder(10)} />
 
         <PricingComparison onOpenOrder={() => handleOpenOrder(10)} />
 

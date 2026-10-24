@@ -6,17 +6,17 @@ export default function HowItWorks() {
     {
       num: "01",
       title: "Send your menu",
-      desc: "Send photos of your current menu card or a PDF on WhatsApp. Tell us how many tables you have.",
+      desc: "Send your menu on WhatsApp. We configure your catalog, table matrix, and GST rules.",
     },
     {
       num: "02",
-      title: "We print & set up",
-      desc: "We create your online menu and print your acrylic stands with your logo, table numbers, and QR codes.",
+      title: "Get table stands",
+      desc: "Custom 3mm acrylic QR stands arrive at your restaurant within 48 hours.",
     },
     {
       num: "03",
-      title: "Place on tables",
-      desc: "Your stands arrive in 48 hours. Place them on your dining tables and guests can scan right away.",
+      title: "Start billing",
+      desc: "Place on tables. Take live orders and print bills with zero monthly software fees.",
     },
   ];
 
@@ -24,15 +24,12 @@ export default function HowItWorks() {
     <section className="section section-subtle" id="how-it-works">
       <div className="container">
         <div className="section-header">
-          <div className="section-kicker-pill">
-            <div className="kicker-dot" />
-            <span className="kicker-text">HOW IT WORKS</span>
-          </div>
+          <span className="section-kicker">HOW IT WORKS</span>
           <h2 className="section-title">
-            Up and running in 3 simple steps.
+            Live in 3 simple steps.
           </h2>
           <p className="section-desc">
-            You send us your menu on WhatsApp. We handle the printing, setup, and doorstep delivery.
+            We handle 100% of the menu digitization and hardware delivery.
           </p>
         </div>
 
@@ -40,7 +37,7 @@ export default function HowItWorks() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "24px",
+            gap: "20px",
           }}
           className="how-it-works-grid"
         >
@@ -49,13 +46,11 @@ export default function HowItWorks() {
               key={idx}
               style={{
                 backgroundColor: "#FFFFFF",
-                borderRadius: "clamp(20px, 3vw, 32px)",
-                padding: "36px 30px",
+                borderRadius: "20px",
+                padding: "28px 24px",
                 border: "1px solid var(--border-hairline)",
                 display: "flex",
                 flexDirection: "column",
-                position: "relative",
-                transition: "all 0.3s ease",
                 boxShadow: "var(--shadow-card)",
               }}
             >
@@ -64,24 +59,24 @@ export default function HowItWorks() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  marginBottom: "20px",
+                  marginBottom: "16px",
                 }}
               >
                 <span
                   style={{
-                    fontSize: "14px",
+                    fontSize: "12px",
                     fontWeight: 800,
-                    letterSpacing: "0.05em",
+                    letterSpacing: "0.06em",
                     color: "var(--zinc-400)",
                   }}
                 >
-                  Step {step.num}
+                  STEP {step.num}
                 </span>
 
                 <div
                   style={{
-                    width: "32px",
-                    height: "32px",
+                    width: "28px",
+                    height: "28px",
                     borderRadius: "50%",
                     backgroundColor: "var(--zinc-100)",
                     display: "flex",
@@ -90,15 +85,15 @@ export default function HowItWorks() {
                     color: "var(--zinc-950)",
                   }}
                 >
-                  <ArrowUpRight size={14} />
+                  <ArrowUpRight size={13} />
                 </div>
               </div>
 
               <h3
                 style={{
-                  fontSize: "1.3rem",
+                  fontSize: "1.15rem",
                   fontWeight: 800,
-                  marginBottom: "10px",
+                  marginBottom: "6px",
                   color: "var(--zinc-950)",
                   letterSpacing: "-0.02em",
                 }}
@@ -108,9 +103,9 @@ export default function HowItWorks() {
 
               <p
                 style={{
-                  fontSize: "0.95rem",
+                  fontSize: "0.9rem",
                   color: "var(--zinc-500)",
-                  lineHeight: 1.6,
+                  lineHeight: 1.5,
                   margin: 0,
                   fontWeight: 500,
                 }}

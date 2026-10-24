@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { ArrowUpRight, Check, Eye } from "lucide-react";
+import { ArrowUpRight, Eye } from "lucide-react";
 
 interface HeroProps {
   onOpenOrder: () => void;
@@ -14,40 +14,40 @@ export default function Hero({ onOpenOrder, onOpenDemo }: HeroProps) {
     <section
       id="hero"
       style={{
-        paddingTop: "120px",
-        paddingBottom: "72px",
+        paddingTop: "clamp(84px, 9vw, 108px)",
+        paddingBottom: "60px",
         position: "relative",
         overflow: "hidden",
       }}
     >
       <div className="container" style={{ textAlign: "center" }}>
-        {/* Clean, Bold Minimalist Headline */}
+        {/* Crisp Headline */}
         <h1
           style={{
-            fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)",
+            fontSize: "clamp(2.1rem, 5vw, 3.8rem)",
             fontWeight: 850,
             color: "var(--zinc-950)",
-            lineHeight: 1.12,
+            lineHeight: 1.15,
             letterSpacing: "-0.035em",
             maxWidth: "840px",
-            margin: "0 auto 18px",
+            margin: "0 auto 16px",
           }}
         >
-          ₹0 subscription POS for your restaurant.
+          Run your restaurant on a modern POS. Zero monthly fees.
         </h1>
 
-        {/* Crisp One-Sentence Subtitle */}
+        {/* Minimal 1-Sentence Subtitle */}
         <p
           style={{
-            fontSize: "clamp(1.05rem, 1.8vw, 1.25rem)",
+            fontSize: "clamp(1rem, 1.6vw, 1.18rem)",
             color: "var(--zinc-500)",
             fontWeight: 500,
-            maxWidth: "520px",
-            margin: "0 auto 32px",
+            maxWidth: "600px",
+            margin: "0 auto 28px",
             lineHeight: 1.55,
           }}
         >
-          Acrylic QR table stands + instant mobile menu. No monthly fees. Pay ₹199 per table once, use forever.
+          Live table management, instant kitchen KOTs, contactless QR ordering, and GST billing on any device. No recurring software subscriptions.
         </p>
 
         {/* Two Clean Action Buttons */}
@@ -65,60 +65,41 @@ export default function Hero({ onOpenOrder, onOpenDemo }: HeroProps) {
             type="button"
             className="btn-easyio"
             onClick={onOpenOrder}
-            style={{ height: "52px", fontSize: "14px", padding: "0 24px" }}
+            style={{ height: "48px", fontSize: "13.5px", padding: "0 22px" }}
           >
-            <span>Order Yours Today</span>
+            <span>Get OruPos POS</span>
             <div className="arrow-circle">
-              <ArrowUpRight size={17} />
+              <ArrowUpRight size={16} />
             </div>
           </button>
 
-          <a
-            href="https://wa.me/917006871031?text=Hi%20OruPos%20team,%20I%20want%20to%20get%20the%20zero%20subscription%20POS%20system%20for%20my%20restaurant."
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={onOpenDemo}
             className="btn-easyio-ghost"
-            style={{ height: "52px", padding: "0 22px", textDecoration: "none" }}
+            style={{ height: "48px", padding: "0 20px", fontSize: "13.5px" }}
           >
-            <span>Contact Us Now</span>
-          </a>
-
-          <a
-            href="#how-it-works"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "4px",
-              padding: "0 12px",
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "var(--zinc-400)",
-              textDecoration: "none",
-              transition: "color 0.15s ease",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--zinc-950)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--zinc-400)")}
-          >
-            <span>Know More ↓</span>
-          </a>
+            <Eye size={15} />
+            <span>See Live Demo</span>
+          </button>
         </div>
 
-        {/* Stand Photo Showcase */}
+        {/* High-End Clean Hardware & POS Showcase Image */}
         <div
           style={{
-            maxWidth: "920px",
+            maxWidth: "960px",
             margin: "0 auto",
-            borderRadius: "clamp(20px, 3.5vw, 36px)",
+            borderRadius: "clamp(16px, 3vw, 32px)",
             border: "1px solid var(--border-hairline)",
             backgroundColor: "#FFFFFF",
-            padding: "clamp(10px, 1.8vw, 16px)",
+            padding: "clamp(8px, 1.5vw, 14px)",
             boxShadow: "var(--shadow-float)",
             position: "relative",
           }}
         >
           <div
             style={{
-              borderRadius: "clamp(16px, 2.8vw, 28px)",
+              borderRadius: "clamp(12px, 2.5vw, 24px)",
               overflow: "hidden",
               position: "relative",
               backgroundColor: "var(--zinc-50)",
@@ -126,7 +107,7 @@ export default function Hero({ onOpenOrder, onOpenDemo }: HeroProps) {
           >
             <Image
               src="/assets/hero-table-stand.jpg"
-              alt="OruPos acrylic QR table stand"
+              alt="OruPos restaurant POS table hardware station"
               width={1400}
               height={780}
               priority
@@ -135,14 +116,15 @@ export default function Hero({ onOpenOrder, onOpenDemo }: HeroProps) {
             <div
               style={{
                 position: "absolute",
-                bottom: "16px",
-                right: "16px",
-                backgroundColor: "rgba(9, 9, 11, 0.88)",
+                bottom: "12px",
+                right: "12px",
+                backgroundColor: "rgba(9, 9, 11, 0.85)",
                 backdropFilter: "blur(10px)",
+                WebkitBackdropFilter: "blur(10px)",
                 color: "#FFFFFF",
-                padding: "8px 16px",
+                padding: "6px 14px",
                 borderRadius: "9999px",
-                fontSize: "12px",
+                fontSize: "11px",
                 fontWeight: 600,
                 display: "flex",
                 alignItems: "center",
@@ -150,7 +132,7 @@ export default function Hero({ onOpenOrder, onOpenDemo }: HeroProps) {
               }}
             >
               <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--emerald-500)" }} />
-              <span>Table 04 stand · Ready to use</span>
+              <span>Table 04 Connected · Live POS Synced</span>
             </div>
           </div>
         </div>

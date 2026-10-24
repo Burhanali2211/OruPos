@@ -1,43 +1,45 @@
 import React from "react";
-import { ShieldCheck, Hash, Smartphone, FileCheck } from "lucide-react";
+import {
+  Layers,
+  ChefHat,
+  QrCode,
+  Receipt,
+} from "lucide-react";
 
 export default function WhatYouGet() {
   const deliverables = [
     {
-      icon: ShieldCheck,
-      title: "Heavy Acrylic Stands",
-      desc: "Clear, durable stands that won't fall or bend. Easy to wipe clean after every meal.",
+      icon: Layers,
+      title: "Table Management",
+      desc: "Live floor plan, table occupancy, and seated timers at a single glance.",
     },
     {
-      icon: Hash,
-      title: "Table Numbers on Both Sides",
-      desc: "Large numbers so your waitstaff can spot tables from anywhere across the room.",
+      icon: ChefHat,
+      title: "Kitchen KOT Routing",
+      desc: "Orders route instantly to the kitchen display with table numbers and chef notes.",
     },
     {
-      icon: Smartphone,
-      title: "Fast Mobile Menu",
-      desc: "Opens in 1 second on any phone camera. Clean dish photos, instant search, and veg/non-veg tags.",
+      icon: QrCode,
+      title: "Contactless QR Ordering",
+      desc: "Diners scan from the table to browse and order in 1 second. Zero app downloads.",
     },
     {
-      icon: FileCheck,
-      title: "Free Menu Setup & Updates",
-      desc: "We enter your full menu for you. Need to change prices or add dishes later? Just text us on WhatsApp.",
+      icon: Receipt,
+      title: "GST Billing & Receipts",
+      desc: "Automated 5% restaurant GST, split payments, and instant WhatsApp digital bills.",
     },
   ];
 
   return (
-    <section className="section section-white" id="what-you-get">
+    <section className="section section-white" id="features">
       <div className="container">
         <div className="section-header">
-          <div className="section-kicker-pill">
-            <div className="kicker-dot" />
-            <span className="kicker-text">WHAT'S INCLUDED</span>
-          </div>
+          <span className="section-kicker">POS CAPABILITIES</span>
           <h2 className="section-title">
-            Everything you need for ₹199 per table.
+            Built for modern restaurant speed.
           </h2>
           <p className="section-desc">
-            Physical stands + online digital menu. No monthly fees, no commissions on food sales.
+            Everything you need to run your floor and kitchen without monthly software fees.
           </p>
         </div>
 
@@ -45,7 +47,7 @@ export default function WhatYouGet() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: "24px",
+            gap: "20px",
           }}
           className="package-items-grid"
         >
@@ -57,38 +59,35 @@ export default function WhatYouGet() {
                 style={{
                   backgroundColor: "var(--zinc-50)",
                   border: "1px solid var(--border-hairline)",
-                  borderRadius: "clamp(20px, 3vw, 32px)",
-                  padding: "32px 28px",
+                  borderRadius: "20px",
+                  padding: "24px",
                   display: "flex",
                   flexDirection: "column",
-                  transition: "all 0.25s ease",
-                  position: "relative",
-                  boxShadow: "var(--shadow-card)",
+                  transition: "all 0.2s ease",
                 }}
               >
                 <div
                   style={{
-                    width: "44px",
-                    height: "44px",
-                    borderRadius: "50%",
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "10px",
                     backgroundColor: "#FFFFFF",
                     border: "1px solid var(--zinc-200)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     color: "var(--zinc-950)",
-                    marginBottom: "20px",
-                    boxShadow: "0 2px 6px rgba(0,0,0,0.04)",
+                    marginBottom: "16px",
                   }}
                 >
-                  <Icon size={20} strokeWidth={1.8} />
+                  <Icon size={18} strokeWidth={2} />
                 </div>
 
                 <h3
                   style={{
-                    fontSize: "1.2rem",
+                    fontSize: "1.1rem",
                     fontWeight: 800,
-                    marginBottom: "8px",
+                    marginBottom: "6px",
                     color: "var(--zinc-950)",
                     letterSpacing: "-0.02em",
                   }}
@@ -98,9 +97,9 @@ export default function WhatYouGet() {
 
                 <p
                   style={{
-                    fontSize: "0.925rem",
+                    fontSize: "0.9rem",
                     color: "var(--zinc-500)",
-                    lineHeight: 1.6,
+                    lineHeight: 1.5,
                     margin: 0,
                     fontWeight: 500,
                   }}
