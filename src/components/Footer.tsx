@@ -260,14 +260,20 @@ export default function Footer() {
               <Link href="/blog/best-restaurant-pos-software-kashmir-srinagar" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
                 • Kashmir & Srinagar POS Guide
               </Link>
+              <Link href="/blog/how-to-open-a-cafe-in-srinagar-kashmir-cost-licenses-setup" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
+                • Open a Cafe in Srinagar Guide
+              </Link>
+              <Link href="/blog/restaurant-billing-machine-vs-pos-software-india-comparison" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
+                • Billing Machine vs POS Software
+              </Link>
               <Link href="/blog/petpooja-vs-posist-vs-orupos-restaurant-billing-comparison" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
                 • Petpooja vs OruPOS Pricing
               </Link>
-              <Link href="/blog/how-kashmir-cafes-restaurants-streamline-kot-billing-offline" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
-                • Offline KOT & Peak Rush Guide
+              <Link href="/blog/how-restaurants-prevent-staff-theft-billing-leaks-india" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
+                • Stop Counter Theft & Fraud
               </Link>
-              <Link href="/blog/complete-guide-restaurant-gst-billing-compliance-india" style={{ fontSize: "12px", color: "var(--zinc-500)", textDecoration: "none", lineHeight: 1.4 }}>
-                • 5% Restaurant GST Guide
+              <Link href="/blog" style={{ fontSize: "12px", color: "var(--emerald-600)", fontWeight: 700, textDecoration: "none", lineHeight: 1.4, marginTop: "2px" }}>
+                → Explore All 14 Guides
               </Link>
             </div>
           </div>

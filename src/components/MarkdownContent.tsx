@@ -172,8 +172,14 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
 
     // Headings
     if (line.startsWith("### ")) {
-      const text = line.replace("### ", "").trim();
-      const id = generateHeadingId(text);
+      let rawText = line.replace("### ", "").trim();
+      let customId = "";
+      const idMatch = rawText.match(/\s+\{#([a-zA-Z0-9_-]+)\}$/);
+      if (idMatch) {
+        customId = idMatch[1];
+        rawText = rawText.replace(/\s+\{#([a-zA-Z0-9_-]+)\}$/, "").trim();
+      }
+      const id = customId || generateHeadingId(rawText);
       elements.push(
         <h3
           key={`h3-${index}`}
@@ -188,7 +194,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
             scrollMarginTop: "100px",
           }}
         >
-          {text}
+          {rawText}
         </h3>
       );
       index++;

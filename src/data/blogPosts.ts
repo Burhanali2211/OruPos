@@ -31,6 +31,17 @@ export interface BlogPost {
   content: string; // Markdown or rich HTML-compatible structured content
 }
 
+import { postCafeSrinagar } from "./posts/post-cafe-srinagar";
+import { postBillingMachine } from "./posts/post-billing-machine";
+import { postTheftPrevention } from "./posts/post-theft-prevention";
+import { postSwiggyZomato } from "./posts/post-swiggy-zomato";
+import { postBakeryPos } from "./posts/post-bakery-pos";
+import { postCloudKitchen } from "./posts/post-cloud-kitchen";
+import { postThermalPrinters } from "./posts/post-thermal-printers";
+import { postQsrFastfood } from "./posts/post-qsr-fastfood";
+import { postTouristRush } from "./posts/post-tourist-rush";
+import { postFoodCosting } from "./posts/post-food-costing";
+
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "best-restaurant-pos-software-kashmir-srinagar",
@@ -558,7 +569,17 @@ You shouldn't need a chartered accountant to sit next to your cash register. Wit
 * Daily, monthly, and quarterly sales summaries are exportable in 1-click for your tax filing.
 * No costly software upgrades every time tax rules update.
 `
-  }
+  },
+  postCafeSrinagar,
+  postBillingMachine,
+  postTheftPrevention,
+  postSwiggyZomato,
+  postBakeryPos,
+  postCloudKitchen,
+  postThermalPrinters,
+  postQsrFastfood,
+  postTouristRush,
+  postFoodCosting,
 ];
 
 export function getAllPosts(): BlogPost[] {
