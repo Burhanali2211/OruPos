@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Clock, Calendar, Search, Sparkles, MapPin, CheckCircle2 } from "lucide-react";
+import { ArrowRight, BookOpen, Clock, Calendar, Search, MapPin, CheckCircle2 } from "lucide-react";
 import { getAllPosts } from "@/data/blogPosts";
 import { ORUPOS_CONFIG } from "@/data/config";
 import BlogIndexClient from "./BlogIndexClient";
@@ -185,24 +185,6 @@ export default function BlogIndexPage() {
         }}
       >
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              backgroundColor: "var(--emerald-50)",
-              border: "1px solid var(--emerald-100)",
-              padding: "6px 14px",
-              borderRadius: "9999px",
-              marginBottom: "20px",
-            }}
-          >
-            <Sparkles size={14} color="var(--emerald-600)" />
-            <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--emerald-600)", letterSpacing: "0.02em" }}>
-              HOSPITALITY & RESTAURANT TECH INTELLIGENCE
-            </span>
-          </div>
-
           <h1
             style={{
               fontSize: "clamp(2rem, 4vw, 3.2rem)",

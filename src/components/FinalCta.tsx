@@ -30,20 +30,6 @@ export default function FinalCta() {
           }}
         >
           <div style={{ position: "relative", zIndex: 10, maxWidth: "560px" }}>
-            <span
-              style={{
-                fontSize: "11px",
-                fontWeight: 800,
-                letterSpacing: "0.12em",
-                color: "var(--zinc-400)",
-                textTransform: "uppercase",
-                display: "block",
-                marginBottom: "10px",
-              }}
-            >
-              GET STARTED TODAY
-            </span>
-
             <h2
               style={{
                 fontSize: "clamp(1.8rem, 3.2vw, 2.6rem)",

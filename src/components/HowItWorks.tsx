@@ -40,8 +40,7 @@ export default function HowItWorks() {
   return (
     <section className="section section-subtle" id="how-it-works">
       <div className="container">
-        <div className="section-header" style={{ textAlign: "center", maxWidth: "720px", margin: "0 auto 48px" }}>
-          <span className="section-kicker">SIMPLE ONBOARDING</span>
+        <div className="section-header" style={{ textAlign: "center", maxWidth: "720px", margin: "0 auto 40px" }}>
           <h2 className="section-title">
             How it works
           </h2>

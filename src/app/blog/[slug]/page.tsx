@@ -12,7 +12,6 @@ import {
   ChevronRight,
   MessageCircle,
   HelpCircle,
-  Sparkles,
   ShieldCheck,
   Zap,
 } from "lucide-react";
@@ -408,12 +407,8 @@ export default async function BlogPostPage({ params }: PageProps) {
                   textTransform: "uppercase",
                   color: "var(--emerald-700)",
                   marginBottom: "8px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
                 }}
               >
-                <Sparkles size={14} />
                 EXECUTIVE SUMMARY
               </div>
               <p

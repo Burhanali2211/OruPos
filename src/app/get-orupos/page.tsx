@@ -8,7 +8,6 @@ import {
   ArrowRight,
   Check,
   CheckCircle2,
-  Sparkles,
   MessageCircle,
   Phone,
   Building2,
@@ -263,19 +262,6 @@ function OnboardingForm() {
           <div>
             {/* Title & Value Pitch */}
             <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 36px" }}>
-              <span
-                style={{
-                  fontSize: "11px",
-                  fontWeight: 800,
-                  letterSpacing: "0.12em",
-                  color: "var(--zinc-400)",
-                  textTransform: "uppercase",
-                  display: "block",
-                  marginBottom: "8px",
-                }}
-              >
-                ONBOARDING APPLICATION
-              </span>
               <h1
                 style={{
                   fontSize: "clamp(1.9rem, 4vw, 2.8rem)",
@@ -409,18 +395,7 @@ function OnboardingForm() {
                   {/* STEP 1: PERSONAL INFO */}
                   {step === 1 && (
                     <div>
-                      <div style={{ marginBottom: "24px" }}>
-                        <span
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: 800,
-                            letterSpacing: "0.08em",
-                            color: "var(--emerald-600)",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          STEP 1 OF 3
-                        </span>
+                      <div style={{ marginBottom: "20px" }}>
                         <h2
                           style={{
                             fontSize: "1.45rem",
@@ -638,18 +613,7 @@ function OnboardingForm() {
                   {/* STEP 2: RESTAURANT DETAILS */}
                   {step === 2 && (
                     <div>
-                      <div style={{ marginBottom: "24px" }}>
-                        <span
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: 800,
-                            letterSpacing: "0.08em",
-                            color: "var(--emerald-600)",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          STEP 2 OF 3
-                        </span>
+                      <div style={{ marginBottom: "20px" }}>
                         <h2
                           style={{
                             fontSize: "1.45rem",
@@ -986,18 +950,7 @@ function OnboardingForm() {
                   {/* STEP 3: OPERATIONS & CURRENT SYSTEM */}
                   {step === 3 && (
                     <div>
-                      <div style={{ marginBottom: "24px" }}>
-                        <span
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: 800,
-                            letterSpacing: "0.08em",
-                            color: "var(--emerald-600)",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          STEP 3 OF 3
-                        </span>
+                      <div style={{ marginBottom: "20px" }}>
                         <h2
                           style={{
                             fontSize: "1.45rem",
@@ -1396,20 +1349,6 @@ function OnboardingForm() {
             >
               <CheckCircle2 size={38} strokeWidth={2.4} />
             </div>
-
-            <span
-              style={{
-                fontSize: "11px",
-                fontWeight: 800,
-                letterSpacing: "0.12em",
-                color: "var(--emerald-600)",
-                textTransform: "uppercase",
-                display: "block",
-                marginBottom: "8px",
-              }}
-            >
-              APPLICATION RECEIVED
-            </span>
 
             <h2
               style={{

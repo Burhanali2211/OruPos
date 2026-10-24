@@ -26,31 +26,10 @@ export default function Hero({ onOpenDemo }: HeroProps) {
       }}
     >
       <div className="container" style={{ textAlign: "center" }}>
-        {/* Crisp Badge */}
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            backgroundColor: "var(--zinc-100)",
-            border: "1px solid var(--zinc-200)",
-            padding: "6px 14px",
-            borderRadius: "9999px",
-            fontSize: "12px",
-            fontWeight: 700,
-            color: "var(--zinc-800)",
-            marginBottom: "20px",
-            letterSpacing: "-0.01em",
-          }}
-        >
-          <span style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: "var(--emerald-500)" }} />
-          <span>Zero Monthly Fees · Web, Mobile & Desktop Apps</span>
-        </div>
-
         {/* Crisp Headline: Your 0 Subscription POS System */}
         <h1
           style={{
-            fontSize: "clamp(2.3rem, 5.5vw, 4.2rem)",
+            fontSize: "clamp(2.4rem, 5.5vw, 4.2rem)",
             fontWeight: 900,
             color: "var(--zinc-950)",
             lineHeight: 1.12,
@@ -69,7 +48,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
             color: "var(--zinc-500)",
             fontWeight: 500,
             maxWidth: "680px",
-            margin: "0 auto 32px",
+            margin: "0 auto 36px",
             lineHeight: 1.55,
           }}
         >
@@ -168,27 +147,6 @@ export default function Hero({ onOpenDemo }: HeroProps) {
               priority
               style={{ width: "100%", height: "auto", display: "block" }}
             />
-            <div
-              style={{
-                position: "absolute",
-                bottom: "12px",
-                right: "12px",
-                backgroundColor: "rgba(9, 9, 11, 0.85)",
-                backdropFilter: "blur(10px)",
-                WebkitBackdropFilter: "blur(10px)",
-                color: "#FFFFFF",
-                padding: "6px 14px",
-                borderRadius: "9999px",
-                fontSize: "11px",
-                fontWeight: 600,
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "var(--emerald-500)" }} />
-              <span>Table 04 Connected · Live POS Synced</span>
-            </div>
           </div>
         </div>
       </div>

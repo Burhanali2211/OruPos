@@ -51,8 +51,7 @@ export default function PricingComparison() {
   return (
     <section className="section section-white" id="comparison">
       <div className="container">
-        <div className="section-header" style={{ textAlign: "center", maxWidth: "760px", margin: "0 auto 40px" }}>
-          <span className="section-kicker">COMPARISON</span>
+        <div className="section-header" style={{ textAlign: "center", maxWidth: "760px", margin: "0 auto 36px" }}>
           <h2 className="section-title">
             OruPos vs Petpooja & Legacy POS
           </h2>
@@ -90,8 +89,7 @@ export default function PricingComparison() {
                 }}
               >
                 <div style={{ color: "var(--zinc-400)" }}>Feature / Capability</div>
-                <div style={{ color: "var(--zinc-950)", display: "flex", alignItems: "center", gap: "6px" }}>
-                  <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "var(--emerald-500)" }} />
+                <div style={{ color: "var(--zinc-950)", fontWeight: 800 }}>
                   <span>OruPos (0 Subscription)</span>
                 </div>
                 <div style={{ color: "var(--zinc-400)" }}>Petpooja & Legacy POS</div>

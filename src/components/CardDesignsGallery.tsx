@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MessageCircle, ShieldCheck, Sparkles, Layers, RefreshCw, ArrowUpRight } from "lucide-react";
+import { MessageCircle, ShieldCheck, QrCode, Layers, RefreshCw, ArrowUpRight } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
 export default function CardDesignsGallery() {
@@ -53,7 +53,7 @@ export default function CardDesignsGallery() {
       desc: "Waterproof, oil-proof, and heat-resistant. Simply wipe down with a damp cloth in seconds.",
     },
     {
-      icon: Sparkles,
+      icon: QrCode,
       title: "Dual-Sided QR & Table Matrix",
       desc: "High-contrast table numbers printed on both sides so diners can scan easily from any seat.",
     },
@@ -84,7 +84,6 @@ export default function CardDesignsGallery() {
           }}
         >
           <div style={{ maxWidth: "620px" }}>
-            <span className="section-kicker">TABLE HARDWARE STATIONS</span>
             <h2 className="section-title">
               Crafted for your dining ambiance.
             </h2>

@@ -1,5 +1,5 @@
 import React from "react";
-import { RefreshCw, Users, QrCode, Sparkles, TrendingUp, Clock, CheckCircle2 } from "lucide-react";
+import { RefreshCw, Users, QrCode, TrendingUp, Clock, CheckCircle2 } from "lucide-react";
 
 export default function Benefits() {
   const benefits = [
@@ -34,7 +34,7 @@ export default function Benefits() {
       title: "Spill-Proof, Gravy-Proof & Pristine",
       highlight: "Heavy-Duty 3mm Optical Cast Acrylic",
       desc: "Paper menus get grease stains, curry splashes, and dog-eared corners. Our heavy-duty acrylic stands stay upright beside salt shakers, wipe clean with a wet cloth, and maintain a 5-star restaurant look.",
-      icon: <Sparkles size={24} color="#E5A93C" />,
+      icon: <CheckCircle2 size={24} color="#E5A93C" />,
       bg: "rgba(229, 169, 60, 0.15)",
       stat: "100%",
       statLabel: "Water & spill resistant",
