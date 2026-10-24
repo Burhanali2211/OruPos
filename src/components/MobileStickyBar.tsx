@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { MessageCircle, ArrowUpRight } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
@@ -53,14 +54,32 @@ export default function MobileStickyBar() {
           rel="noopener noreferrer"
           aria-label="WhatsApp"
           style={{
+            width: "38px",
             height: "38px",
-            padding: "0 18px",
+            borderRadius: "50%",
+            backgroundColor: "rgba(255, 255, 255, 0.12)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "var(--emerald-500)",
+            textDecoration: "none",
+          }}
+        >
+          <MessageCircle size={16} />
+        </a>
+
+        <Link
+          href="/get-orupos"
+          style={{
+            height: "38px",
+            padding: "0 16px",
             backgroundColor: "#FFFFFF",
             color: "var(--zinc-950)",
-            fontSize: "12px",
+            fontSize: "11.5px",
             fontWeight: 800,
             textTransform: "uppercase",
-            letterSpacing: "0.06em",
+            letterSpacing: "0.08em",
             borderRadius: "9999px",
             textDecoration: "none",
             display: "inline-flex",
@@ -69,10 +88,9 @@ export default function MobileStickyBar() {
             boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)",
           }}
         >
-          <MessageCircle size={15} color="var(--emerald-600)" />
-          <span>Contact Us Now</span>
+          <span>Get POS</span>
           <ArrowUpRight size={13} />
-        </a>
+        </Link>
       </div>
     </div>
   );

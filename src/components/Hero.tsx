@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight, ArrowDown, MessageCircle } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
@@ -75,7 +76,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
           QR-based digital menus, direct-to-vendor payment settlement, instant kitchen KOT routing, live table management, and GST billing on your existing devices.
         </p>
 
-        {/* Two Requested Action Buttons: Contact Us Now & Learn More */}
+        {/* Action Buttons: Get OruPos POS, Contact Us Now & Learn More */}
         <div
           style={{
             display: "flex",
@@ -86,10 +87,8 @@ export default function Hero({ onOpenDemo }: HeroProps) {
             marginBottom: "44px",
           }}
         >
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/get-orupos"
             className="btn-easyio"
             style={{
               height: "50px",
@@ -98,15 +97,16 @@ export default function Hero({ onOpenDemo }: HeroProps) {
               textDecoration: "none",
             }}
           >
-            <MessageCircle size={17} style={{ marginRight: "4px" }} />
-            <span>Contact Us Now</span>
+            <span>Get OruPos POS</span>
             <div className="arrow-circle">
               <ArrowUpRight size={16} />
             </div>
-          </a>
+          </Link>
 
           <a
-            href="#features"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-easyio-ghost"
             style={{
               height: "50px",
@@ -116,8 +116,26 @@ export default function Hero({ onOpenDemo }: HeroProps) {
               color: "var(--zinc-800)",
             }}
           >
+            <MessageCircle size={16} color="var(--emerald-600)" />
+            <span>Contact Us Now</span>
+          </a>
+
+          <a
+            href="#features"
+            style={{
+              height: "50px",
+              padding: "0 18px",
+              fontSize: "13.5px",
+              fontWeight: 700,
+              textDecoration: "none",
+              color: "var(--zinc-500)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+            }}
+          >
             <span>Learn More</span>
-            <ArrowDown size={15} />
+            <ArrowDown size={14} />
           </a>
         </div>
 

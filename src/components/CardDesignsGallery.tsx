@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { MessageCircle, ShieldCheck, Sparkles, Layers, RefreshCw } from "lucide-react";
+import Link from "next/link";
+import { MessageCircle, ShieldCheck, Sparkles, Layers, RefreshCw, ArrowUpRight } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
 export default function CardDesignsGallery() {
@@ -202,28 +203,47 @@ export default function CardDesignsGallery() {
               ))}
             </div>
 
-            <a
-              href={hardwareInquiryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: "var(--zinc-950)",
-                fontWeight: 750,
-                fontSize: "12.5px",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                textDecoration: "none",
-                padding: "6px 14px",
-                borderRadius: "9999px",
-                backgroundColor: "#FFFFFF",
-                border: "1px solid var(--zinc-200)",
-                transition: "all 0.15s ease",
-              }}
-            >
-              <MessageCircle size={14} color="var(--emerald-600)" />
-              <span>Inquire for Custom Branded Stands</span>
-            </a>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+              <Link
+                href="/get-orupos"
+                style={{
+                  color: "var(--zinc-950)",
+                  fontWeight: 750,
+                  fontSize: "12.5px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  textDecoration: "none",
+                  padding: "6px 14px",
+                  borderRadius: "9999px",
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid var(--zinc-200)",
+                  transition: "all 0.15s ease",
+                }}
+              >
+                <span>Get Custom Stands</span>
+                <ArrowUpRight size={13} />
+              </Link>
+
+              <a
+                href={hardwareInquiryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "var(--zinc-600)",
+                  fontWeight: 650,
+                  fontSize: "12px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  textDecoration: "none",
+                  padding: "6px 12px",
+                }}
+              >
+                <MessageCircle size={14} color="var(--emerald-600)" />
+                <span>WhatsApp Design Inquiry</span>
+              </a>
+            </div>
           </div>
         </div>
 

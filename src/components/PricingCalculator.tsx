@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { ArrowUpRight, Minus, Plus, MessageCircle } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
@@ -245,28 +246,48 @@ export default function PricingCalculator() {
             </strong>
           </div>
 
-          {/* Action Button: Replaced with Contact Us CTA */}
-          <a
-            href={orderWhatsAppUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-easyio"
-            style={{
-              width: "100%",
-              height: "50px",
-              fontSize: "13.5px",
-              textDecoration: "none",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <MessageCircle size={16} style={{ marginRight: "6px" }} />
-            <span>Contact Us to Setup {tables} Tables</span>
-            <div className="arrow-circle">
-              <ArrowUpRight size={16} />
-            </div>
-          </a>
+          {/* Action Buttons: Link to /get-orupos and WhatsApp alternative */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <Link
+              href={`/get-orupos?tables=${tables}`}
+              className="btn-easyio"
+              style={{
+                width: "100%",
+                height: "50px",
+                fontSize: "13.5px",
+                textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <span>Get OruPos POS for {tables} Tables</span>
+              <div className="arrow-circle">
+                <ArrowUpRight size={16} />
+              </div>
+            </Link>
+
+            <a
+              href={orderWhatsAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: "12.5px",
+                color: "var(--zinc-500)",
+                fontWeight: 650,
+                textAlign: "center",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                padding: "6px 0",
+              }}
+            >
+              <MessageCircle size={14} color="var(--emerald-600)" />
+              <span>Or quick order directly via WhatsApp</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

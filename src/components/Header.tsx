@@ -156,10 +156,8 @@ export default function Header() {
               <span>WhatsApp</span>
             </a>
 
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/get-orupos"
               className="header-order-btn"
               style={{
                 height: "38px",
@@ -180,10 +178,10 @@ export default function Header() {
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--zinc-800)")}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--zinc-950)")}
             >
-              <span className="hidden-mobile">Contact Us Now</span>
-              <span className="show-mobile" style={{ display: "none" }}>Contact Us</span>
+              <span className="hidden-mobile">Get OruPos</span>
+              <span className="show-mobile" style={{ display: "none" }}>Get POS</span>
               <ArrowUpRight size={13} />
-            </a>
+            </Link>
 
             {/* Mobile Hamburger Button */}
             <button
@@ -266,19 +264,17 @@ export default function Header() {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "24px" }}>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/get-orupos"
               onClick={() => setMobileMenuOpen(false)}
               className="btn-easyio"
               style={{ width: "100%", height: "50px", fontSize: "13px", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}
             >
-              <span>Contact Us Now</span>
+              <span>Get OruPos POS</span>
               <div className="arrow-circle">
                 <ArrowUpRight size={16} />
               </div>
-            </a>
+            </Link>
 
             <a
               href={whatsappUrl}

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Check, X, ArrowUpRight, MessageCircle } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
@@ -150,10 +151,8 @@ export default function PricingComparison() {
               </div>
             </div>
 
-            <a
-              href={switchInquiryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/get-orupos"
               style={{
                 height: "44px",
                 padding: "0 22px",
@@ -171,10 +170,9 @@ export default function PricingComparison() {
                 whiteSpace: "nowrap",
               }}
             >
-              <MessageCircle size={15} color="var(--emerald-600)" />
-              <span>Contact Us Now</span>
+              <span>Get OruPos POS</span>
               <ArrowUpRight size={14} />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
