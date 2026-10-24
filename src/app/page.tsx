@@ -7,7 +7,6 @@ import WhatYouGet from "@/components/WhatYouGet";
 import HowItWorks from "@/components/HowItWorks";
 import CardDesignsGallery from "@/components/CardDesignsGallery";
 import PricingComparison from "@/components/PricingComparison";
-import PricingCalculator from "@/components/PricingCalculator";
 import FaqSection from "@/components/FaqSection";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
@@ -36,8 +35,6 @@ export default function HomePage() {
         <CardDesignsGallery />
 
         <PricingComparison />
-
-        <PricingCalculator />
 
         <FaqSection />
 

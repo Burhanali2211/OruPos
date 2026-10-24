@@ -94,7 +94,6 @@ export default function Header() {
               {[
                 { href: "#how-it-works", label: "How It Works" },
                 { href: "#comparison", label: "POS vs Others" },
-                { href: "#pricing", label: "Pricing" },
                 { href: "#faq", label: "FAQ" },
               ].map((item, idx) => (
                 <a
@@ -231,7 +230,6 @@ export default function Header() {
             {[
               { href: "#how-it-works", label: "How It Works" },
               { href: "#comparison", label: "POS vs Others" },
-              { href: "#pricing", label: "Pricing & Calculator" },
               { href: "#faq", label: "FAQ" },
             ].map((item, idx) => (
               <a
