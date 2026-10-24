@@ -156,8 +156,10 @@ export default function Footer() {
             </h4>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
               {[
-                { label: "POS Features", href: "#features" },
+                { label: "Get OruPos", href: "/get-orupos" },
                 { label: "How It Works", href: "#how-it-works" },
+                { label: "POS Features", href: "#features" },
+                { label: "Table Hardware", href: "#designs" },
                 { label: "POS vs Others", href: "#comparison" },
                 { label: "Pricing", href: "#pricing" },
                 { label: "Blog & Guides", href: "/blog" },

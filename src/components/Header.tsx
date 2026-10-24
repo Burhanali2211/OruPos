@@ -88,16 +88,13 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links — Clean & Uncluttered */}
           <nav aria-label="Main Navigation" className="hidden-mobile">
-            <div style={{ display: "flex", alignItems: "center", gap: "28px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "32px" }}>
               {[
-                { href: "#features", label: "POS Features" },
                 { href: "#how-it-works", label: "How It Works" },
-                { href: "#designs", label: "Table Hardware" },
                 { href: "#comparison", label: "POS vs Others" },
                 { href: "#pricing", label: "Pricing" },
-                { href: "/blog", label: "Blog & Guides" },
                 { href: "#faq", label: "FAQ" },
               ].map((item, idx) => (
                 <a
@@ -232,12 +229,9 @@ export default function Header() {
         >
           <div style={{ display: "flex", flexDirection: "column" }}>
             {[
-              { href: "#features", label: "POS Features" },
               { href: "#how-it-works", label: "How It Works" },
-              { href: "#designs", label: "Table Hardware" },
               { href: "#comparison", label: "POS vs Others" },
               { href: "#pricing", label: "Pricing & Calculator" },
-              { href: "/blog", label: "Blog & Guides" },
               { href: "#faq", label: "FAQ" },
             ].map((item, idx) => (
               <a
