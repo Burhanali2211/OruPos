@@ -1,14 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowUpRight, Minus, Plus } from "lucide-react";
+import { ArrowUpRight, Minus, Plus, MessageCircle } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
-interface PricingCalculatorProps {
-  onOpenOrder: (tablesCount: number) => void;
-}
-
-export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProps) {
+export default function PricingCalculator() {
   const [tables, setTables] = useState<number>(10);
   const pricePerTable = ORUPOS_CONFIG.pricing.pricePerTable;
   const presets = [5, 10, 15, 20, 30];
@@ -22,6 +18,11 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
   };
 
   const total = tables * pricePerTable;
+
+  const orderWhatsAppUrl = ORUPOS_CONFIG.getWhatsAppUrl({
+    tables,
+    customMessage: `Hi OruPos Team! I am interested in onboarding my restaurant with OruPos 0-Subscription POS for ${tables} tables (₹${total.toLocaleString("en-IN")} one-time hardware setup). Please guide me on getting started.`,
+  });
 
   return (
     <section className="section section-subtle" id="pricing">
@@ -244,18 +245,28 @@ export default function PricingCalculator({ onOpenOrder }: PricingCalculatorProp
             </strong>
           </div>
 
-          {/* Action Button */}
-          <button
-            type="button"
+          {/* Action Button: Replaced with Contact Us CTA */}
+          <a
+            href={orderWhatsAppUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-easyio"
-            onClick={() => onOpenOrder(tables)}
-            style={{ width: "100%", height: "50px", fontSize: "13.5px" }}
+            style={{
+              width: "100%",
+              height: "50px",
+              fontSize: "13.5px",
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            <span>Get OruPos POS for {tables} Tables</span>
+            <MessageCircle size={16} style={{ marginRight: "6px" }} />
+            <span>Contact Us to Setup {tables} Tables</span>
             <div className="arrow-circle">
               <ArrowUpRight size={16} />
             </div>
-          </button>
+          </a>
         </div>
       </div>
     </section>

@@ -5,12 +5,11 @@ import Link from "next/link";
 import { MessageCircle, Menu, X, ArrowUpRight } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
-interface HeaderProps {
-  onOpenOrder: () => void;
-}
-
-export default function Header({ onOpenOrder }: HeaderProps) {
+export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const whatsappUrl = ORUPOS_CONFIG.getWhatsAppUrl({
+    customMessage: "Hi OruPos Team! I am interested in getting the 0-Subscription POS system for my restaurant. Please guide me.",
+  });
 
   return (
     <>
@@ -95,6 +94,7 @@ export default function Header({ onOpenOrder }: HeaderProps) {
               {[
                 { href: "#features", label: "POS Features" },
                 { href: "#how-it-works", label: "How It Works" },
+                { href: "#designs", label: "Table Hardware" },
                 { href: "#comparison", label: "POS vs Others" },
                 { href: "#pricing", label: "Pricing" },
                 { href: "/blog", label: "Blog & Guides" },
@@ -123,7 +123,7 @@ export default function Header({ onOpenOrder }: HeaderProps) {
           {/* Right Actions */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <a
-              href={ORUPOS_CONFIG.getWhatsAppUrl()}
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp Inquiry"
@@ -156,9 +156,10 @@ export default function Header({ onOpenOrder }: HeaderProps) {
               <span>WhatsApp</span>
             </a>
 
-            <button
-              type="button"
-              onClick={onOpenOrder}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="header-order-btn"
               style={{
                 height: "38px",
@@ -168,8 +169,7 @@ export default function Header({ onOpenOrder }: HeaderProps) {
                 fontSize: "12px",
                 fontWeight: 700,
                 borderRadius: "9999px",
-                border: "none",
-                cursor: "pointer",
+                textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
@@ -180,10 +180,10 @@ export default function Header({ onOpenOrder }: HeaderProps) {
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--zinc-800)")}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--zinc-950)")}
             >
-              <span className="hidden-mobile">Get OruPos POS</span>
-              <span className="show-mobile" style={{ display: "none" }}>Get POS</span>
+              <span className="hidden-mobile">Contact Us Now</span>
+              <span className="show-mobile" style={{ display: "none" }}>Contact Us</span>
               <ArrowUpRight size={13} />
-            </button>
+            </a>
 
             {/* Mobile Hamburger Button */}
             <button
@@ -236,9 +236,10 @@ export default function Header({ onOpenOrder }: HeaderProps) {
             {[
               { href: "#features", label: "POS Features" },
               { href: "#how-it-works", label: "How It Works" },
+              { href: "#designs", label: "Table Hardware" },
               { href: "#comparison", label: "POS vs Others" },
               { href: "#pricing", label: "Pricing & Calculator" },
-              { href: "/blog", label: "Blog & Regional Guides" },
+              { href: "/blog", label: "Blog & Guides" },
               { href: "#faq", label: "FAQ" },
             ].map((item, idx) => (
               <a
@@ -265,27 +266,27 @@ export default function Header({ onOpenOrder }: HeaderProps) {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "24px" }}>
-            <button
-              type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenOrder();
-              }}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
               className="btn-easyio"
-              style={{ width: "100%", height: "50px", fontSize: "13px" }}
+              style={{ width: "100%", height: "50px", fontSize: "13px", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}
             >
-              <span>Get OruPos POS</span>
+              <span>Contact Us Now</span>
               <div className="arrow-circle">
                 <ArrowUpRight size={16} />
               </div>
-            </button>
+            </a>
 
             <a
-              href={ORUPOS_CONFIG.getWhatsAppUrl()}
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
               className="btn-easyio-ghost"
-              style={{ width: "100%", height: "46px", justifyContent: "center", fontSize: "13px" }}
+              style={{ width: "100%", height: "46px", justifyContent: "center", fontSize: "13px", textDecoration: "none" }}
             >
               <MessageCircle size={16} color="var(--emerald-600)" />
               <span>Chat on WhatsApp</span>

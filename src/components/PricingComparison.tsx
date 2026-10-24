@@ -1,77 +1,85 @@
+"use client";
+
 import React from "react";
-import { Check, X, ArrowUpRight } from "lucide-react";
+import { Check, X, ArrowUpRight, MessageCircle } from "lucide-react";
+import { ORUPOS_CONFIG } from "@/data/config";
 
-interface PricingComparisonProps {
-  onOpenOrder: () => void;
-}
-
-export default function PricingComparison({ onOpenOrder }: PricingComparisonProps) {
+export default function PricingComparison() {
   const comparisonRows = [
     {
       feature: "Monthly Software Fee",
-      orupos: "₹0 forever",
-      others: "₹1,500 – ₹4,000 / month",
+      orupos: "₹0 forever (Zero Subscription)",
+      others: "₹1,500 – ₹4,000 / month recurring",
     },
     {
       feature: "Floor Table Management",
-      orupos: "Included natively",
-      others: "Paid enterprise add-on",
+      orupos: "Included natively (Unlimited tables)",
+      others: "Paid enterprise add-on / higher tier",
     },
     {
-      feature: "Kitchen KOT Routing",
-      orupos: "Included with chef notes",
-      others: "Extra module fee",
+      feature: "Kitchen KOT Routing & KDS",
+      orupos: "Included with live chef notes & printing",
+      others: "Extra module fee per terminal",
     },
     {
-      feature: "Food Sales Commission",
-      orupos: "0% commission",
-      others: "2% to 5% platform cut",
+      feature: "Direct Vendor Payment Settlement",
+      orupos: "Instant direct to your UPI / bank account",
+      others: "Third-party gateway fees & delayed payouts",
     },
     {
-      feature: "Table Hardware",
-      orupos: "3mm acrylic stands included",
-      others: "None (restaurateur prints DIY)",
+      feature: "Device Flexibility",
+      orupos: "Web, Mobile & Desktop on any phone or PC",
+      others: "Locks into expensive ₹25,000+ POS hardware",
     },
     {
-      feature: "Device Lock-In",
-      orupos: "Runs on any phone, tablet, or PC",
-      others: "Locks into ₹25,000 billing hardware",
+      feature: "Table QR Hardware Stations",
+      orupos: "Custom 3mm optical cast acrylic included",
+      others: "None (restaurateur prints DIY paper slips)",
+    },
+    {
+      feature: "Custom Branded Website",
+      orupos: "Free dedicated digital menu website",
+      others: "Paid website builder & domain add-ons",
     },
   ];
+
+  const switchInquiryUrl = ORUPOS_CONFIG.getWhatsAppUrl({
+    customMessage: "Hi OruPos Team! I would like to switch my restaurant to the OruPos 0-Subscription POS System. Please guide me on onboarding.",
+  });
 
   return (
     <section className="section section-white" id="comparison">
       <div className="container">
-        <div className="section-header" style={{ textAlign: "center" }}>
+        <div className="section-header" style={{ textAlign: "center", maxWidth: "760px", margin: "0 auto 40px" }}>
           <span className="section-kicker">COMPARISON</span>
           <h2 className="section-title">
-            Why switch to zero-subscription POS?
+            OruPos vs Petpooja & Legacy POS
           </h2>
           <p className="section-desc" style={{ margin: "0 auto" }}>
-            Compare OruPos against traditional monthly restaurant POS software.
+            Compare zero-subscription OruPos against Petpooja, Dine In, and traditional recurring restaurant software.
           </p>
         </div>
 
         {/* Comparison Box with Mobile Horizontal Scroll */}
         <div
           style={{
-            maxWidth: "880px",
+            maxWidth: "920px",
             margin: "0 auto",
             backgroundColor: "#FFFFFF",
             border: "1px solid var(--border-hairline)",
-            borderRadius: "clamp(16px, 2.5vw, 28px)",
+            borderRadius: "clamp(18px, 2.8vw, 30px)",
             overflow: "hidden",
             boxShadow: "var(--shadow-card)",
           }}
         >
           <div className="comparison-scroll-box">
-            <div style={{ minWidth: "560px" }}>
+            <div style={{ minWidth: "620px" }}>
               {/* Table Header */}
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1.4fr 1.1fr 1fr",
-                  padding: "16px 20px",
+                  gridTemplateColumns: "1.4fr 1.2fr 1fr",
+                  padding: "18px 24px",
                   backgroundColor: "var(--zinc-50)",
                   borderBottom: "1px solid var(--border-subtle)",
                   fontWeight: 800,
@@ -80,38 +88,38 @@ export default function PricingComparison({ onOpenOrder }: PricingComparisonProp
                   letterSpacing: "0.05em",
                 }}
               >
-                <div style={{ color: "var(--zinc-400)" }}>Feature</div>
+                <div style={{ color: "var(--zinc-400)" }}>Feature / Capability</div>
                 <div style={{ color: "var(--zinc-950)", display: "flex", alignItems: "center", gap: "6px" }}>
-                  <span style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: "var(--emerald-500)" }} />
-                  <span>OruPos (₹0 Monthly)</span>
+                  <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "var(--emerald-500)" }} />
+                  <span>OruPos (0 Subscription)</span>
                 </div>
-                <div style={{ color: "var(--zinc-400)" }}>Legacy POS Apps</div>
+                <div style={{ color: "var(--zinc-400)" }}>Petpooja & Legacy POS</div>
               </div>
 
-              {/* Table Body */}
+              {/* Table Body (NO COMMISSION LINE) */}
               <div style={{ display: "flex", flexDirection: "column" }}>
                 {comparisonRows.map((row, idx) => (
                   <div
                     key={idx}
                     style={{
                       display: "grid",
-                      gridTemplateColumns: "1.4fr 1.1fr 1fr",
-                      padding: "14px 20px",
+                      gridTemplateColumns: "1.4fr 1.2fr 1fr",
+                      padding: "16px 24px",
                       borderBottom: idx < comparisonRows.length - 1 ? "1px solid var(--border-subtle)" : "none",
                       alignItems: "center",
-                      fontSize: "13px",
+                      fontSize: "13.5px",
                       backgroundColor: idx % 2 === 0 ? "#FFFFFF" : "rgba(250, 250, 250, 0.4)",
                     }}
                   >
                     <div style={{ fontWeight: 650, color: "var(--zinc-800)" }}>
                       {row.feature}
                     </div>
-                    <div style={{ fontWeight: 700, color: "var(--zinc-950)", display: "flex", alignItems: "center", gap: "6px" }}>
-                      <Check size={15} color="var(--emerald-600)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                    <div style={{ fontWeight: 700, color: "var(--zinc-950)", display: "flex", alignItems: "center", gap: "8px" }}>
+                      <Check size={16} color="var(--emerald-600)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                       <span>{row.orupos}</span>
                     </div>
-                    <div style={{ color: "var(--zinc-400)", fontWeight: 500, display: "flex", alignItems: "center", gap: "6px" }}>
-                      <X size={14} color="var(--zinc-300)" strokeWidth={2} style={{ flexShrink: 0 }} />
+                    <div style={{ color: "var(--zinc-400)", fontWeight: 500, display: "flex", alignItems: "center", gap: "8px" }}>
+                      <X size={15} color="var(--zinc-300)" strokeWidth={2} style={{ flexShrink: 0 }} />
                       <span>{row.others}</span>
                     </div>
                   </div>
@@ -120,52 +128,53 @@ export default function PricingComparison({ onOpenOrder }: PricingComparisonProp
             </div>
           </div>
 
-          {/* Table Footer Banner */}
+          {/* Table Footer Banner with Contact Us Now CTA */}
           <div
             style={{
-              padding: "18px 20px",
+              padding: "20px 24px",
               backgroundColor: "var(--zinc-950)",
               color: "#FFFFFF",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               flexWrap: "wrap",
-              gap: "14px",
+              gap: "16px",
             }}
           >
             <div>
-              <div style={{ fontSize: "14px", fontWeight: 800 }}>
-                Save over ₹25,000 every year in POS software rent
+              <div style={{ fontSize: "14.5px", fontWeight: 800 }}>
+                Save ₹25,000 to ₹48,000 every year in POS software rent
               </div>
-              <div style={{ fontSize: "12px", color: "var(--zinc-400)", marginTop: "2px" }}>
-                Zero monthly fees forever. Cloud POS software + hardware included.
+              <div style={{ fontSize: "12px", color: "var(--zinc-400)", marginTop: "3px" }}>
+                Zero monthly subscriptions forever. Complete cloud POS, KOT, and table hardware.
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={onOpenOrder}
+            <a
+              href={switchInquiryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
-                height: "42px",
-                padding: "0 20px",
+                height: "44px",
+                padding: "0 22px",
                 backgroundColor: "#FFFFFF",
                 color: "var(--zinc-950)",
                 borderRadius: "9999px",
                 fontWeight: 800,
-                fontSize: "12px",
-                border: "none",
-                cursor: "pointer",
-                transition: "all 0.15s ease",
+                fontSize: "12.5px",
+                textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
+                boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)",
+                transition: "all 0.15s ease",
+                whiteSpace: "nowrap",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--butter-yellow)")}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#FFFFFF")}
             >
-              <span>Get OruPos POS</span>
-              <ArrowUpRight size={13} />
-            </button>
+              <MessageCircle size={15} color="var(--emerald-600)" />
+              <span>Contact Us Now</span>
+              <ArrowUpRight size={14} />
+            </a>
           </div>
         </div>
       </div>

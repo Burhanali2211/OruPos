@@ -4,11 +4,11 @@ import React from "react";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
-interface FinalCtaProps {
-  onOpenOrder: () => void;
-}
+export default function FinalCta() {
+  const whatsappUrl = ORUPOS_CONFIG.getWhatsAppUrl({
+    customMessage: "Hi OruPos Team! I am ready to switch our restaurant to the 0-Subscription OruPos POS system. Please connect with me.",
+  });
 
-export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
   return (
     <section className="section section-white">
       <div className="container">
@@ -28,7 +28,7 @@ export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
             boxShadow: "0 16px 40px rgba(9, 9, 11, 0.2)",
           }}
         >
-          <div style={{ position: "relative", zIndex: 10, maxWidth: "520px" }}>
+          <div style={{ position: "relative", zIndex: 10, maxWidth: "560px" }}>
             <span
               style={{
                 fontSize: "11px",
@@ -40,7 +40,7 @@ export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
                 marginBottom: "10px",
               }}
             >
-              GET STARTED
+              GET STARTED TODAY
             </span>
 
             <h2
@@ -53,7 +53,7 @@ export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
                 marginBottom: "10px",
               }}
             >
-              Switch to a zero-subscription POS.
+              Your 0 Subscription POS System is ready.
             </h2>
 
             <p
@@ -65,7 +65,7 @@ export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
                 fontWeight: 500,
               }}
             >
-              Run your floor, kitchen KOTs, and GST billing on your existing devices with zero monthly software fees.
+              Manage live tables, route kitchen KOTs, offer QR menus, and settle payments directly to your bank account with zero monthly software fees.
             </p>
           </div>
 
@@ -75,13 +75,14 @@ export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
               zIndex: 10,
               display: "flex",
               alignItems: "center",
-              gap: "10px",
+              gap: "12px",
               flexWrap: "wrap",
             }}
           >
-            <button
-              type="button"
-              onClick={onOpenOrder}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 height: "48px",
                 padding: "0 24px",
@@ -89,43 +90,19 @@ export default function FinalCta({ onOpenOrder }: FinalCtaProps) {
                 color: "var(--zinc-950)",
                 borderRadius: "9999px",
                 fontWeight: 800,
-                fontSize: "12.5px",
-                border: "none",
-                cursor: "pointer",
+                fontSize: "13px",
+                textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
                 transition: "all 0.15s ease",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--butter-yellow)")}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--zinc-100)")}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#FFFFFF")}
             >
-              <span>Get OruPos POS</span>
+              <MessageCircle size={16} color="var(--emerald-600)" />
+              <span>Contact Us Now</span>
               <ArrowUpRight size={15} />
-            </button>
-
-            <a
-              href={ORUPOS_CONFIG.getWhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                height: "48px",
-                padding: "0 18px",
-                backgroundColor: "rgba(255, 255, 255, 0.08)",
-                color: "#FFFFFF",
-                borderRadius: "9999px",
-                fontWeight: 700,
-                fontSize: "12.5px",
-                border: "1px solid rgba(255, 255, 255, 0.15)",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                textDecoration: "none",
-                transition: "all 0.15s ease",
-              }}
-            >
-              <MessageCircle size={15} color="var(--emerald-500)" />
-              <span>WhatsApp</span>
             </a>
           </div>
         </div>

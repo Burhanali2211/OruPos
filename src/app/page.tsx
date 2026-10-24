@@ -11,23 +11,11 @@ import PricingCalculator from "@/components/PricingCalculator";
 import FaqSection from "@/components/FaqSection";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
-import OrderModal from "@/components/OrderModal";
 import DemoModal from "@/components/DemoModal";
 import MobileStickyBar from "@/components/MobileStickyBar";
 
 export default function HomePage() {
-  const [orderModalOpen, setOrderModalOpen] = useState(false);
-  const [orderTablesCount, setOrderTablesCount] = useState(10);
   const [demoModalOpen, setDemoModalOpen] = useState(false);
-
-  const handleOpenOrder = (tablesCount = 10) => {
-    setOrderTablesCount(tablesCount);
-    setOrderModalOpen(true);
-  };
-
-  const handleOpenDemo = () => {
-    setDemoModalOpen(true);
-  };
 
   return (
     <>
@@ -36,40 +24,32 @@ export default function HomePage() {
       <div className="ambient-grid-lines" />
 
       {/* Floating Island Header */}
-      <Header onOpenOrder={() => handleOpenOrder(10)} />
+      <Header />
 
       <main style={{ position: "relative", zIndex: 10 }}>
-        <Hero
-          onOpenOrder={() => handleOpenOrder(10)}
-          onOpenDemo={handleOpenDemo}
-        />
+        <Hero onOpenDemo={() => setDemoModalOpen(true)} />
 
         <WhatYouGet />
 
         <HowItWorks />
 
-        <CardDesignsGallery onOpenOrder={() => handleOpenOrder(10)} />
+        <CardDesignsGallery />
 
-        <PricingComparison onOpenOrder={() => handleOpenOrder(10)} />
+        <PricingComparison />
 
-        <PricingCalculator onOpenOrder={handleOpenOrder} />
+        <PricingCalculator />
 
         <FaqSection />
 
-        <FinalCta onOpenOrder={() => handleOpenOrder(10)} />
+        <FinalCta />
       </main>
 
       <Footer />
 
-      {/* Floating & Modal Overlays */}
-      <MobileStickyBar onOpenOrder={() => handleOpenOrder(10)} />
+      {/* Floating Sticky Bar on Mobile */}
+      <MobileStickyBar />
 
-      <OrderModal
-        isOpen={orderModalOpen}
-        onClose={() => setOrderModalOpen(false)}
-        initialTables={orderTablesCount}
-      />
-
+      {/* Live Interactive Demo Modal */}
       <DemoModal
         isOpen={demoModalOpen}
         onClose={() => setDemoModalOpen(false)}

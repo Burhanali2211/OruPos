@@ -52,7 +52,7 @@ export interface OruPosConfig {
   packageIncludes: PackageDeliverable[];
   calculateTotal: (tables: number) => number;
   formatCurrency: (amount: number) => string;
-  getWhatsAppUrl: (data?: { tables?: number; restaurantName?: string; ownerName?: string; city?: string }) => string;
+  getWhatsAppUrl: (data?: { tables?: number; restaurantName?: string; ownerName?: string; city?: string; customMessage?: string }) => string;
 }
 
 export const ORUPOS_CONFIG: OruPosConfig = {
@@ -137,7 +137,11 @@ export const ORUPOS_CONFIG: OruPosConfig = {
     return this.pricing.currencySymbol + Number(amount).toLocaleString("en-IN");
   },
 
-  getWhatsAppUrl(data = {}): string {
+  getWhatsAppUrl(data: { tables?: number; restaurantName?: string; ownerName?: string; city?: string; customMessage?: string } = {}): string {
+    if (data.customMessage) {
+      return `${this.urls.whatsappBase}${this.contact.whatsappNumber}?text=${encodeURIComponent(data.customMessage)}`;
+    }
+
     const tables = data.tables || this.pricing.defaultTables;
     const total = this.calculateTotal(tables);
     const restaurantName = data.restaurantName ? `Restaurant: ${data.restaurantName}` : "";

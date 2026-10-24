@@ -2,86 +2,123 @@
 
 import React from "react";
 import Image from "next/image";
-import { ArrowUpRight, Eye } from "lucide-react";
+import { ArrowUpRight, ArrowDown, MessageCircle } from "lucide-react";
+import { ORUPOS_CONFIG } from "@/data/config";
 
 interface HeroProps {
-  onOpenOrder: () => void;
-  onOpenDemo: () => void;
+  onOpenDemo?: () => void;
 }
 
-export default function Hero({ onOpenOrder, onOpenDemo }: HeroProps) {
+export default function Hero({ onOpenDemo }: HeroProps) {
+  const whatsappUrl = ORUPOS_CONFIG.getWhatsAppUrl({
+    customMessage: "Hi OruPos Team! I am interested in your 0 Subscription POS System for my restaurant. Please guide me on getting started.",
+  });
+
   return (
     <section
       id="hero"
       style={{
-        paddingTop: "clamp(84px, 9vw, 108px)",
+        paddingTop: "clamp(88px, 9vw, 112px)",
         paddingBottom: "60px",
         position: "relative",
         overflow: "hidden",
       }}
     >
       <div className="container" style={{ textAlign: "center" }}>
-        {/* Crisp Headline */}
-        <h1
+        {/* Crisp Badge */}
+        <div
           style={{
-            fontSize: "clamp(2.1rem, 5vw, 3.8rem)",
-            fontWeight: 850,
-            color: "var(--zinc-950)",
-            lineHeight: 1.15,
-            letterSpacing: "-0.035em",
-            maxWidth: "840px",
-            margin: "0 auto 16px",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            backgroundColor: "var(--zinc-100)",
+            border: "1px solid var(--zinc-200)",
+            padding: "6px 14px",
+            borderRadius: "9999px",
+            fontSize: "12px",
+            fontWeight: 700,
+            color: "var(--zinc-800)",
+            marginBottom: "20px",
+            letterSpacing: "-0.01em",
           }}
         >
-          Run your restaurant on a modern POS. Zero monthly fees.
+          <span style={{ width: "7px", height: "7px", borderRadius: "50%", backgroundColor: "var(--emerald-500)" }} />
+          <span>Zero Monthly Fees · Web, Mobile & Desktop Apps</span>
+        </div>
+
+        {/* Crisp Headline: Your 0 Subscription POS System */}
+        <h1
+          style={{
+            fontSize: "clamp(2.3rem, 5.5vw, 4.2rem)",
+            fontWeight: 900,
+            color: "var(--zinc-950)",
+            lineHeight: 1.12,
+            letterSpacing: "-0.04em",
+            maxWidth: "880px",
+            margin: "0 auto 18px",
+          }}
+        >
+          Your 0 Subscription POS System
         </h1>
 
-        {/* Minimal 1-Sentence Subtitle */}
+        {/* Concise Value-Packed Subtitle */}
         <p
           style={{
-            fontSize: "clamp(1rem, 1.6vw, 1.18rem)",
+            fontSize: "clamp(1rem, 1.6vw, 1.2rem)",
             color: "var(--zinc-500)",
             fontWeight: 500,
-            maxWidth: "600px",
-            margin: "0 auto 28px",
+            maxWidth: "680px",
+            margin: "0 auto 32px",
             lineHeight: 1.55,
           }}
         >
-          Live table management, instant kitchen KOTs, contactless QR ordering, and GST billing on any device. No recurring software subscriptions.
+          QR-based digital menus, direct-to-vendor payment settlement, instant kitchen KOT routing, live table management, and GST billing on your existing devices.
         </p>
 
-        {/* Two Clean Action Buttons */}
+        {/* Two Requested Action Buttons: Contact Us Now & Learn More */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "12px",
+            gap: "14px",
             flexWrap: "wrap",
-            marginBottom: "40px",
+            marginBottom: "44px",
           }}
         >
-          <button
-            type="button"
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-easyio"
-            onClick={onOpenOrder}
-            style={{ height: "48px", fontSize: "13.5px", padding: "0 22px" }}
+            style={{
+              height: "50px",
+              fontSize: "14px",
+              padding: "0 24px",
+              textDecoration: "none",
+            }}
           >
-            <span>Get OruPos POS</span>
+            <MessageCircle size={17} style={{ marginRight: "4px" }} />
+            <span>Contact Us Now</span>
             <div className="arrow-circle">
               <ArrowUpRight size={16} />
             </div>
-          </button>
+          </a>
 
-          <button
-            type="button"
-            onClick={onOpenDemo}
+          <a
+            href="#features"
             className="btn-easyio-ghost"
-            style={{ height: "48px", padding: "0 20px", fontSize: "13.5px" }}
+            style={{
+              height: "50px",
+              padding: "0 22px",
+              fontSize: "14px",
+              textDecoration: "none",
+              color: "var(--zinc-800)",
+            }}
           >
-            <Eye size={15} />
-            <span>See Live Demo</span>
-          </button>
+            <span>Learn More</span>
+            <ArrowDown size={15} />
+          </a>
         </div>
 
         {/* High-End Clean Hardware & POS Showcase Image */}
@@ -107,7 +144,7 @@ export default function Hero({ onOpenOrder, onOpenDemo }: HeroProps) {
           >
             <Image
               src="/assets/hero-table-stand.jpg"
-              alt="OruPos restaurant POS table hardware station"
+              alt="OruPos 0-Subscription Restaurant POS Hardware and Table Station"
               width={1400}
               height={780}
               priority

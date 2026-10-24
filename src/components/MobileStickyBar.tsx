@@ -4,11 +4,11 @@ import React from "react";
 import { MessageCircle, ArrowUpRight } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
-interface MobileStickyBarProps {
-  onOpenOrder: () => void;
-}
+export default function MobileStickyBar() {
+  const whatsappUrl = ORUPOS_CONFIG.getWhatsAppUrl({
+    customMessage: "Hi OruPos Team! I am interested in getting the 0-Subscription POS system for my restaurant. Please guide me.",
+  });
 
-export default function MobileStickyBar({ onOpenOrder }: MobileStickyBarProps) {
   return (
     <div
       style={{
@@ -42,56 +42,37 @@ export default function MobileStickyBar({ onOpenOrder }: MobileStickyBarProps) {
           </span>
         </div>
         <span style={{ fontSize: "10px", color: "var(--emerald-500)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>
-          Complete Restaurant POS
+          0-Subscription POS
         </span>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         <a
-          href={ORUPOS_CONFIG.getWhatsAppUrl()}
+          href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
           style={{
-            width: "38px",
             height: "38px",
-            borderRadius: "50%",
-            backgroundColor: "rgba(255, 255, 255, 0.12)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "var(--emerald-500)",
-            textDecoration: "none",
-          }}
-        >
-          <MessageCircle size={16} />
-        </a>
-
-        <button
-          type="button"
-          onClick={onOpenOrder}
-          style={{
-            height: "38px",
-            padding: "0 16px",
+            padding: "0 18px",
             backgroundColor: "#FFFFFF",
             color: "var(--zinc-950)",
-            fontSize: "11px",
+            fontSize: "12px",
             fontWeight: 800,
             textTransform: "uppercase",
-            letterSpacing: "0.1em",
+            letterSpacing: "0.06em",
             borderRadius: "9999px",
-            border: "none",
-            cursor: "pointer",
+            textDecoration: "none",
             display: "inline-flex",
             alignItems: "center",
             gap: "6px",
             boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)",
           }}
         >
-          <span>Get POS</span>
+          <MessageCircle size={15} color="var(--emerald-600)" />
+          <span>Contact Us Now</span>
           <ArrowUpRight size={13} />
-        </button>
+        </a>
       </div>
     </div>
   );

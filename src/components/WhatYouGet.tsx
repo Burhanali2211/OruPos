@@ -1,57 +1,84 @@
+"use client";
+
 import React from "react";
 import {
-  Layers,
-  ChefHat,
   QrCode,
+  CreditCard,
+  ChefHat,
+  LayoutGrid,
   Receipt,
+  Smartphone,
+  CheckCircle2,
 } from "lucide-react";
 
 export default function WhatYouGet() {
-  const deliverables = [
+  const featureList = [
     {
-      icon: Layers,
-      title: "Table Management",
-      desc: "Live floor plan, table occupancy, and seated timers at a single glance.",
+      icon: QrCode,
+      title: "QR-Based Digital Menu",
+      badge: "Contactless",
+      desc: "Fast, visual mobile menu loaded in 1 second when diners scan the table QR. Zero app download required, with high-res food photos, dietary tags, and instant price updates.",
+      points: ["1-second instant loading", "High-res food photography", "Real-time out-of-stock toggling"],
+    },
+    {
+      icon: CreditCard,
+      title: "Direct-to-Vendor Payment Settlement",
+      badge: "Direct Payouts",
+      desc: "Diner payments via UPI, Google Pay, PhonePe, Paytm, or cards deposit directly into your restaurant bank account. Zero middleman holds and zero settlement delay.",
+      points: ["Instant direct UPI settlement", "Zero wallet lock-in", "Automated daily payment reconciliation"],
     },
     {
       icon: ChefHat,
-      title: "Kitchen KOT Routing",
-      desc: "Orders route instantly to the kitchen display with table numbers and chef notes.",
+      title: "Kitchen Management & KOT",
+      badge: "Real-time Sync",
+      desc: "Orders punch instantly to your kitchen display (KDS) and thermal KOT printers. Shows exact table number, seated time, and custom cooking instructions for your chefs.",
+      points: ["Real-time Kitchen Display System", "Thermal KOT printer support", "Custom chef cooking notes"],
     },
     {
-      icon: QrCode,
-      title: "Contactless QR Ordering",
-      desc: "Diners scan from the table to browse and order in 1 second. Zero app downloads.",
+      icon: LayoutGrid,
+      title: "Table & Floor Management",
+      badge: "Floor Map",
+      desc: "Interactive bird's-eye view of your restaurant floor. Track live table status (Occupied, Dining, Billed), manage running table tabs, and transfer or merge tables effortlessly.",
+      points: ["Live visual table occupancy", "Seated timer & turnover tracking", "Split & merge table tabs"],
     },
     {
       icon: Receipt,
-      title: "GST Billing & Receipts",
-      desc: "Automated 5% restaurant GST, split payments, and instant WhatsApp digital bills.",
+      title: "GST Compliance & Invoicing",
+      badge: "Automated",
+      desc: "Compliant restaurant GST invoicing. Automatically splits CGST & SGST (5%), supports custom service charges, and prints 2-inch/3-inch thermal receipts or sends via WhatsApp.",
+      points: ["Automated 5% restaurant GST", "Thermal bill & digital WhatsApp receipts", "Daily GST sales reports"],
+    },
+    {
+      icon: Smartphone,
+      title: "Mobile App, Desktop App & Web App",
+      badge: "Universal Access",
+      desc: "Run your entire restaurant operations on whatever hardware you already own. Native support for Android phones, iPhones, iPads, Windows desktop billing PCs, and Macs.",
+      points: ["Android & iOS mobile apps", "Windows & Mac desktop apps", "Offline sync mode during internet drops"],
     },
   ];
 
   return (
     <section className="section section-white" id="features">
       <div className="container">
-        <div className="section-header">
-          <span className="section-kicker">POS CAPABILITIES</span>
+        <div className="section-header" style={{ textAlign: "center", maxWidth: "720px", margin: "0 auto 48px" }}>
+          <span className="section-kicker">COMPLETE FEATURE SET</span>
           <h2 className="section-title">
-            Built for modern restaurant speed.
+            Everything your restaurant needs. Zero subscription.
           </h2>
-          <p className="section-desc">
-            Everything you need to run your floor and kitchen without monthly software fees.
+          <p className="section-desc" style={{ margin: "0 auto" }}>
+            A complete, enterprise-grade restaurant operating system built for front-of-house speed and back-of-house kitchen precision.
           </p>
         </div>
 
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: "20px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "24px",
           }}
           className="package-items-grid"
         >
-          {deliverables.map((item, idx) => {
+          {featureList.map((item, idx) => {
             const Icon = item.icon;
             return (
               <div
@@ -59,37 +86,73 @@ export default function WhatYouGet() {
                 style={{
                   backgroundColor: "var(--zinc-50)",
                   border: "1px solid var(--border-hairline)",
-                  borderRadius: "20px",
-                  padding: "24px",
+                  borderRadius: "24px",
+                  padding: "32px 28px",
                   display: "flex",
                   flexDirection: "column",
                   transition: "all 0.2s ease",
+                  position: "relative",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#FFFFFF";
+                  e.currentTarget.style.borderColor = "var(--zinc-300)";
+                  e.currentTarget.style.boxShadow = "var(--shadow-card)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "var(--zinc-50)";
+                  e.currentTarget.style.borderColor = "var(--border-hairline)";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               >
                 <div
                   style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "10px",
-                    backgroundColor: "#FFFFFF",
-                    border: "1px solid var(--zinc-200)",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    color: "var(--zinc-950)",
-                    marginBottom: "16px",
+                    justifyContent: "space-between",
+                    marginBottom: "20px",
                   }}
                 >
-                  <Icon size={18} strokeWidth={2} />
+                  <div
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "14px",
+                      backgroundColor: "#FFFFFF",
+                      border: "1px solid var(--zinc-200)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "var(--zinc-950)",
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.04)",
+                    }}
+                  >
+                    <Icon size={22} strokeWidth={2.2} />
+                  </div>
+
+                  <span
+                    style={{
+                      fontSize: "11px",
+                      fontWeight: 800,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                      backgroundColor: "rgba(9, 9, 11, 0.05)",
+                      color: "var(--zinc-700)",
+                      padding: "4px 10px",
+                      borderRadius: "9999px",
+                    }}
+                  >
+                    {item.badge}
+                  </span>
                 </div>
 
                 <h3
                   style={{
-                    fontSize: "1.1rem",
-                    fontWeight: 800,
-                    marginBottom: "6px",
+                    fontSize: "1.25rem",
+                    fontWeight: 850,
+                    marginBottom: "10px",
                     color: "var(--zinc-950)",
-                    letterSpacing: "-0.02em",
+                    letterSpacing: "-0.025em",
+                    lineHeight: 1.25,
                   }}
                 >
                   {item.title}
@@ -97,15 +160,43 @@ export default function WhatYouGet() {
 
                 <p
                   style={{
-                    fontSize: "0.9rem",
+                    fontSize: "0.92rem",
                     color: "var(--zinc-500)",
-                    lineHeight: 1.5,
-                    margin: 0,
+                    lineHeight: 1.6,
+                    margin: "0 0 20px 0",
                     fontWeight: 500,
+                    flexGrow: 1,
                   }}
                 >
                   {item.desc}
                 </p>
+
+                <div
+                  style={{
+                    borderTop: "1px solid var(--border-subtle)",
+                    paddingTop: "16px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "8px",
+                  }}
+                >
+                  {item.points.map((pt, pIdx) => (
+                    <div
+                      key={pIdx}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        fontSize: "12.5px",
+                        color: "var(--zinc-700)",
+                        fontWeight: 600,
+                      }}
+                    >
+                      <CheckCircle2 size={14} color="var(--emerald-600)" style={{ flexShrink: 0 }} />
+                      <span>{pt}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             );
           })}
