@@ -151,9 +151,10 @@ function OnboardingForm() {
       {/* Top Floating Header */}
       <header
         style={{
-          borderBottom: "1px solid var(--border-hairline)",
-          backgroundColor: "rgba(255, 255, 255, 0.95)",
+          borderBottom: "1px solid rgba(0, 0, 0, 0.06)",
+          backgroundColor: "rgba(255, 255, 255, 0.92)",
           backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
           position: "sticky",
           top: 0,
           zIndex: 50,
@@ -161,10 +162,10 @@ function OnboardingForm() {
       >
         <div
           style={{
-            maxWidth: "1140px",
+            maxWidth: "1120px",
             margin: "0 auto",
             padding: "0 24px",
-            height: "64px",
+            height: "56px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -181,36 +182,23 @@ function OnboardingForm() {
           >
             <img
               src="/assets/logo.png"
-              alt="OruPos"
+              alt="OruPOS"
               style={{
-                height: "28px",
+                height: "24px",
                 width: "auto",
                 objectFit: "contain",
               }}
             />
-            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
-              <span
-                style={{
-                  fontWeight: 900,
-                  color: "var(--zinc-950)",
-                  fontSize: "16px",
-                  letterSpacing: "-0.03em",
-                }}
-              >
-                POS
-              </span>
-              <span
-                style={{
-                  fontSize: "9px",
-                  fontWeight: 750,
-                  letterSpacing: "0.08em",
-                  color: "var(--zinc-400)",
-                  textTransform: "uppercase",
-                }}
-              >
-                Zero-Subscription
-              </span>
-            </div>
+            <span
+              style={{
+                fontWeight: 800,
+                color: "var(--zinc-950)",
+                fontSize: "17px",
+                letterSpacing: "-0.03em",
+              }}
+            >
+              OruPOS
+            </span>
           </Link>
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -218,8 +206,8 @@ function OnboardingForm() {
               href="/"
               style={{
                 fontSize: "12.5px",
-                fontWeight: 650,
-                color: "var(--zinc-600)",
+                fontWeight: 600,
+                color: "var(--zinc-500)",
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
@@ -227,7 +215,7 @@ function OnboardingForm() {
               }}
             >
               <ArrowLeft size={14} />
-              <span className="hidden-mobile">Back to Home</span>
+              <span>Home</span>
             </Link>
 
             <a
@@ -235,54 +223,54 @@ function OnboardingForm() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                height: "36px",
+                height: "34px",
                 padding: "0 14px",
-                borderRadius: "9999px",
+                borderRadius: "var(--radius-full)",
                 backgroundColor: "var(--zinc-100)",
-                border: "1px solid var(--zinc-200)",
+                border: "1px solid var(--border-light)",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
                 fontSize: "12px",
-                fontWeight: 700,
+                fontWeight: 650,
                 color: "var(--zinc-800)",
                 textDecoration: "none",
               }}
             >
-              <MessageCircle size={14} color="var(--emerald-600)" />
-              <span>Need Help?</span>
+              <MessageCircle size={14} />
+              <span>Contact Support</span>
             </a>
           </div>
         </div>
       </header>
 
       {/* Main Container */}
-      <main style={{ padding: "40px 20px 80px", maxWidth: "1000px", margin: "0 auto" }}>
+      <main style={{ padding: "40px 20px 80px", maxWidth: "960px", margin: "0 auto" }}>
         {!submitted ? (
           <div>
             {/* Title & Value Pitch */}
-            <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 36px" }}>
+            <div style={{ textAlign: "center", maxWidth: "620px", margin: "0 auto 36px" }}>
               <h1
                 style={{
-                  fontSize: "clamp(1.9rem, 4vw, 2.8rem)",
+                  fontSize: "clamp(1.8rem, 3.8vw, 2.6rem)",
                   fontWeight: 900,
                   color: "var(--zinc-950)",
                   lineHeight: 1.15,
                   letterSpacing: "-0.035em",
-                  margin: "0 0 12px",
+                  margin: "0 0 10px",
                 }}
               >
-                Get your 0-subscription POS system
+                Setup Your Restaurant POS
               </h1>
-              <p style={{ fontSize: "1rem", color: "var(--zinc-500)", margin: 0, lineHeight: 1.55 }}>
-                Fill in your details below so we can configure your menu, tables, and tax settings for rapid deployment.
+              <p style={{ fontSize: "0.96rem", color: "var(--zinc-500)", margin: 0, lineHeight: 1.55 }}>
+                Enter your outlet details to configure dining tables, menu catalog, and billing preferences.
               </p>
             </div>
 
             {/* Stepper Progress Bar */}
             <div
               style={{
-                maxWidth: "620px",
+                maxWidth: "580px",
                 margin: "0 auto 36px",
                 display: "flex",
                 alignItems: "center",
@@ -294,10 +282,10 @@ function OnboardingForm() {
               <div
                 style={{
                   position: "absolute",
-                  top: "18px",
+                  top: "17px",
                   left: "40px",
                   right: "40px",
-                  height: "2px",
+                  height: "1px",
                   backgroundColor: "var(--zinc-200)",
                   zIndex: 1,
                 }}
@@ -306,13 +294,13 @@ function OnboardingForm() {
               <div
                 style={{
                   position: "absolute",
-                  top: "18px",
+                  top: "17px",
                   left: "40px",
                   width: step === 1 ? "0%" : step === 2 ? "50%" : "85%",
-                  height: "2px",
+                  height: "1px",
                   backgroundColor: "var(--zinc-950)",
                   zIndex: 2,
-                  transition: "width 0.3s ease",
+                  transition: "width 0.25s ease",
                 }}
               />
 
@@ -338,32 +326,31 @@ function OnboardingForm() {
                   >
                     <div
                       style={{
-                        width: "36px",
-                        height: "36px",
+                        width: "34px",
+                        height: "34px",
                         borderRadius: "50%",
                         backgroundColor: isActive
                           ? "var(--zinc-950)"
                           : isCompleted
-                          ? "var(--emerald-600)"
+                          ? "var(--zinc-900)"
                           : "#FFFFFF",
-                        border: isActive || isCompleted ? "none" : "2px solid var(--zinc-300)",
-                        color: isActive || isCompleted ? "#FFFFFF" : "var(--zinc-500)",
+                        border: isActive || isCompleted ? "none" : "1px solid var(--zinc-300)",
+                        color: isActive || isCompleted ? "#FFFFFF" : "var(--zinc-400)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         fontSize: "12px",
-                        fontWeight: 800,
-                        boxShadow: isActive ? "0 4px 12px rgba(9, 9, 11, 0.2)" : "none",
-                        transition: "all 0.25s ease",
+                        fontWeight: 700,
+                        transition: "all 0.2s ease",
                       }}
                     >
-                      {isCompleted ? <Check size={16} strokeWidth={3} /> : <Icon size={16} />}
+                      {isCompleted ? <Check size={14} strokeWidth={2.8} /> : <Icon size={14} />}
                     </div>
                     <span
                       style={{
-                        fontSize: "11.5px",
-                        fontWeight: isActive ? 800 : 600,
-                        color: isActive ? "var(--zinc-950)" : "var(--zinc-500)",
+                        fontSize: "11px",
+                        fontWeight: isActive ? 750 : 550,
+                        color: isActive ? "var(--zinc-950)" : "var(--zinc-400)",
                         whiteSpace: "nowrap",
                       }}
                     >
@@ -598,13 +585,11 @@ function OnboardingForm() {
                         <button
                           type="button"
                           onClick={handleNext}
-                          className="btn-easyio"
-                          style={{ height: "48px", fontSize: "13.5px", padding: "0 24px" }}
+                          className="btn-primary"
+                          style={{ height: "46px", fontSize: "13.5px", padding: "0 24px", gap: "8px" }}
                         >
                           <span>Next: Restaurant Details</span>
-                          <div className="arrow-circle">
-                            <ArrowRight size={16} />
-                          </div>
+                          <ArrowRight size={15} />
                         </button>
                       </div>
                     </div>
@@ -935,13 +920,11 @@ function OnboardingForm() {
                         <button
                           type="button"
                           onClick={handleNext}
-                          className="btn-easyio"
-                          style={{ height: "48px", fontSize: "13.5px", padding: "0 24px" }}
+                          className="btn-primary"
+                          style={{ height: "46px", fontSize: "13.5px", padding: "0 24px", gap: "8px" }}
                         >
                           <span>Next: Operations & POS</span>
-                          <div className="arrow-circle">
-                            <ArrowRight size={16} />
-                          </div>
+                          <ArrowRight size={15} />
                         </button>
                       </div>
                     </div>
@@ -1244,31 +1227,31 @@ function OnboardingForm() {
                           }}
                         >
                           <div>
-                            <span style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--emerald-500)" }}>
-                              Your OruPos Agreement
+                            <span style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--zinc-400)" }}>
+                              Software Terms
                             </span>
-                            <div style={{ fontSize: "15px", fontWeight: 850, marginTop: "2px" }}>
-                              ₹0 Monthly Software Subscription Forever
+                            <div style={{ fontSize: "15px", fontWeight: 800, marginTop: "2px" }}>
+                              ₹0 / Month Software Fee
                             </div>
                             <div style={{ fontSize: "12px", color: "var(--zinc-400)", marginTop: "2px" }}>
-                              One-time {tables} Acrylic Stands & Full Menu Setup: ₹{totalHardwareSetup.toLocaleString("en-IN")}
+                              {tables} Acrylic Table Stands & Menu Digitization: ₹{totalHardwareSetup.toLocaleString("en-IN")}
                             </div>
                           </div>
 
                           <div
                             style={{
-                              backgroundColor: "rgba(16, 185, 129, 0.15)",
-                              border: "1px solid rgba(16, 185, 129, 0.3)",
+                              backgroundColor: "rgba(255, 255, 255, 0.08)",
+                              border: "1px solid rgba(255, 255, 255, 0.12)",
                               padding: "8px 14px",
                               borderRadius: "10px",
                               textAlign: "right",
                             }}
                           >
-                            <span style={{ fontSize: "10.5px", color: "var(--emerald-400)", fontWeight: 700, display: "block" }}>
-                              Estimated Software Rent Saved
+                            <span style={{ fontSize: "10.5px", color: "var(--zinc-400)", fontWeight: 600, display: "block" }}>
+                              Monthly Software Savings
                             </span>
                             <strong style={{ fontSize: "14px", color: "#FFFFFF" }}>
-                              ₹25,000 – ₹45,000 / year
+                              ₹2,500 – ₹4,000 / mo
                             </strong>
                           </div>
                         </div>
@@ -1298,18 +1281,17 @@ function OnboardingForm() {
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="btn-easyio"
+                          className="btn-primary"
                           style={{
-                            height: "50px",
-                            fontSize: "14px",
+                            height: "48px",
+                            fontSize: "13.5px",
                             padding: "0 28px",
                             opacity: isSubmitting ? 0.7 : 1,
+                            cursor: isSubmitting ? "not-allowed" : "pointer",
                           }}
                         >
-                          <span>{isSubmitting ? "Submitting Application..." : "Submit & Deploy Restaurant"}</span>
-                          <div className="arrow-circle">
-                            <Check size={16} strokeWidth={3} />
-                          </div>
+                          <span>{isSubmitting ? "Submitting Application..." : "Submit & Activate POS"}</span>
+                          <ArrowRight size={15} />
                         </button>
                       </div>
                     </div>
@@ -1332,60 +1314,60 @@ function OnboardingForm() {
               textAlign: "center",
             }}
           >
-            {/* Green Badge */}
+            {/* Minimalist Confirmation Mark */}
             <div
               style={{
-                width: "72px",
-                height: "72px",
+                width: "56px",
+                height: "56px",
                 borderRadius: "50%",
-                backgroundColor: "var(--emerald-50)",
-                border: "2px solid var(--emerald-500)",
-                color: "var(--emerald-600)",
+                backgroundColor: "var(--zinc-100)",
+                border: "1px solid var(--zinc-300)",
+                color: "var(--zinc-950)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                margin: "0 auto 24px",
+                margin: "0 auto 20px",
               }}
             >
-              <CheckCircle2 size={38} strokeWidth={2.4} />
+              <Check size={28} strokeWidth={2.4} />
             </div>
 
             <h2
               style={{
-                fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)",
+                fontSize: "clamp(1.7rem, 3.2vw, 2.2rem)",
                 fontWeight: 900,
                 color: "var(--zinc-950)",
                 letterSpacing: "-0.03em",
                 lineHeight: 1.2,
-                margin: "0 0 14px",
+                margin: "0 0 12px",
               }}
             >
-              Thank you, {fullName || "Partner"}!
+              Application Received, {fullName || "Partner"}
             </h2>
 
             <p
               style={{
-                fontSize: "1rem",
-                color: "var(--zinc-600)",
+                fontSize: "0.96rem",
+                color: "var(--zinc-500)",
                 lineHeight: 1.6,
-                maxWidth: "520px",
-                margin: "0 auto 28px",
+                maxWidth: "500px",
+                margin: "0 auto 26px",
               }}
             >
-              We have received your onboarding details for{" "}
+              We received your onboarding submission for{" "}
               <strong style={{ color: "var(--zinc-950)" }}>{restaurantName || "your restaurant"}</strong> ({tables} Tables in {city || "India"}).
-              Our deployment specialist is preparing your digital catalog.
+              Our team will verify your menu catalog and dispatch table stands.
             </p>
 
             {/* Application Summary Box */}
             <div
               style={{
                 backgroundColor: "var(--zinc-50)",
-                borderRadius: "18px",
+                borderRadius: "16px",
                 padding: "20px",
-                border: "1px solid var(--border-subtle)",
+                border: "1px solid var(--border-light)",
                 textAlign: "left",
-                marginBottom: "28px",
+                marginBottom: "26px",
                 display: "flex",
                 flexDirection: "column",
                 gap: "10px",
@@ -1398,7 +1380,7 @@ function OnboardingForm() {
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--zinc-200)", paddingBottom: "8px" }}>
                 <span style={{ color: "var(--zinc-500)" }}>Software Fee</span>
-                <strong style={{ color: "var(--emerald-600)" }}>₹0 / month (Zero Subscription)</strong>
+                <strong style={{ color: "var(--zinc-950)" }}>₹0 / month (Zero Monthly Rental)</strong>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--zinc-200)", paddingBottom: "8px" }}>
                 <span style={{ color: "var(--zinc-500)" }}>Hardware Stands</span>
@@ -1411,37 +1393,36 @@ function OnboardingForm() {
             </div>
 
             {/* Instant WhatsApp Action */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "center" }}>
               <a
                 href={getPersonalizedWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-easyio"
+                className="btn-primary"
                 style={{
-                  height: "52px",
-                  fontSize: "14px",
+                  height: "48px",
+                  fontSize: "13.5px",
                   padding: "0 28px",
                   textDecoration: "none",
                   width: "100%",
-                  maxWidth: "420px",
+                  maxWidth: "380px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  gap: "8px",
                 }}
               >
-                <MessageCircle size={18} style={{ marginRight: "8px" }} />
-                <span>Connect on WhatsApp to Activate</span>
-                <div className="arrow-circle">
-                  <ArrowRight size={16} />
-                </div>
+                <MessageCircle size={16} />
+                <span>Connect on WhatsApp</span>
+                <ArrowRight size={15} />
               </a>
 
               <a
                 href={`tel:${ORUPOS_CONFIG.contact.phoneTel}`}
                 style={{
-                  fontSize: "13px",
-                  fontWeight: 650,
-                  color: "var(--zinc-600)",
+                  fontSize: "12.5px",
+                  fontWeight: 600,
+                  color: "var(--zinc-500)",
                   textDecoration: "none",
                   display: "inline-flex",
                   alignItems: "center",
@@ -1449,8 +1430,8 @@ function OnboardingForm() {
                   marginTop: "6px",
                 }}
               >
-                <Phone size={14} />
-                <span>Or call us directly at {ORUPOS_CONFIG.contact.phoneDisplay}</span>
+                <Phone size={13} />
+                <span>Or call directly at {ORUPOS_CONFIG.contact.phoneDisplay}</span>
               </a>
 
               <Link
@@ -1458,11 +1439,11 @@ function OnboardingForm() {
                 style={{
                   fontSize: "12px",
                   color: "var(--zinc-400)",
-                  textDecoration: "underline",
-                  marginTop: "14px",
+                  textDecoration: "none",
+                  marginTop: "12px",
                 }}
               >
-                Return to homepage
+                Return to home
               </Link>
             </div>
           </div>

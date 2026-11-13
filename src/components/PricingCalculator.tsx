@@ -250,21 +250,20 @@ export default function PricingCalculator() {
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <Link
               href={`/get-orupos?tables=${tables}`}
-              className="btn-easyio"
+              className="btn-primary"
               style={{
                 width: "100%",
-                height: "50px",
+                height: "48px",
                 fontSize: "13.5px",
                 textDecoration: "none",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                gap: "8px",
               }}
             >
               <span>Get OruPos POS for {tables} Tables</span>
-              <div className="arrow-circle">
-                <ArrowUpRight size={16} />
-              </div>
+              <ArrowUpRight size={15} />
             </Link>
 
             <a

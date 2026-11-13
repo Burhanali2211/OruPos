@@ -26,30 +26,27 @@ export default function Footer() {
         >
           {/* Brand Column */}
           <div>
-            <Link href="/" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "10px", marginBottom: "18px" }}>
+            <Link href="/" style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px", marginBottom: "18px" }}>
               <img
                 src="/assets/logo.png"
-                alt="OruPOS Logo"
+                alt="OruPOS"
                 style={{
-                  height: "32px",
+                  height: "26px",
                   width: "auto",
                   objectFit: "contain",
                   display: "block",
                 }}
               />
-              <div style={{ display: "flex", alignItems: "baseline" }}>
-                <span
-                  style={{
-                    fontSize: "1.25rem",
-                    fontWeight: 900,
-                    letterSpacing: "-0.04em",
-                    color: "var(--zinc-950)",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  POS
-                </span>
-              </div>
+              <span
+                style={{
+                  fontSize: "1.2rem",
+                  fontWeight: 900,
+                  letterSpacing: "-0.03em",
+                  color: "var(--zinc-950)",
+                }}
+              >
+                OruPOS
+              </span>
             </Link>
 
             <h3
