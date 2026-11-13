@@ -507,7 +507,9 @@ export default function RestaurantAnalyticsModal({
                       <div>
                         <span style={{ color: "var(--zinc-400)", display: "block", fontSize: "10.5px" }}>Avg Browsing</span>
                         <span style={{ fontSize: "14px", fontWeight: 800, color: "var(--zinc-950)" }}>
-                          3m 38s
+                          {data.avgDurationSecs
+                            ? `${Math.floor(data.avgDurationSecs / 60)}m ${data.avgDurationSecs % 60}s`
+                            : "—"}
                         </span>
                       </div>
                     </div>
@@ -515,14 +517,20 @@ export default function RestaurantAnalyticsModal({
                     <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--zinc-400)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
                       Top Scanned Tables:
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px", fontSize: "12px" }}>
-                      {data.topTables.slice(0, 4).map((tbl, tIdx) => (
-                        <div key={tIdx} style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#FFFFFF", padding: "6px 10px", borderRadius: "8px", border: "1px solid var(--border-light)" }}>
-                          <span style={{ color: "var(--zinc-700)", fontWeight: 550 }}>{tbl.table}</span>
-                          <span style={{ fontWeight: 700, color: "var(--zinc-950)" }}>{tbl.scans}</span>
-                        </div>
-                      ))}
-                    </div>
+                    {data.topTables && data.topTables.length > 0 ? (
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px", fontSize: "12px" }}>
+                        {data.topTables.slice(0, 4).map((tbl, tIdx) => (
+                          <div key={tIdx} style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#FFFFFF", padding: "6px 10px", borderRadius: "8px", border: "1px solid var(--border-light)" }}>
+                            <span style={{ color: "var(--zinc-700)", fontWeight: 550 }}>{tbl.table}</span>
+                            <span style={{ fontWeight: 700, color: "var(--zinc-950)" }}>{tbl.scans}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div style={{ fontSize: "12px", color: "var(--zinc-400)", fontStyle: "italic", padding: "6px 0" }}>
+                        No QR table scans recorded yet
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
