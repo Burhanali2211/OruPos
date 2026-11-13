@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { MessageCircle, Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
 
 export default function Header() {
@@ -14,7 +14,6 @@ export default function Header() {
   return (
     <>
       <header
-        className="site-sticky-header"
         style={{
           position: "fixed",
           top: 0,
@@ -22,27 +21,26 @@ export default function Header() {
           right: 0,
           width: "100%",
           zIndex: 100,
-          backgroundColor: "rgba(255, 255, 255, 0.94)",
+          backgroundColor: "rgba(255, 255, 255, 0.88)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
-          borderBottom: "1px solid var(--border-hairline)",
-          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.02)",
+          borderBottom: "1px solid rgba(0, 0, 0, 0.06)",
           transition: "all 0.2s ease",
         }}
       >
         <div
           className="header-inner-container"
           style={{
-            maxWidth: "1200px",
+            maxWidth: "1120px",
             margin: "0 auto",
             padding: "0 24px",
-            height: "64px",
+            height: "56px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
           }}
         >
-          {/* Brand Logo */}
+          {/* Minimalist Logo */}
           <Link
             href="/"
             style={{
@@ -54,54 +52,44 @@ export default function Header() {
           >
             <img
               src="/assets/logo.png"
-              alt="OruPos"
+              alt="OruPOS"
               style={{
-                height: "30px",
+                height: "24px",
                 width: "auto",
                 objectFit: "contain",
                 display: "block",
               }}
             />
-            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
-              <span
-                style={{
-                  fontWeight: 900,
-                  letterSpacing: "-0.035em",
-                  color: "var(--zinc-950)",
-                  fontSize: "17px",
-                  textTransform: "uppercase",
-                }}
-              >
-                POS
-              </span>
-              <span
-                style={{
-                  fontSize: "9px",
-                  fontWeight: 750,
-                  letterSpacing: "0.08em",
-                  color: "var(--zinc-400)",
-                  textTransform: "uppercase",
-                }}
-              >
-                Zero-Subscription
-              </span>
-            </div>
+            <span
+              style={{
+                fontWeight: 800,
+                letterSpacing: "-0.03em",
+                color: "var(--zinc-950)",
+                fontSize: "15px",
+                textTransform: "uppercase",
+              }}
+            >
+              POS
+            </span>
           </Link>
 
-          {/* Desktop Navigation Links — Clean & Uncluttered */}
+          {/* Minimalist Desktop Navigation */}
           <nav aria-label="Main Navigation" className="hidden-mobile">
             <div style={{ display: "flex", alignItems: "center", gap: "32px" }}>
               {[
-                { href: "#how-it-works", label: "How It Works" },
-                { href: "#comparison", label: "POS vs Others" },
+                { href: "#features", label: "Features" },
+                { href: "#demo", label: "Demo" },
+                { href: "#designs", label: "Hardware" },
+                { href: "#comparison", label: "Pricing" },
                 { href: "#faq", label: "FAQ" },
+                { href: "/blog", label: "Guides" },
               ].map((item, idx) => (
                 <a
                   key={idx}
                   href={item.href}
                   style={{
                     fontSize: "13px",
-                    fontWeight: 650,
+                    fontWeight: 500,
                     letterSpacing: "-0.01em",
                     color: "var(--zinc-600)",
                     textDecoration: "none",
@@ -116,67 +104,48 @@ export default function Header() {
             </div>
           </nav>
 
-          {/* Right Actions */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          {/* Minimalist Right Action */}
+          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="WhatsApp Inquiry"
               className="hidden-mobile"
               style={{
-                height: "38px",
-                padding: "0 14px",
-                borderRadius: "9999px",
-                border: "1px solid var(--zinc-200)",
-                backgroundColor: "#FFFFFF",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                color: "var(--zinc-700)",
+                fontSize: "13px",
+                fontWeight: 500,
+                color: "var(--zinc-500)",
                 textDecoration: "none",
-                fontSize: "12px",
-                fontWeight: 650,
-                transition: "all 0.15s ease",
+                transition: "color 0.15s ease",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--zinc-50)";
-                e.currentTarget.style.borderColor = "var(--zinc-300)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#FFFFFF";
-                e.currentTarget.style.borderColor = "var(--zinc-200)";
-              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--zinc-950)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--zinc-500)")}
             >
-              <MessageCircle size={15} color="var(--emerald-600)" />
-              <span>WhatsApp</span>
+              WhatsApp
             </a>
 
             <Link
               href="/get-orupos"
-              className="header-order-btn"
               style={{
-                height: "38px",
-                padding: "0 18px",
+                height: "34px",
+                padding: "0 14px",
                 backgroundColor: "var(--zinc-950)",
                 color: "#FFFFFF",
                 fontSize: "12px",
-                fontWeight: 700,
-                borderRadius: "9999px",
+                fontWeight: 600,
+                borderRadius: "var(--radius-full)",
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "6px",
-                boxShadow: "0 4px 12px rgba(9, 9, 11, 0.1)",
-                transition: "all 0.2s ease",
+                gap: "5px",
+                transition: "background-color 0.15s ease",
                 whiteSpace: "nowrap",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--zinc-800)")}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--zinc-950)")}
             >
-              <span className="hidden-mobile">Get OruPos</span>
-              <span className="show-mobile" style={{ display: "none" }}>Get POS</span>
-              <ArrowUpRight size={13} />
+              <span>Get Started</span>
+              <ArrowUpRight size={12} />
             </Link>
 
             {/* Mobile Hamburger Button */}
@@ -186,17 +155,17 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="show-mobile"
               style={{
-                width: "38px",
-                height: "38px",
-                borderRadius: "50%",
-                border: "1px solid var(--zinc-200)",
-                backgroundColor: "#FFFFFF",
+                width: "34px",
+                height: "34px",
+                borderRadius: "var(--radius-full)",
+                border: "none",
+                backgroundColor: "transparent",
                 display: "none",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "var(--zinc-950)",
                 cursor: "pointer",
-                flexShrink: 0,
+                padding: 0,
               }}
             >
               {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -205,32 +174,33 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Navigation Drawer attached right below sticky header */}
+      {/* Minimalist Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div
           style={{
             position: "fixed",
-            top: "58px",
+            top: "56px",
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: "rgba(255, 255, 255, 0.98)",
-            backdropFilter: "blur(20px)",
-            WebkitBackdropFilter: "blur(20px)",
+            backgroundColor: "#FFFFFF",
             zIndex: 99,
-            padding: "20px 20px 32px",
+            padding: "24px 20px 32px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            borderTop: "1px solid var(--zinc-200)",
+            borderTop: "1px solid rgba(0, 0, 0, 0.06)",
             overflowY: "auto",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
             {[
-              { href: "#how-it-works", label: "How It Works" },
-              { href: "#comparison", label: "POS vs Others" },
+              { href: "#features", label: "Features" },
+              { href: "#demo", label: "Demo" },
+              { href: "#designs", label: "Hardware" },
+              { href: "#comparison", label: "Pricing" },
               { href: "#faq", label: "FAQ" },
+              { href: "/blog", label: "Guides" },
             ].map((item, idx) => (
               <a
                 key={idx}
@@ -238,11 +208,9 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 style={{
                   fontSize: "16px",
-                  fontWeight: 700,
+                  fontWeight: 550,
                   color: "var(--zinc-950)",
-                  letterSpacing: "-0.01em",
-                  padding: "15px 4px",
-                  borderBottom: "1px solid var(--zinc-100)",
+                  padding: "12px 4px",
                   textDecoration: "none",
                   display: "flex",
                   alignItems: "center",
@@ -250,7 +218,7 @@ export default function Header() {
                 }}
               >
                 <span>{item.label}</span>
-                <ArrowUpRight size={15} color="var(--zinc-400)" />
+                <ArrowUpRight size={14} color="var(--zinc-400)" />
               </a>
             ))}
           </div>
@@ -259,13 +227,11 @@ export default function Header() {
             <Link
               href="/get-orupos"
               onClick={() => setMobileMenuOpen(false)}
-              className="btn-easyio"
-              style={{ width: "100%", height: "50px", fontSize: "13px", textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center" }}
+              className="btn-primary"
+              style={{ width: "100%", height: "44px", fontSize: "13px" }}
             >
-              <span>Get OruPos POS</span>
-              <div className="arrow-circle">
-                <ArrowUpRight size={16} />
-              </div>
+              <span>Get Started</span>
+              <ArrowUpRight size={14} />
             </Link>
 
             <a
@@ -273,10 +239,9 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMobileMenuOpen(false)}
-              className="btn-easyio-ghost"
-              style={{ width: "100%", height: "46px", justifyContent: "center", fontSize: "13px", textDecoration: "none" }}
+              className="btn-secondary"
+              style={{ width: "100%", height: "44px", fontSize: "13px" }}
             >
-              <MessageCircle size={16} color="var(--emerald-600)" />
               <span>Chat on WhatsApp</span>
             </a>
           </div>

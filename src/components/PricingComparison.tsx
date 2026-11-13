@@ -2,8 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Check, X, ArrowUpRight, MessageCircle } from "lucide-react";
-import { ORUPOS_CONFIG } from "@/data/config";
+import { Check, X, ArrowUpRight } from "lucide-react";
 
 export default function PricingComparison() {
   const comparisonRows = [
@@ -13,50 +12,47 @@ export default function PricingComparison() {
       others: "₹1,500 – ₹4,000 / month recurring",
     },
     {
-      feature: "Floor Table Management",
-      orupos: "Included natively (Unlimited tables)",
+      feature: "Floor & Table Management",
+      orupos: "Included free (Unlimited tables)",
       others: "Paid enterprise add-on / higher tier",
     },
     {
       feature: "Kitchen KOT Routing & KDS",
-      orupos: "Included with live chef notes & printing",
-      others: "Extra module fee per terminal",
+      orupos: "Included with chef notes & printing",
+      others: "Extra monthly charge per terminal",
     },
     {
-      feature: "Direct Vendor Payment Settlement",
+      feature: "Payment Settlement",
       orupos: "Instant direct to your UPI / bank account",
-      others: "Third-party gateway fees & delayed payouts",
+      others: "T+1 or T+2 delay with gateway cuts",
     },
     {
-      feature: "Device Flexibility",
-      orupos: "Web, Mobile & Desktop on any phone or PC",
-      others: "Locks into expensive ₹25,000+ POS hardware",
+      feature: "Device Freedom",
+      orupos: "Runs on any phone, tablet, PC or Mac",
+      others: "Locks into expensive ₹25,000+ proprietary machines",
     },
     {
-      feature: "Table QR Hardware Stations",
+      feature: "Custom Table QR Stations",
       orupos: "Custom 3mm optical cast acrylic included",
       others: "None (restaurateur prints DIY paper slips)",
     },
     {
-      feature: "Custom Branded Website",
-      orupos: "Free dedicated digital menu website",
-      others: "Paid website builder & domain add-ons",
+      feature: "Dedicated Digital Menu Web App",
+      orupos: "Included free with zero hosting costs",
+      others: "Paid website builder add-ons",
     },
   ];
-
-  const switchInquiryUrl = ORUPOS_CONFIG.getWhatsAppUrl({
-    customMessage: "Hi OruPos Team! I would like to switch my restaurant to the OruPos 0-Subscription POS System. Please guide me on onboarding.",
-  });
 
   return (
     <section className="section section-white" id="comparison">
       <div className="container">
-        <div className="section-header" style={{ textAlign: "center", maxWidth: "760px", margin: "0 auto 36px" }}>
+        <div className="section-header" style={{ textAlign: "center", maxWidth: "760px", margin: "0 auto 40px" }}>
+          <span className="section-kicker">Honest Comparison</span>
           <h2 className="section-title">
-            OruPos vs Petpooja & Legacy POS
+            OruPOS vs Petpooja & Legacy POS
           </h2>
           <p className="section-desc" style={{ margin: "0 auto" }}>
-            Compare zero-subscription OruPos against Petpooja, Dine In, and traditional recurring restaurant software.
+            Compare zero-subscription OruPOS against Petpooja, Dine In, and traditional recurring restaurant software.
           </p>
         </div>
 
@@ -66,8 +62,8 @@ export default function PricingComparison() {
             maxWidth: "920px",
             margin: "0 auto",
             backgroundColor: "#FFFFFF",
-            border: "1px solid var(--border-hairline)",
-            borderRadius: "clamp(18px, 2.8vw, 30px)",
+            border: "1px solid var(--border-light)",
+            borderRadius: "clamp(18px, 2.5vw, 28px)",
             overflow: "hidden",
             boxShadow: "var(--shadow-card)",
           }}
@@ -88,14 +84,14 @@ export default function PricingComparison() {
                   letterSpacing: "0.05em",
                 }}
               >
-                <div style={{ color: "var(--zinc-400)" }}>Feature / Capability</div>
+                <div style={{ color: "var(--zinc-500)" }}>Feature / Capability</div>
                 <div style={{ color: "var(--zinc-950)", fontWeight: 800 }}>
-                  <span>OruPos (0 Subscription)</span>
+                  <span>OruPOS (0 Subscription)</span>
                 </div>
                 <div style={{ color: "var(--zinc-400)" }}>Petpooja & Legacy POS</div>
               </div>
 
-              {/* Table Body (NO COMMISSION LINE) */}
+              {/* Table Body */}
               <div style={{ display: "flex", flexDirection: "column" }}>
                 {comparisonRows.map((row, idx) => (
                   <div
@@ -117,7 +113,7 @@ export default function PricingComparison() {
                       <Check size={16} color="var(--emerald-600)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                       <span>{row.orupos}</span>
                     </div>
-                    <div style={{ color: "var(--zinc-400)", fontWeight: 500, display: "flex", alignItems: "center", gap: "8px" }}>
+                    <div style={{ color: "var(--zinc-400)", fontWeight: 450, display: "flex", alignItems: "center", gap: "8px" }}>
                       <X size={15} color="var(--zinc-300)" strokeWidth={2} style={{ flexShrink: 0 }} />
                       <span>{row.others}</span>
                     </div>
@@ -127,10 +123,10 @@ export default function PricingComparison() {
             </div>
           </div>
 
-          {/* Table Footer Banner with Contact Us Now CTA */}
+          {/* Table Footer Banner */}
           <div
             style={{
-              padding: "20px 24px",
+              padding: "22px 28px",
               backgroundColor: "var(--zinc-950)",
               color: "#FFFFFF",
               display: "flex",
@@ -142,10 +138,10 @@ export default function PricingComparison() {
           >
             <div>
               <div style={{ fontSize: "14.5px", fontWeight: 800 }}>
-                Save ₹25,000 to ₹48,000 every year in POS software rent
+                Save ₹24,000 to ₹48,000 every year in POS software rent
               </div>
-              <div style={{ fontSize: "12px", color: "var(--zinc-400)", marginTop: "3px" }}>
-                Zero monthly subscriptions forever. Complete cloud POS, KOT, and table hardware.
+              <div style={{ fontSize: "12.5px", color: "var(--zinc-400)", marginTop: "4px" }}>
+                Zero monthly fees forever. Full cloud POS, kitchen KOT, and table hardware.
               </div>
             </div>
 
@@ -156,19 +152,19 @@ export default function PricingComparison() {
                 padding: "0 22px",
                 backgroundColor: "#FFFFFF",
                 color: "var(--zinc-950)",
-                borderRadius: "9999px",
-                fontWeight: 800,
-                fontSize: "12.5px",
+                borderRadius: "var(--radius-full)",
+                fontWeight: 700,
+                fontSize: "13px",
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
-                boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)",
+                boxShadow: "0 2px 8px rgba(255, 255, 255, 0.2)",
                 transition: "all 0.15s ease",
                 whiteSpace: "nowrap",
               }}
             >
-              <span>Get OruPos POS</span>
+              <span>Get OruPOS</span>
               <ArrowUpRight size={14} />
             </Link>
           </div>

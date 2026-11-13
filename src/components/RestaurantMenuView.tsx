@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MenuItem, RestaurantData } from "@/lib/restaurants";
@@ -55,6 +55,32 @@ export default function RestaurantMenuView({ restaurant, initialTable }: Restaur
       setToastMessage(null);
     }, 2800);
   };
+
+  // Lightweight analytics ping on customer visit / table scan
+  useEffect(() => {
+    try {
+      const payload = JSON.stringify({
+        slug: restaurant.slug,
+        table: initialTable || "01",
+        path: typeof window !== "undefined" ? window.location.pathname : "/",
+        eventType: initialTable ? "scan" : "visit",
+      });
+      if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
+        const blob = new Blob([payload], { type: "application/json" });
+        if (navigator.sendBeacon("/api/analytics/track", blob)) {
+          return;
+        }
+      }
+      fetch("/api/analytics/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+        keepalive: true,
+      }).catch(() => {});
+    } catch {
+      // ignore
+    }
+  }, [restaurant.slug, initialTable]);
 
   // Add item
   const handleAddItem = (dish: MenuItem) => {

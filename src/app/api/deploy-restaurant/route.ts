@@ -98,11 +98,11 @@ function syncTraefikSubdomains(baseDir: string): void {
   }
   try {
     const entries = fs.readdirSync(baseDir, { withFileTypes: true });
-    const subdomains: string[] = ["demo.orupos.in"];
+    const subdomains: string[] = ["demo.orupos.in", "diamondcafe.orupos.in"];
     for (const entry of entries) {
       if (entry.isDirectory()) {
         const slug = entry.name;
-        if (slug !== "demo" && fs.existsSync(path.join(baseDir, slug, "dist"))) {
+        if (slug !== "demo" && slug !== "diamondcafe" && fs.existsSync(path.join(baseDir, slug, "dist"))) {
           subdomains.push(`${slug}.orupos.in`);
         }
       }
@@ -196,6 +196,20 @@ export async function GET() {
           updatedAt,
         });
       }
+    }
+
+    // Always preserve diamondcafe deployment & analytics
+    const hasDiamondCafe = restaurants.some((r) => r.slug === "diamondcafe");
+    if (!hasDiamondCafe) {
+      restaurants.push({
+        name: "Diamond Cafe",
+        slug: "diamondcafe",
+        subdomain: "diamondcafe.orupos.in",
+        url: "https://diamondcafe.orupos.in",
+        hasIndex: true,
+        filesCount: 16,
+        deployedAt: "2026-04-01T00:00:00.000Z",
+      });
     }
 
     // Sort newest first
@@ -530,6 +544,13 @@ export async function DELETE(req: NextRequest) {
 
     if (!slug) {
       return NextResponse.json({ error: "Slug is required" }, { status: 400 });
+    }
+
+    if (slug === "diamondcafe" || slug === "demo") {
+      return NextResponse.json(
+        { error: `Protected restaurant '${slug}' cannot be deleted` },
+        { status: 403 }
+      );
     }
 
     const baseDir = getRestaurantsBaseDir();

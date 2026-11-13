@@ -206,7 +206,6 @@ export default function CustomerExperience({ onOpenDemo }: CustomerExperiencePro
                 }}
               >
                 <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#1E293B" }} />
-                <span style={{ width: "10px", height: "10px", borderRadius: "50%", backgroundColor: "#047857" }} className="pulse-dot" />
               </div>
 
               {/* Screen Canvas */}
@@ -249,7 +248,6 @@ export default function CustomerExperience({ onOpenDemo }: CustomerExperiencePro
                 zIndex: 2,
               }}
             >
-              <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#10B981" }} className="pulse-dot" />
               <span>Interactive Simulator: Tap dishes to test</span>
             </div>
           </div>

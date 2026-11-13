@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { DeployedRestaurant } from "@/app/api/deploy-restaurant/route";
+import RestaurantAnalyticsModal from "@/components/RestaurantAnalyticsModal";
+import DeployAuthGate from "@/components/DeployAuthGate";
+import { BarChart3, TrendingUp, Users, LogOut } from "lucide-react";
 import {
   UploadCloudIcon,
   ExternalLinkIcon,
@@ -20,6 +23,9 @@ interface FileItem {
 }
 
 export default function DeployPortalPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [checkingAuth, setCheckingAuth] = useState<boolean>(true);
+
   const [restaurants, setRestaurants] = useState<DeployedRestaurant[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -47,6 +53,19 @@ export default function DeployPortalPage() {
   const [isEditDragging, setIsEditDragging] = useState<boolean>(false);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [updateProgress, setUpdateProgress] = useState<string>("");
+
+  // Customer Analytics Modal State
+  const [analyticsModalData, setAnalyticsModalData] = useState<{
+    isOpen: boolean;
+    restaurantName: string;
+    subdomain: string;
+    slug: string;
+  }>({
+    isOpen: false,
+    restaurantName: "",
+    subdomain: "",
+    slug: "all",
+  });
 
   const zipInputRef = useRef<HTMLInputElement | null>(null);
   const folderInputRef = useRef<HTMLInputElement | null>(null);
@@ -83,8 +102,25 @@ export default function DeployPortalPage() {
   };
 
   useEffect(() => {
-    fetchRestaurants();
+    try {
+      if (typeof window !== "undefined") {
+        const stored = sessionStorage.getItem("orupos_deploy_access");
+        if (stored === "granted") {
+          setIsAuthenticated(true);
+        }
+      }
+    } catch {
+      // ignore
+    } finally {
+      setCheckingAuth(false);
+    }
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchRestaurants();
+    }
+  }, [isAuthenticated]);
 
   // Recursively read directory entries dropped into browser
   async function extractFilesFromItems(items: DataTransferItemList): Promise<FileItem[]> {
@@ -460,6 +496,30 @@ export default function DeployPortalPage() {
     ? `${slug.toLowerCase().replace(/[^a-z0-9_-]/g, "")}.orupos.in`
     : "your-restaurant.orupos.in";
 
+  if (checkingAuth) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          backgroundColor: "#09090B",
+          color: "#FFFFFF",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "var(--font-sans)",
+        }}
+      >
+        <span style={{ fontSize: "13px", color: "var(--zinc-500)" }}>
+          Checking access authorization...
+        </span>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <DeployAuthGate onSuccess={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#F9F9F8", color: "#111111" }}>
       {/* Toast Notification */}
@@ -538,7 +598,31 @@ export default function DeployPortalPage() {
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          <button
+            type="button"
+            onClick={() => {
+              sessionStorage.removeItem("orupos_deploy_access");
+              setIsAuthenticated(false);
+            }}
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.08)",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              color: "#E2E8F0",
+              fontSize: "12px",
+              fontWeight: 600,
+              padding: "6px 12px",
+              borderRadius: "6px",
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+            }}
+          >
+            <LogOut size={13} color="#E2E8F0" />
+            <span>Lock Portal</span>
+          </button>
+
           <Link
             href="/"
             style={{
@@ -1029,26 +1113,57 @@ export default function DeployPortalPage() {
                 Every restaurant website hosted on its own <code>.orupos.in</code> domain
               </p>
             </div>
-            <button
-              onClick={fetchRestaurants}
-              disabled={loading}
-              style={{
-                backgroundColor: "#FFFFFF",
-                border: "1px solid #E2E8F0",
-                padding: "8px 14px",
-                borderRadius: "8px",
-                fontSize: "12px",
-                fontWeight: 600,
-                color: "#334155",
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-              }}
-            >
-              <RefreshIcon size={14} color="#334155" />
-              <span>Refresh</span>
-            </button>
+            <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+              <button
+                type="button"
+                onClick={() =>
+                  setAnalyticsModalData({
+                    isOpen: true,
+                    restaurantName: "Network Traffic Overview",
+                    subdomain: "*.orupos.in",
+                    slug: "all",
+                  })
+                }
+                style={{
+                  backgroundColor: "#0F172A",
+                  color: "#FFFFFF",
+                  border: "none",
+                  padding: "8px 14px",
+                  borderRadius: "8px",
+                  fontSize: "12px",
+                  fontWeight: 650,
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  boxShadow: "0 2px 6px rgba(15, 23, 42, 0.15)",
+                }}
+              >
+                <BarChart3 size={13} color="#FFFFFF" />
+                <span>Traffic & Analytics</span>
+              </button>
+
+              <button
+                onClick={fetchRestaurants}
+                disabled={loading}
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid #E2E8F0",
+                  padding: "8px 14px",
+                  borderRadius: "8px",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  color: "#334155",
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                <RefreshIcon size={14} color="#334155" />
+                <span>Refresh</span>
+              </button>
+            </div>
           </div>
 
           {loading ? (
@@ -1189,6 +1304,35 @@ export default function DeployPortalPage() {
                     </Link>
 
                     <div style={{ display: "flex", gap: "8px" }}>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setAnalyticsModalData({
+                            isOpen: true,
+                            restaurantName: res.name,
+                            subdomain: res.subdomain,
+                            slug: res.slug,
+                          })
+                        }
+                        style={{
+                          backgroundColor: "#F8FAFC",
+                          border: "1px solid #E2E8F0",
+                          color: "#0F172A",
+                          cursor: "pointer",
+                          padding: "6px 12px",
+                          fontSize: "12px",
+                          fontWeight: 700,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          borderRadius: "6px",
+                          transition: "all 0.15s ease",
+                        }}
+                      >
+                        <BarChart3 size={12} color="#0F172A" />
+                        <span>Analytics</span>
+                      </button>
+
                       <button
                         onClick={() => openEditModal(res)}
                         style={{
@@ -1603,6 +1747,17 @@ export default function DeployPortalPage() {
           </div>
         </div>
       )}
+
+      {/* Customer Traffic, Rush Hours & Visitor Analytics Modal */}
+      <RestaurantAnalyticsModal
+        isOpen={analyticsModalData.isOpen}
+        onClose={() =>
+          setAnalyticsModalData((prev) => ({ ...prev, isOpen: false }))
+        }
+        restaurantName={analyticsModalData.restaurantName}
+        subdomain={analyticsModalData.subdomain}
+        slug={analyticsModalData.slug}
+      />
     </div>
   );
 }

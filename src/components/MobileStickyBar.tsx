@@ -17,48 +17,42 @@ export default function MobileStickyBar() {
         bottom: "16px",
         left: "50%",
         transform: "translateX(-50%)",
-        width: "calc(100% - 28px)",
-        maxWidth: "460px",
-        backgroundColor: "rgba(9, 9, 11, 0.95)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-        borderRadius: "9999px",
-        padding: "8px 12px 8px 20px",
+        width: "calc(100% - 32px)",
+        maxWidth: "420px",
+        backgroundColor: "rgba(9, 9, 11, 0.92)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderRadius: "var(--radius-full)",
+        padding: "6px 8px 6px 18px",
         zIndex: 90,
-        boxShadow: "0 12px 36px rgba(9, 9, 11, 0.35)",
+        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.25)",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        border: "1px solid rgba(255, 255, 255, 0.15)",
+        border: "1px solid rgba(255, 255, 255, 0.12)",
       }}
       className="mobile-sticky-bottom-bar"
     >
-      <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-          <span style={{ fontSize: "16px", fontWeight: 900, color: "#FFFFFF", letterSpacing: "-0.02em" }}>
-            ₹0
-          </span>
-          <span style={{ fontSize: "11px", color: "var(--zinc-400)", fontWeight: 600 }}>
-            monthly fee
-          </span>
-        </div>
-        <span style={{ fontSize: "10px", color: "var(--emerald-500)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>
-          0-Subscription POS
+      <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
+        <span style={{ fontSize: "13px", fontWeight: 700, color: "#FFFFFF", letterSpacing: "-0.01em" }}>
+          OruPOS
+        </span>
+        <span style={{ fontSize: "11px", color: "var(--zinc-400)", fontWeight: 500 }}>
+          ₹0 / month
         </span>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
         <a
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
           style={{
-            width: "38px",
-            height: "38px",
+            width: "32px",
+            height: "32px",
             borderRadius: "50%",
-            backgroundColor: "rgba(255, 255, 255, 0.12)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
+            backgroundColor: "rgba(255, 255, 255, 0.08)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -66,30 +60,28 @@ export default function MobileStickyBar() {
             textDecoration: "none",
           }}
         >
-          <MessageCircle size={16} />
+          <MessageCircle size={14} />
         </a>
 
         <Link
           href="/get-orupos"
           style={{
-            height: "38px",
-            padding: "0 16px",
+            height: "32px",
+            padding: "0 13px",
             backgroundColor: "#FFFFFF",
             color: "var(--zinc-950)",
-            fontSize: "11.5px",
-            fontWeight: 800,
-            textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            borderRadius: "9999px",
+            fontSize: "11px",
+            fontWeight: 650,
+            borderRadius: "var(--radius-full)",
             textDecoration: "none",
             display: "inline-flex",
             alignItems: "center",
-            gap: "6px",
-            boxShadow: "0 4px 12px rgba(255, 255, 255, 0.2)",
+            gap: "4px",
+            whiteSpace: "nowrap",
           }}
         >
-          <span>Get POS</span>
-          <ArrowUpRight size={13} />
+          <span>Get Started</span>
+          <ArrowUpRight size={11} />
         </Link>
       </div>
     </div>

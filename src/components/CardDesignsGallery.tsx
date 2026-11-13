@@ -12,7 +12,7 @@ export default function CardDesignsGallery() {
   const themes = {
     classic: {
       name: "Classic Dining",
-      subtitle: "Sophisticated minimalism for fine dine and family restaurants",
+      subtitle: "Refined aesthetic for fine dine and family restaurants",
       image: "/assets/card-designs-classic.png",
       alt: "Restaurant table QR acrylic card designs in six color schemes",
     },
@@ -45,7 +45,7 @@ export default function CardDesignsGallery() {
     {
       icon: Layers,
       title: "3mm Optical Cast Acrylic",
-      desc: "Industrial-grade, shatter-resistant crystal acrylic engineered for heavy daily restaurant usage.",
+      desc: "Industrial-grade, shatter-resistant crystal acrylic with a stable weighted footprint that stays upright.",
     },
     {
       icon: ShieldCheck,
@@ -69,7 +69,7 @@ export default function CardDesignsGallery() {
   });
 
   return (
-    <section className="section section-white" id="designs">
+    <section className="section section-subtle" id="designs">
       <div className="container">
         {/* Section Header */}
         <div
@@ -83,12 +83,13 @@ export default function CardDesignsGallery() {
             marginBottom: "36px",
           }}
         >
-          <div style={{ maxWidth: "620px" }}>
+          <div style={{ maxWidth: "640px" }}>
+            <span className="section-kicker">Tabletop Hardware</span>
             <h2 className="section-title">
-              Crafted for your dining ambiance.
+              Heavy-duty acrylic table stands built for restaurant floors.
             </h2>
             <p className="section-desc">
-              Heavy-duty optical cast acrylic stations customized with your restaurant logo, brand colors, and permanent table numbering.
+              Customized with your restaurant logo, brand colors, and permanent table numbering. Engineered to resist spills, heat, and daily wear.
             </p>
           </div>
 
@@ -98,7 +99,7 @@ export default function CardDesignsGallery() {
               display: "inline-flex",
               backgroundColor: "var(--zinc-100)",
               padding: "4px",
-              borderRadius: "9999px",
+              borderRadius: "var(--radius-full)",
               border: "1px solid var(--zinc-200)",
               gap: "2px",
               maxWidth: "100%",
@@ -106,7 +107,7 @@ export default function CardDesignsGallery() {
             }}
           >
             {[
-              { id: "classic", label: "Classic" },
+              { id: "classic", label: "Classic Dining" },
               { id: "cafe", label: "Cafe & QSR" },
               { id: "bistro", label: "Bar & Bistro" },
             ].map((tab) => {
@@ -118,14 +119,14 @@ export default function CardDesignsGallery() {
                   onClick={() => setActiveTab(tab.id as "classic" | "cafe" | "bistro")}
                   style={{
                     padding: "8px 18px",
-                    borderRadius: "9999px",
+                    borderRadius: "var(--radius-full)",
                     border: "none",
                     backgroundColor: isSelected ? "#FFFFFF" : "transparent",
                     color: isSelected ? "var(--zinc-950)" : "var(--zinc-500)",
                     fontSize: "12.5px",
-                    fontWeight: 750,
+                    fontWeight: 700,
                     cursor: "pointer",
-                    boxShadow: isSelected ? "0 2px 6px rgba(0,0,0,0.06)" : "none",
+                    boxShadow: isSelected ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
                     transition: "all 0.15s ease",
                     whiteSpace: "nowrap",
                   }}
@@ -140,20 +141,20 @@ export default function CardDesignsGallery() {
         {/* Main Hardware Showcase Frame */}
         <div
           style={{
-            border: "1px solid var(--border-hairline)",
-            borderRadius: "clamp(20px, 3vw, 32px)",
+            border: "1px solid var(--border-light)",
+            borderRadius: "clamp(18px, 2.5vw, 28px)",
             overflow: "hidden",
-            backgroundColor: "var(--zinc-50)",
+            backgroundColor: "#FFFFFF",
             padding: "clamp(12px, 2vw, 20px)",
-            marginBottom: "28px",
+            marginBottom: "24px",
             boxShadow: "var(--shadow-card)",
           }}
         >
           <div
             style={{
-              borderRadius: "clamp(14px, 2.5vw, 24px)",
+              borderRadius: "clamp(12px, 2vw, 20px)",
               overflow: "hidden",
-              backgroundColor: "#FFFFFF",
+              backgroundColor: "var(--zinc-50)",
               border: "1px solid var(--border-subtle)",
               position: "relative",
             }}
@@ -181,7 +182,7 @@ export default function CardDesignsGallery() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap" }}>
-              <span style={{ fontWeight: 850, textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--zinc-950)", fontSize: "11px" }}>
+              <span style={{ fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--zinc-900)", fontSize: "11px" }}>
                 Brand Colors:
               </span>
               {colorways.map((c, idx) => (
@@ -194,7 +195,7 @@ export default function CardDesignsGallery() {
                       backgroundColor: c.color,
                       border: c.border ? `1px solid ${c.border}` : "none",
                       display: "inline-block",
-                      boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
                     }}
                   />
                   <span style={{ fontWeight: 600, color: "var(--zinc-700)" }}>{c.name}</span>
@@ -202,19 +203,19 @@ export default function CardDesignsGallery() {
               ))}
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
               <Link
                 href="/get-orupos"
                 style={{
                   color: "var(--zinc-950)",
-                  fontWeight: 750,
+                  fontWeight: 650,
                   fontSize: "12.5px",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "6px",
                   textDecoration: "none",
                   padding: "6px 14px",
-                  borderRadius: "9999px",
+                  borderRadius: "var(--radius-full)",
                   backgroundColor: "#FFFFFF",
                   border: "1px solid var(--zinc-200)",
                   transition: "all 0.15s ease",
@@ -230,17 +231,17 @@ export default function CardDesignsGallery() {
                 rel="noopener noreferrer"
                 style={{
                   color: "var(--zinc-600)",
-                  fontWeight: 650,
+                  fontWeight: 600,
                   fontSize: "12px",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "5px",
                   textDecoration: "none",
-                  padding: "6px 12px",
+                  padding: "6px 10px",
                 }}
               >
                 <MessageCircle size={14} color="var(--emerald-600)" />
-                <span>WhatsApp Design Inquiry</span>
+                <span>WhatsApp Design Samples</span>
               </a>
             </div>
           </div>
@@ -261,9 +262,9 @@ export default function CardDesignsGallery() {
                 key={sIdx}
                 style={{
                   backgroundColor: "#FFFFFF",
-                  border: "1px solid var(--border-hairline)",
+                  border: "1px solid var(--border-light)",
                   borderRadius: "18px",
-                  padding: "20px",
+                  padding: "22px 20px",
                   display: "flex",
                   flexDirection: "column",
                   gap: "10px",
@@ -296,11 +297,11 @@ export default function CardDesignsGallery() {
                 </h4>
                 <p
                   style={{
-                    fontSize: "0.85rem",
+                    fontSize: "0.88rem",
                     color: "var(--zinc-500)",
                     margin: 0,
                     lineHeight: 1.5,
-                    fontWeight: 500,
+                    fontWeight: 450,
                   }}
                 >
                   {spec.desc}

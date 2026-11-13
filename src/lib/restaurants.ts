@@ -283,6 +283,23 @@ export const DEFAULT_RESTAURANTS: Record<string, RestaurantData> = {
     categories: STARTER_MENU_PACKS.continental.categories,
     items: STARTER_MENU_PACKS.continental.items,
   },
+
+  diamondcafe: {
+    slug: "diamondcafe",
+    name: "Diamond Cafe",
+    tagline: "Specialty Coffee • Artisan Bakes • Breakfast & Fast Food",
+    phone: "+916005659527",
+    whatsapp: "916005659527",
+    rating: "4.8",
+    prepTime: "10-15 Mins",
+    location: "Main Market, Srinagar",
+    tableCount: 16,
+    themeColor: "#1E3A2F",
+    active: true,
+    createdAt: "2026-04-01",
+    categories: STARTER_MENU_PACKS.cafe.categories,
+    items: STARTER_MENU_PACKS.cafe.items,
+  },
 };
 
 // Global memory registry to persist dynamically registered domains across Next.js server calls

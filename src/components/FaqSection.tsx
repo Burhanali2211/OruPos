@@ -8,24 +8,28 @@ export default function FaqSection() {
 
   const faqs = [
     {
-      q: "Is OruPos a complete Restaurant POS system?",
-      a: "Yes. OruPos handles table management, live kitchen KOT routing, 5% restaurant GST billing, sales analytics, and contactless table ordering with zero monthly software fees.",
+      q: "Is OruPOS a complete restaurant POS system?",
+      a: "Yes. OruPOS handles table floor management, live kitchen KOT routing, 5% restaurant GST billing, sales analytics, and contactless table ordering with zero monthly software fees.",
     },
     {
       q: "Why is there zero monthly subscription?",
-      a: "Legacy POS software charges ₹1,500 to ₹4,000 every month in recurring rent. OruPos charges a one-time setup of ₹199 per table for hardware and onboarding, with zero monthly retainers.",
+      a: "Most legacy POS companies charge ₹1,500 to ₹4,000 every month in software rent. We believe in software ownership. You pay a one-time onboarding fee for your custom table QR stands, and keep the software forever with zero recurring fees.",
     },
     {
       q: "Do I need special billing machines or monitors?",
-      a: "No. OruPos runs in the cloud on any device you already have — Android phones, iPhones, iPads, Android tablets, laptops, or desktop computers.",
+      a: "No. OruPOS runs in the cloud on any device you already own — Android phones, iPhones, iPads, Android tablets, laptops, or Windows desktop computers.",
     },
     {
       q: "How does the Kitchen KOT work?",
-      a: "When an order is placed from a table or by staff, the KOT appears immediately on your kitchen display, tablet, or WhatsApp with table numbers and chef notes.",
+      a: "When an order is placed from a table QR or by waitstaff, the KOT appears immediately on your kitchen display tablet, screen, or prints directly to thermal KOT printers with table numbers and chef notes.",
     },
     {
       q: "Are physical acrylic table stands included?",
       a: "Yes. Every table gets a heavy-duty 3mm optical cast acrylic QR station printed with your logo, table number, and dedicated table QR, delivered to your door.",
+    },
+    {
+      q: "Do you take any commission on customer orders?",
+      a: "Zero. We take 0% commission on all orders. Customer UPI and card payments deposit directly into your own bank account.",
     },
   ];
 
@@ -33,12 +37,12 @@ export default function FaqSection() {
     <section className="section section-white" id="faq">
       <div className="container container-narrow">
         <div className="section-header" style={{ textAlign: "center" }}>
-          <span className="section-kicker">FAQ</span>
+          <span className="section-kicker">Frequently Asked Questions</span>
           <h2 className="section-title">
-            Frequently asked questions.
+            Everything you need to know.
           </h2>
           <p className="section-desc" style={{ margin: "0 auto" }}>
-            Answers about our zero-subscription POS software and table hardware.
+            Direct answers about zero-subscription POS software and tabletop hardware.
           </p>
         </div>
 
@@ -50,7 +54,7 @@ export default function FaqSection() {
                 key={idx}
                 style={{
                   borderTop: "1px solid var(--border-subtle)",
-                  padding: "16px 0",
+                  padding: "18px 0",
                 }}
               >
                 <button
@@ -62,22 +66,22 @@ export default function FaqSection() {
                     textAlign: "left",
                     background: "none",
                     border: "none",
-                    fontSize: "0.98rem",
+                    fontSize: "1.02rem",
                     fontWeight: 700,
                     color: "var(--zinc-950)",
                     cursor: "pointer",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    gap: "12px",
+                    gap: "14px",
                     padding: 0,
                   }}
                 >
                   <span>{faq.q}</span>
                   <div
                     style={{
-                      width: "24px",
-                      height: "24px",
+                      width: "26px",
+                      height: "26px",
                       borderRadius: "50%",
                       backgroundColor: isOpen ? "var(--zinc-950)" : "var(--zinc-100)",
                       color: isOpen ? "#FFFFFF" : "var(--zinc-500)",
@@ -89,7 +93,7 @@ export default function FaqSection() {
                     }}
                   >
                     <ChevronDown
-                      size={13}
+                      size={14}
                       style={{
                         transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                         transition: "transform 0.15s ease",
@@ -100,11 +104,11 @@ export default function FaqSection() {
                 {isOpen && (
                   <div
                     style={{
-                      paddingTop: "10px",
-                      fontSize: "0.9rem",
+                      paddingTop: "12px",
+                      fontSize: "0.93rem",
                       color: "var(--zinc-500)",
-                      lineHeight: 1.55,
-                      fontWeight: 500,
+                      lineHeight: 1.6,
+                      fontWeight: 450,
                     }}
                   >
                     {faq.a}

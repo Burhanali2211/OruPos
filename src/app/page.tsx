@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import WhatYouGet from "@/components/WhatYouGet";
+import LiveDemoSection from "@/components/LiveDemoSection";
 import HowItWorks from "@/components/HowItWorks";
 import CardDesignsGallery from "@/components/CardDesignsGallery";
 import PricingComparison from "@/components/PricingComparison";
@@ -18,17 +19,18 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Ambient Radial Canvas and 80px Grid Lines */}
-      <div className="ambient-bg-grid" />
-      <div className="ambient-grid-lines" />
+      {/* Subtle, architectural canvas wash */}
+      <div className="subtle-top-wash" />
 
-      {/* Floating Island Header */}
+      {/* Modern Fixed Header */}
       <Header />
 
       <main style={{ position: "relative", zIndex: 10 }}>
         <Hero onOpenDemo={() => setDemoModalOpen(true)} />
 
         <WhatYouGet />
+
+        <LiveDemoSection onOpenDemo={() => setDemoModalOpen(true)} />
 
         <HowItWorks />
 
