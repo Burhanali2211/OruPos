@@ -276,7 +276,17 @@ export default function Footer() {
           </div>
 
           <div style={{ color: "var(--zinc-400)", fontWeight: 500, fontSize: "11px" }}>
-            © {new Date().getFullYear()} {ORUPOS_CONFIG.legalEntity} · All rights reserved.
+            © {new Date().getFullYear()} OruPos · A product of{" "}
+            <a
+              href="https://easyio.tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "inherit", textDecoration: "underline", fontWeight: 600 }}
+              title="Easyio Technologies • Enterprise Software & Platforms"
+            >
+              Easyio Technologies
+            </a>{" "}
+            · All rights reserved.
           </div>
         </div>
       </div>
