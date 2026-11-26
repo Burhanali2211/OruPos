@@ -1,1 +1,49 @@
-[]
+[
+  {
+    "slug": "diamondcafe",
+    "path": "/",
+    "device": "desktop",
+    "eventType": "visit",
+    "timestamp": 1795662503795,
+    "id": "1795662503796-2yyah"
+  },
+  {
+    "slug": "diamondcafe",
+    "table": "03",
+    "path": "/",
+    "device": "desktop",
+    "eventType": "scan",
+    "timestamp": 1795662956379,
+    "id": "1795662956380-4bg3a"
+  },
+  {
+    "slug": "diamondcafe",
+    "table": "03",
+    "path": "/",
+    "device": "desktop",
+    "eventType": "order",
+    "timestamp": 1795662956468,
+    "id": "1795662956468-q2dmg"
+  },
+  {
+    "slug": "diamondcafe",
+    "path": "/",
+    "device": "desktop",
+    "eventType": "dish_click",
+    "source": "link",
+    "dishName": "Butter Chicken Biryani",
+    "category": "Mains",
+    "timestamp": 1795664478200,
+    "id": "1795664478201-duxaj"
+  },
+  {
+    "slug": "diamondcafe",
+    "path": "/",
+    "device": "desktop",
+    "eventType": "search",
+    "source": "link",
+    "query": "coffee",
+    "timestamp": 1795664478416,
+    "id": "1795664478416-7f166"
+  }
+]

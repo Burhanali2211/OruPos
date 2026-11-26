@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   Users,
   QrCode,
@@ -11,6 +12,7 @@ import {
   RefreshCw,
   ShoppingBag,
   Flame,
+  ExternalLink,
 } from "lucide-react";
 import { AnalyticsSummary } from "@/lib/analytics";
 
@@ -135,6 +137,25 @@ export default function RestaurantAnalyticsModal({
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <Link
+              href={`/deploy/analytics?slug=${encodeURIComponent(slug)}`}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "5px",
+                fontSize: "12px",
+                fontWeight: 700,
+                color: "#FFFFFF",
+                backgroundColor: "#0F172A",
+                padding: "6px 12px",
+                borderRadius: "8px",
+                textDecoration: "none",
+              }}
+            >
+              <span>Full Dashboard</span>
+              <ExternalLink size={12} />
+            </Link>
+
             {/* Period Selector Tabs */}
             <div
               style={{
@@ -505,11 +526,9 @@ export default function RestaurantAnalyticsModal({
                         </span>
                       </div>
                       <div>
-                        <span style={{ color: "var(--zinc-400)", display: "block", fontSize: "10.5px" }}>Avg Browsing</span>
+                        <span style={{ color: "var(--zinc-400)", display: "block", fontSize: "10.5px" }}>QR Attribution</span>
                         <span style={{ fontSize: "14px", fontWeight: 800, color: "var(--zinc-950)" }}>
-                          {data.avgDurationSecs
-                            ? `${Math.floor(data.avgDurationSecs / 60)}m ${data.avgDurationSecs % 60}s`
-                            : "—"}
+                          {data.sourceAttribution ? `${data.sourceAttribution.qrPercentage}%` : "—"}
                         </span>
                       </div>
                     </div>

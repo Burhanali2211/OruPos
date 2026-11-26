@@ -91,6 +91,87 @@ function ensureIndexAtRoot(targetDist: string): void {
   }
 }
 
+function extractZipArchive(tempZipPath: string, targetDist: string): void {
+  const isWindows = process.platform === "win32";
+  if (isWindows) {
+    execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
+    return;
+  }
+
+  // Linux: 1. Try python3 built-in zipfile (available on all Ubuntu/Debian installs out of the box)
+  try {
+    execSync(`python3 -m zipfile -e "${tempZipPath}" "${targetDist}"`);
+    return;
+  } catch {}
+
+  // 2. Try unzip CLI
+  try {
+    execSync(`unzip -o -q "${tempZipPath}" -d "${targetDist}"`);
+    return;
+  } catch {}
+
+  // 3. Fallback to tar
+  execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
+}
+
+function injectAnalyticsScript(targetDist: string, slug: string): void {
+  const indexPath = path.join(targetDist, "index.html");
+  if (!fs.existsSync(indexPath)) return;
+
+  try {
+    let html = fs.readFileSync(indexPath, "utf8");
+    if (html.includes("orupos-analytics-tracker") || html.includes("/api/analytics/track")) {
+      return;
+    }
+
+    const trackerSnippet = `
+    <!-- OruPos Live Traffic & QR Scan Analytics Tracker -->
+    <script id="orupos-analytics-tracker">
+      (function() {
+        try {
+          var slug = "${slug}";
+          var params = new URLSearchParams(window.location.search);
+          var table = params.get("table") || params.get("t");
+          var payload = JSON.stringify({
+            slug: slug,
+            table: table || undefined,
+            path: window.location.pathname || "/",
+            eventType: table ? "scan" : "visit",
+            timestamp: Date.now()
+          });
+          var isBeacon = typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function";
+          var isLocalOrOrupos = window.location.hostname.indexOf("orupos.in") !== -1 || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+          var url = isLocalOrOrupos ? "/api/analytics/track" : "https://orupos.in/api/analytics/track";
+
+          if (isBeacon) {
+            navigator.sendBeacon(url, new Blob([payload], { type: "application/json" }));
+          } else {
+            fetch(url, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: payload,
+              keepalive: true,
+              mode: "cors"
+            }).catch(function(){});
+          }
+        } catch(e) {}
+      })();
+    </script>`;
+
+    if (html.includes("</head>")) {
+      html = html.replace("</head>", `${trackerSnippet}\n</head>`);
+    } else if (html.includes("</body>")) {
+      html = html.replace("</body>", `${trackerSnippet}\n</body>`);
+    } else {
+      html += trackerSnippet;
+    }
+
+    fs.writeFileSync(indexPath, html, "utf8");
+  } catch (err) {
+    console.error("Could not inject analytics script into index.html:", err);
+  }
+}
+
 function syncTraefikSubdomains(baseDir: string): void {
   const tlsConfigPath = "/etc/traefik/tls.yml";
   if (!fs.existsSync(tlsConfigPath)) {
@@ -316,24 +397,14 @@ export async function POST(req: NextRequest) {
       fs.writeFileSync(tempZipPath, buffer);
 
       // Extract archive
-      const isWindows = process.platform === "win32";
       try {
-        if (isWindows) {
-          execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
-        } else {
-          execSync(`unzip -o -q "${tempZipPath}" -d "${targetDist}"`);
-        }
-      } catch {
-        // Fallback to tar if unzip failed
-        try {
-          execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
-        } catch (extractErr) {
-          if (fs.existsSync(tempZipPath)) fs.unlinkSync(tempZipPath);
-          return NextResponse.json(
-            { error: "Could not extract archive. Ensure it is a valid .zip file or drag the 'dist' folder directly.", details: String(extractErr) },
-            { status: 400 }
-          );
-        }
+        extractZipArchive(tempZipPath, targetDist);
+      } catch (extractErr) {
+        if (fs.existsSync(tempZipPath)) fs.unlinkSync(tempZipPath);
+        return NextResponse.json(
+          { error: "Could not extract archive. Ensure it is a valid .zip file or drag the 'dist' folder directly.", details: String(extractErr) },
+          { status: 400 }
+        );
       }
 
       // Clean temp zip
@@ -344,6 +415,16 @@ export async function POST(req: NextRequest) {
 
     // Recursively flatten if index.html is in any subfolder
     ensureIndexAtRoot(targetDist);
+
+    // Auto-inject OruPos visitor and QR scan analytics tracker
+    injectAnalyticsScript(targetDist, slug);
+
+    // Ensure Linux permissions for Nginx www-data
+    if (process.platform !== "win32") {
+      try {
+        execSync(`chmod -R 755 "${restaurantDir}"`);
+      } catch {}
+    }
 
     // Sync Traefik dynamic router so new subdomain immediately gets Let's Encrypt SSL
     syncTraefikSubdomains(baseDir);
@@ -467,26 +548,25 @@ export async function PUT(req: NextRequest) {
 
         const isWindows = process.platform === "win32";
         try {
-          if (isWindows) {
-            execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
-          } else {
-            execSync(`unzip -o -q "${tempZipPath}" -d "${targetDist}"`);
-          }
-        } catch {
-          try {
-            execSync(`tar -xf "${tempZipPath}" -C "${targetDist}"`);
-          } catch (extractErr) {
-            if (fs.existsSync(tempZipPath)) fs.unlinkSync(tempZipPath);
-            return NextResponse.json(
-              { error: "Could not extract archive.", details: String(extractErr) },
-              { status: 400 }
-            );
-          }
+          extractZipArchive(tempZipPath, targetDist);
+        } catch (extractErr) {
+          if (fs.existsSync(tempZipPath)) fs.unlinkSync(tempZipPath);
+          return NextResponse.json(
+            { error: "Could not extract archive.", details: String(extractErr) },
+            { status: 400 }
+          );
         }
         if (fs.existsSync(tempZipPath)) fs.unlinkSync(tempZipPath);
       }
 
       ensureIndexAtRoot(targetDist);
+      injectAnalyticsScript(targetDist, finalSlug);
+
+      if (process.platform !== "win32") {
+        try {
+          execSync(`chmod -R 755 "${restaurantDir}"`);
+        } catch {}
+      }
     }
 
     // Sync Traefik in case slug changed or subdomains changed

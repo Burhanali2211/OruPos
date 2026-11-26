@@ -15,9 +15,9 @@ echo "=========================================="
 echo "--> Updating system packages..."
 sudo apt update && sudo apt upgrade -y
 
-# 2. Install essential packages (curl, git, nginx)
+# 2. Install essential packages (curl, git, nginx, unzip)
 echo "--> Installing Nginx and utilities..."
-sudo apt install -y curl git nginx ufw
+sudo apt install -y curl git nginx ufw unzip
 
 # 3. Install Node.js 20 LTS (if not already installed)
 if ! command -v node &> /dev/null; then

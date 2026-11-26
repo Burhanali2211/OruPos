@@ -384,10 +384,9 @@ export default function DeployPortalPage() {
 
       if (editSelectedFiles.length > 0) {
         setUpdateProgress(`Uploading ${editSelectedFiles.length} updated build files...`);
-        const paths = editSelectedFiles.map((item) => item.path);
-        formData.append("paths", JSON.stringify(paths));
         for (const item of editSelectedFiles) {
           formData.append("files", item.file);
+          formData.append("paths", item.path);
         }
       } else if (editSelectedZip) {
         setUpdateProgress(`Uploading ${editSelectedZip.name}...`);
@@ -439,10 +438,9 @@ export default function DeployPortalPage() {
 
       if (selectedFiles.length > 0) {
         setUploadProgress(`Uploading ${selectedFiles.length} files from folder...`);
-        const paths = selectedFiles.map((item) => item.path);
-        formData.append("paths", JSON.stringify(paths));
         for (const item of selectedFiles) {
           formData.append("files", item.file);
+          formData.append("paths", item.path);
         }
       } else if (selectedZip) {
         setUploadProgress(`Uploading ${selectedZip.name}...`);
@@ -1114,16 +1112,8 @@ export default function DeployPortalPage() {
               </p>
             </div>
             <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-              <button
-                type="button"
-                onClick={() =>
-                  setAnalyticsModalData({
-                    isOpen: true,
-                    restaurantName: "Network Traffic Overview",
-                    subdomain: "*.orupos.in",
-                    slug: "all",
-                  })
-                }
+              <Link
+                href="/deploy/analytics"
                 style={{
                   backgroundColor: "#0F172A",
                   color: "#FFFFFF",
@@ -1136,12 +1126,13 @@ export default function DeployPortalPage() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "6px",
+                  textDecoration: "none",
                   boxShadow: "0 2px 6px rgba(15, 23, 42, 0.15)",
                 }}
               >
-                <BarChart3 size={13} color="#FFFFFF" />
-                <span>Traffic & Analytics</span>
-              </button>
+                <BarChart3 size={13} color="#10B981" />
+                <span>Live Analytics Dashboard</span>
+              </Link>
 
               <button
                 onClick={fetchRestaurants}
@@ -1304,21 +1295,13 @@ export default function DeployPortalPage() {
                     </Link>
 
                     <div style={{ display: "flex", gap: "8px" }}>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setAnalyticsModalData({
-                            isOpen: true,
-                            restaurantName: res.name,
-                            subdomain: res.subdomain,
-                            slug: res.slug,
-                          })
-                        }
+                      <Link
+                        href={`/deploy/analytics?slug=${encodeURIComponent(res.slug)}`}
                         style={{
                           backgroundColor: "#F8FAFC",
                           border: "1px solid #E2E8F0",
                           color: "#0F172A",
-                          cursor: "pointer",
+                          textDecoration: "none",
                           padding: "6px 12px",
                           fontSize: "12px",
                           fontWeight: 700,
@@ -1331,7 +1314,7 @@ export default function DeployPortalPage() {
                       >
                         <BarChart3 size={12} color="#0F172A" />
                         <span>Analytics</span>
-                      </button>
+                      </Link>
 
                       <button
                         onClick={() => openEditModal(res)}
