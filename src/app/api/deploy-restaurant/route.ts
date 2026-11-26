@@ -140,8 +140,8 @@ function injectAnalyticsScript(targetDist: string, slug: string): void {
             timestamp: Date.now()
           });
           var isBeacon = typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function";
-          var isLocalOrOrupos = window.location.hostname.indexOf("orupos.in") !== -1 || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-          var url = isLocalOrOrupos ? "/api/analytics/track" : "https://orupos.in/api/analytics/track";
+          var isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+          var url = isLocalhost ? "/api/analytics/track" : "https://orupos.in/api/analytics/track";
 
           if (isBeacon) {
             navigator.sendBeacon(url, new Blob([payload], { type: "application/json" }));
