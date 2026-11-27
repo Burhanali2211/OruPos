@@ -120,13 +120,13 @@ function OnboardingForm() {
   // Generate personalized WhatsApp message with full details
   const getPersonalizedWhatsAppUrl = () => {
     let msg = `Hi OruPOS Team,\nI have submitted my restaurant onboarding details:\n\n`;
-    msg += `👤 Contact: ${fullName.trim()}${role ? ` (${role})` : ""}\n`;
-    msg += `📞 Phone/WhatsApp: ${phone.trim()}\n`;
-    if (email.trim()) msg += `✉️ Email: ${email.trim()}\n`;
-    msg += `\n🍽️ Restaurant: ${restaurantName.trim()}\n`;
-    msg += `📍 Location: ${city.trim()}${address.trim() ? ` (${address.trim()})` : ""}\n`;
-    msg += `🏢 Outlet Type: ${outletType}\n`;
-    msg += `🪑 Tables: ${tables} tables (Hardware Setup: ₹${totalHardwareSetup.toLocaleString("en-IN")})\n`;
+    msg += `Contact: ${fullName.trim()}${role ? ` (${role})` : ""}\n`;
+    msg += `Phone/WhatsApp: ${phone.trim()}\n`;
+    if (email.trim()) msg += `Email: ${email.trim()}\n`;
+    msg += `\nRestaurant: ${restaurantName.trim()}\n`;
+    msg += `Location: ${city.trim()}${address.trim() ? ` (${address.trim()})` : ""}\n`;
+    msg += `Outlet Type: ${outletType}\n`;
+    msg += `Tables: ${tables} tables (Hardware Setup: ₹${totalHardwareSetup.toLocaleString("en-IN")})\n`;
 
     let posStatusText = "";
     if (isUsingPos === "Yes") {
@@ -136,9 +136,9 @@ function OnboardingForm() {
     } else {
       posStatusText = "Planning a new restaurant launch";
     }
-    msg += `\n⚙️ Current POS: ${posStatusText}\n`;
-    msg += `📊 Daily Volume: ${dailyOrders} | Avg Ticket: ${averageOrderValue}\n`;
-    if (notes.trim()) msg += `📝 Notes: ${notes.trim()}\n`;
+    msg += `\nCurrent POS: ${posStatusText}\n`;
+    msg += `Daily Volume: ${dailyOrders} | Avg Ticket: ${averageOrderValue}\n`;
+    if (notes.trim()) msg += `Notes: ${notes.trim()}\n`;
     msg += `\nPlease guide me on deploying OruPOS 0-Subscription POS and receiving our custom table stands.`;
 
     return `https://wa.me/${ORUPOS_CONFIG.contact.whatsappNumber}?text=${encodeURIComponent(msg)}`;

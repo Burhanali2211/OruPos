@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import WhatYouGet from "@/components/WhatYouGet";
 import LiveDemoSection from "@/components/LiveDemoSection";
 import HowItWorks from "@/components/HowItWorks";
+import BusinessTypes from "@/components/BusinessTypes";
 import CardDesignsGallery from "@/components/CardDesignsGallery";
 import PricingComparison from "@/components/PricingComparison";
 import FaqSection from "@/components/FaqSection";
@@ -33,6 +34,8 @@ export default function HomePage() {
         <LiveDemoSection onOpenDemo={() => setDemoModalOpen(true)} />
 
         <HowItWorks />
+
+        <BusinessTypes />
 
         <CardDesignsGallery />
 

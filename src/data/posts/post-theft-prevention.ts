@@ -134,12 +134,12 @@ A modern restaurant POS must have distinct role boundaries:
 
 | Action / Capability | Floor Waiter | Cashier | Restaurant Owner / General Manager |
 | :--- | :--- | :--- | :--- |
-| **Punch Orders & Fire KOT** | ✅ Yes | ✅ Yes | ✅ Yes |
-| **Print Customer Bill** | ✅ Yes | ✅ Yes | ✅ Yes |
-| **Apply Custom Discount** | ❌ No | ❌ No | **✅ Yes (PIN Protected)** |
-| **Cancel or Void an Order** | ❌ No | ❌ No | **✅ Yes (PIN Protected)** |
-| **Modify Item Selling Price** | ❌ No | ❌ No | **✅ Yes** |
-| **View Profit Margins & Costs** | ❌ No | ❌ No | **✅ Yes** |
+| **Punch Orders & Fire KOT** | Yes Yes | Yes Yes | Yes Yes |
+| **Print Customer Bill** | Yes Yes | Yes Yes | Yes Yes |
+| **Apply Custom Discount** | No No | No No | **Yes Yes (PIN Protected)** |
+| **Cancel or Void an Order** | No No | No No | **Yes Yes (PIN Protected)** |
+| **Modify Item Selling Price** | No No | No No | **Yes Yes** |
+| **View Profit Margins & Costs** | No No | No No | **Yes Yes** |
 
 With **OruPOS**, these role protections are built-in from day one. You can empower your floor staff to take orders lightning-fast on their Android phones while strictly preventing them from manipulating your revenue numbers.
 

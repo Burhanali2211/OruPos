@@ -128,9 +128,9 @@ Before investing a single rupee in restaurant software, verify these five must-h
 | Feature | Legacy Cash Register | Petpooja | TMBill | Restroworks (POSist) | **OruPOS** |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Pricing Model** | Hardware Purchase (₹15k) | **₹15k – ₹25k / Year** | ₹12k – ₹18k / Year | ₹30k – ₹80k+ / Year | **₹199 / Table (One-Time)** |
-| **Annual Renewals** | None | ❌ Heavy Recurring Fee | ❌ Heavy Recurring Fee | ❌ Enterprise Recurring | **✅ ₹0 (Zero Subscription)** |
+| **Annual Renewals** | None | No Heavy Recurring Fee | No Heavy Recurring Fee | No Enterprise Recurring | **Yes ₹0 (Zero Subscription)** |
 | **Kitchen KOT** | Paper slips or manual | Thermal / KDS | Thermal / KDS | Enterprise KDS | **Real-Time KDS + Thermal** |
-| **QR Code Ordering** | ❌ None | Extra Add-On Cost | Basic | Enterprise Add-On | **✅ Included Free** |
+| **QR Code Ordering** | No None | Extra Add-On Cost | Basic | Enterprise Add-On | **Yes Included Free** |
 | **Hardware Required** | Proprietary box | Windows PC or Android | Windows / Android | High-end Touch Terminal | **Any Phone, Tablet, PC** |
 | **Internet Resilience** | Offline only | Hybrid POS Local | Cloud/Hybrid | Cloud-heavy | **Offline Cache Ready** |
 | **Menu Update Ease** | Complicated key codes | Admin portal | Admin portal | Complex back-office | **Instant WhatsApp Support** |
@@ -510,7 +510,7 @@ Many small food entrepreneurs are confused about whether to register under the *
 | Parameter | Regular 5% GST Scheme | Composition Scheme (Section 10) |
 | :--- | :--- | :--- |
 | **Annual Turnover Eligibility** | Any turnover | Up to ₹1.5 Crore (₹75 Lakhs in Special Category States) |
-| **Can Collect Tax from Diners?** | **Yes (5% split as 2.5% + 2.5%)** | ❌ **No (Illegal to charge tax on bill)** |
+| **Can Collect Tax from Diners?** | **Yes (5% split as 2.5% + 2.5%)** | No **No (Illegal to charge tax on bill)** |
 | **Document Issued** | **Tax Invoice** | **Bill of Supply** |
 | **Tax Paid to Government** | 5% collected from customer | 5% of total turnover paid out of pocket |
 | **Inter-State E-Commerce Sale** | Permitted | Restricted |

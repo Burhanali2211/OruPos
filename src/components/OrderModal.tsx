@@ -195,7 +195,7 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
                             : "var(--color-text-light)",
                         }}
                       >
-                        {isCompleted ? "✓ " : `${s.num}. `}{s.label}
+                        {isCompleted && <Check size={12} strokeWidth={2.5} />}{!isCompleted && `${s.num}. `}{s.label}
                       </span>
                     </div>
                   );

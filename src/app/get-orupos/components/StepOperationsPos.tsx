@@ -1,7 +1,18 @@
 "use client";
 
 import React from "react";
-import { ArrowLeft, ArrowRight, CheckCircle2, ShieldCheck, Zap, MessageSquare } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  ShieldCheck,
+  Zap,
+  MessageSquare,
+  FileText,
+  Monitor,
+  Store,
+  Info,
+} from "lucide-react";
 
 interface StepOperationsPosProps {
   isUsingPos: string;
@@ -121,21 +132,25 @@ export default function StepOperationsPos({
             {[
               {
                 id: "Manual",
-                title: "📝 Pen, Paper or Register",
+                title: "Pen, Paper or Register",
+                icon: FileText,
                 desc: "Paper slips, kacha bills, counter notebook, or basic calculator",
               },
               {
                 id: "Yes",
-                title: "💻 Computer / Billing Software",
+                title: "Computer / Billing Software",
+                icon: Monitor,
                 desc: "Currently using Petpooja, Vyapar, Posist, Excel, or another POS",
               },
               {
                 id: "New",
-                title: "🚀 Opening a New Outlet",
+                title: "Opening a New Outlet",
+                icon: Store,
                 desc: "Setting up fresh for an upcoming launch or renovation",
               },
             ].map((opt) => {
               const isSelected = isUsingPos === opt.id;
+              const OptionIcon = opt.icon;
               return (
                 <button
                   key={opt.id}
@@ -157,9 +172,12 @@ export default function StepOperationsPos({
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <span style={{ fontSize: "13.5px", fontWeight: isSelected ? 800 : 700 }}>
-                      {opt.title}
-                    </span>
+                    <div style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                      <OptionIcon size={16} color={isSelected ? "var(--zinc-950)" : "var(--zinc-500)"} />
+                      <span style={{ fontSize: "13.5px", fontWeight: isSelected ? 800 : 700 }}>
+                        {opt.title}
+                      </span>
+                    </div>
                     {isSelected && <CheckCircle2 size={16} color="var(--zinc-950)" />}
                   </div>
                   <span style={{ fontSize: "11.5px", color: "var(--zinc-500)", lineHeight: 1.4 }}>
@@ -413,8 +431,9 @@ export default function StepOperationsPos({
               resize: "vertical",
             }}
           />
-          <span style={{ display: "block", fontSize: "11px", color: "var(--zinc-500)", marginTop: "4px" }}>
-            ℹ️ You can leave this blank if you don&apos;t have any specific questions right now.
+          <span style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "11px", color: "var(--zinc-500)", marginTop: "4px" }}>
+            <Info size={13} style={{ flexShrink: 0 }} />
+            <span>You can leave this blank if you don&apos;t have any specific questions right now.</span>
           </span>
         </div>
 

@@ -107,7 +107,7 @@ export default function LiveDemoSection({ onOpenDemo }: LiveDemoSectionProps) {
                 Test the actual guest experience. Opens in under 1 second without downloading any app. Features high-res photography, dietary tags, and waiter alert buttons.
               </p>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "28px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "24px" }}>
                 {[
                   "1-second mobile load time with zero app download",
                   "Orders route directly into Kitchen KOT and POS floor table matrix",
@@ -142,6 +142,67 @@ export default function LiveDemoSection({ onOpenDemo }: LiveDemoSectionProps) {
                     <span>{item}</span>
                   </div>
                 ))}
+              </div>
+
+              {/* Live Menu Items Snapshot Preview with SEO */}
+              <div style={{ marginBottom: "24px" }}>
+                <span style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--zinc-400)", display: "block", marginBottom: "8px" }}>
+                  Sample Dishes on Live Demo Menu
+                </span>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px" }}>
+                  {[
+                    {
+                      name: "Paneer Tikka Angara",
+                      price: "₹260",
+                      image: "/assets/dish-paneer.jpg",
+                      alt: "Tandoori Paneer Tikka with spiced yogurt marinade and mint chutney",
+                    },
+                    {
+                      name: "Dum Chicken Biryani",
+                      price: "₹340",
+                      image: "/assets/dish-biryani.jpg",
+                      alt: "Slow dum cooked royal chicken biryani with saffron and basmati rice",
+                    },
+                    {
+                      name: "Napoli Margherita",
+                      price: "₹450",
+                      image: "/assets/dish-pizza.jpg",
+                      alt: "Woodfired Napoli sourdough pizza with San Marzano tomato and mozzarella",
+                    },
+                  ].map((dish, dIdx) => (
+                    <div
+                      key={dIdx}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        padding: "6px 8px",
+                        borderRadius: "10px",
+                        backgroundColor: "var(--zinc-50)",
+                        border: "1px solid var(--zinc-200)",
+                      }}
+                    >
+                      <div style={{ position: "relative", width: "36px", height: "36px", borderRadius: "8px", overflow: "hidden", flexShrink: 0 }}>
+                        <Image
+                          src={dish.image}
+                          alt={dish.alt}
+                          title={dish.name}
+                          fill
+                          style={{ objectFit: "cover" }}
+                          sizes="36px"
+                        />
+                      </div>
+                      <div style={{ overflow: "hidden" }}>
+                        <span style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--zinc-900)", display: "block", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>
+                          {dish.name}
+                        </span>
+                        <span style={{ fontSize: "11px", fontWeight: 600, color: "var(--zinc-500)" }}>
+                          {dish.price}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>

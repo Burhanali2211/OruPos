@@ -14,19 +14,19 @@ export default function CardDesignsGallery() {
       name: "Classic Dining",
       subtitle: "Refined aesthetic for fine dine and family restaurants",
       image: "/assets/card-designs-classic.png",
-      alt: "Restaurant table QR card designs in six color schemes",
+      alt: "Custom printed QR table ordering stands for classic dining and family restaurants",
     },
     cafe: {
       name: "Modern Cafe & Bistro",
       subtitle: "Vibrant and aesthetic branding for quick-serve and modern cafes",
       image: "/assets/card-designs-cafe.png",
-      alt: "Cafe table QR card designs in six color schemes",
+      alt: "Modern branded QR table ordering stands for artisan coffee shops, cafes, and bakeries",
     },
     bistro: {
       name: "Contemporary Bar & Lounge",
       subtitle: "Bold high-contrast typographic layouts for bars, lounges, and roasteries",
       image: "/assets/card-designs-bistro.png",
-      alt: "Bistro and lounge table QR card designs in six color schemes",
+      alt: "High-contrast contemporary QR table ordering stands for bars, bistros, and lounges",
     },
   };
 

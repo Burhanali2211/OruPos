@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { ORUPOS_CONFIG } from "@/data/config";
@@ -29,6 +30,24 @@ export default function FinalCta() {
             boxShadow: "0 12px 36px rgba(9, 9, 11, 0.15)",
           }}
         >
+          {/* Subtle real restaurant ambient backdrop */}
+          <div style={{ position: "absolute", inset: 0, opacity: 0.15, pointerEvents: "none" }}>
+            <Image
+              src="/assets/hotel-dining.jpg"
+              alt="Restaurant dining room atmosphere powered by OruPos zero-subscription POS"
+              title="OruPos Hospitality Management"
+              fill
+              style={{ objectFit: "cover", objectPosition: "center" }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "radial-gradient(circle at right, transparent 30%, rgba(9, 9, 11, 0.95) 85%)",
+              }}
+            />
+          </div>
+
           <div style={{ position: "relative", zIndex: 10, maxWidth: "580px" }}>
             <h2
               style={{

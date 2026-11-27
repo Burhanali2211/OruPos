@@ -87,11 +87,11 @@ It connects your dining room tables, your waiters, your kitchen prep station, an
 | **Upfront Hardware Cost** | ₹7,000 – ₹14,000 (Proprietary Box) | **₹0** (Use existing phone, tab, or PC) |
 | **Software Cost** | Included (Basic firmware) | **₹199 / Table (One-Time Setup)** |
 | **Menu Interface** | Memorizing 3-digit number codes | Visual touchscreen with photos & categories |
-| **Kitchen KOT Routing** | ❌ None (Waiter must run paper slips) | **✅ Instant Digital & Thermal KOT in < 2s** |
-| **Table Dine-In Tracking** | ❌ Cannot track 15 open tables | **✅ Live floor map (Occupied, Preparing, Billed)** |
-| **Diner QR Code Ordering** | ❌ Impossible | **✅ Included with QR Table Stands** |
-| **Owner Mobile Reports** | ❌ Must physically visit counter | **✅ Real-time sales on your phone anywhere** |
-| **GST Invoicing Compliance** | Basic / Rigid tax splits | **✅ Full 5% CGST/SGST + WhatsApp Receipts** |
+| **Kitchen KOT Routing** | No None (Waiter must run paper slips) | **Yes Instant Digital & Thermal KOT in < 2s** |
+| **Table Dine-In Tracking** | No Cannot track 15 open tables | **Yes Live floor map (Occupied, Preparing, Billed)** |
+| **Diner QR Code Ordering** | No Impossible | **Yes Included with QR Table Stands** |
+| **Owner Mobile Reports** | No Must physically visit counter | **Yes Real-time sales on your phone anywhere** |
+| **GST Invoicing Compliance** | Basic / Rigid tax splits | **Yes Full 5% CGST/SGST + WhatsApp Receipts** |
 | **Hardware Repair** | Must ship unit to manufacturer | Replace phone/tablet in 5 minutes |
 
 ---

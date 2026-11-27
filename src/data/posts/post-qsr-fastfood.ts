@@ -92,7 +92,7 @@ Fast food profitability lives in **up-sells and modifiers**:
 * Add Extra Cheese (+₹30) & Extra Meat (+₹40): Bill becomes ₹190 (Cost: ₹65, Margin: ₹125)
 
 Your POS touchscreen must make modifiers one-tap:
-* Tap \`[Chicken Shawarma]\` ➔ Pop-up shows: \`[Extra Cheese +₹30]\` \`[Spicy Mayo +₹15]\` \`[Wheat Rumali +₹20]\`.
+* Tap \`[Chicken Shawarma]\` -> Pop-up shows: \`[Extra Cheese +₹30]\` \`[Spicy Mayo +₹15]\` \`[Wheat Rumali +₹20]\`.
 * Cashier taps the modifiers and hits \`[PAY]\` in less than 3 seconds.
 * The kitchen prep cook sees the exact customizations printed cleanly on the ticket.
 
