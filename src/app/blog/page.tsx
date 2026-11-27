@@ -264,7 +264,7 @@ export default function BlogIndexPage() {
               Ready to Upgrade Your Restaurant with Zero Monthly Rent?
             </h2>
             <p style={{ color: "var(--zinc-400)", fontSize: "15px", lineHeight: 1.6, margin: 0 }}>
-              Get OruPOS for just ₹199 per table one-time. Complete cloud POS, real-time kitchen KOT routing, durable acrylic table stands, and 100% menu setup done for you.
+              Get OruPOS for just ₹199 per table one-time. Complete cloud POS, real-time kitchen KOT routing, durable QR table stands, and 100% menu setup done for you.
             </p>
           </div>
 

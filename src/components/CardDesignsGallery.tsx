@@ -14,19 +14,19 @@ export default function CardDesignsGallery() {
       name: "Classic Dining",
       subtitle: "Refined aesthetic for fine dine and family restaurants",
       image: "/assets/card-designs-classic.png",
-      alt: "Restaurant table QR acrylic card designs in six color schemes",
+      alt: "Restaurant table QR card designs in six color schemes",
     },
     cafe: {
       name: "Modern Cafe & Bistro",
       subtitle: "Vibrant and aesthetic branding for quick-serve and modern cafes",
       image: "/assets/card-designs-cafe.png",
-      alt: "Cafe table QR acrylic card designs in six color schemes",
+      alt: "Cafe table QR card designs in six color schemes",
     },
     bistro: {
       name: "Contemporary Bar & Lounge",
       subtitle: "Bold high-contrast typographic layouts for bars, lounges, and roasteries",
       image: "/assets/card-designs-bistro.png",
-      alt: "Bistro and lounge table QR acrylic card designs in six color schemes",
+      alt: "Bistro and lounge table QR card designs in six color schemes",
     },
   };
 
@@ -44,8 +44,8 @@ export default function CardDesignsGallery() {
   const hardwareSpecs = [
     {
       icon: Layers,
-      title: "3mm Optical Cast Acrylic",
-      desc: "Industrial-grade, shatter-resistant crystal acrylic with a stable weighted footprint that stays upright.",
+      title: "Heavy-Duty Table QR Stations",
+      desc: "Industrial-grade, shatter-resistant crystal table stands with a stable weighted footprint that stays upright.",
     },
     {
       icon: ShieldCheck,
@@ -65,7 +65,7 @@ export default function CardDesignsGallery() {
   ];
 
   const hardwareInquiryUrl = ORUPOS_CONFIG.getWhatsAppUrl({
-    customMessage: "Hi OruPos Team! I am interested in custom branded acrylic table QR stands for my restaurant. Please share design samples and options.",
+    customMessage: "Hi OruPos Team! I am interested in custom branded QR table stands for my restaurant. Please share design samples and options.",
   });
 
   return (
@@ -86,7 +86,7 @@ export default function CardDesignsGallery() {
           <div style={{ maxWidth: "640px" }}>
             <span className="section-kicker">Tabletop Hardware</span>
             <h2 className="section-title">
-              Heavy-duty acrylic table stands built for restaurant floors.
+              Heavy-duty QR table stands built for restaurant floors.
             </h2>
             <p className="section-desc">
               Customized with your restaurant logo, brand colors, and permanent table numbering. Engineered to resist spills, heat, and daily wear.

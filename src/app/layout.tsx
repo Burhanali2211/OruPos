@@ -4,7 +4,7 @@ import { ORUPOS_CONFIG } from "@/data/config";
 
 export const metadata: Metadata = {
   title: "OruPos — Zero-Subscription Restaurant POS System (₹0 Monthly Fee)",
-  description: "India's zero-subscription restaurant POS system. Includes real-time table management, instant QR contactless ordering, kitchen KOTs, GST billing, daily analytics, and custom acrylic table stands for ₹199/table one-time.",
+  description: "India's zero-subscription restaurant POS system. Includes real-time table management, instant QR contactless ordering, kitchen KOTs, GST billing, daily analytics, and custom QR table stands for ₹199/table one-time.",
   metadataBase: new URL(ORUPOS_CONFIG.urls.website),
   alternates: {
     canonical: "/",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "OruPos — Zero-Subscription Restaurant POS System",
-    description: "Complete cloud POS software + table ordering + kitchen KOT + custom acrylic stands for ₹199 per table one-time. Zero monthly fees forever.",
+    description: "Complete cloud POS software + table ordering + kitchen KOT + custom QR table stands for ₹199 per table one-time. Zero monthly fees forever.",
     images: ["/assets/hero-table-stand.jpg"],
   },
   robots: {
@@ -126,10 +126,10 @@ export default function RootLayout({
           },
           {
             "@type": "Question",
-            "name": "Are physical acrylic table stands included?",
+            "name": "Are physical QR table stands included?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes! Every single table receives a custom-printed, 3mm heavy-duty acrylic QR stand mapped to that specific table number, delivered directly to your restaurant door across India."
+              "text": "Yes! Every single table receives a custom-printed, durable heavy-duty QR stand mapped to that specific table number, delivered directly to your restaurant door across India."
             }
           },
           {

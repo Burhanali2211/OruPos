@@ -25,8 +25,8 @@ export default function HowItWorks() {
     {
       num: "03",
       icon: QrCode,
-      title: "Receive Acrylic Table Stands",
-      desc: "Place heavy-duty, crystal-clear 3mm acrylic QR stands at your dining tables and billing counter for customer scanning.",
+      title: "Receive Table QR Stands",
+      desc: "Place heavy-duty, crystal-clear table QR stands at your dining tables and billing counter for customer scanning.",
     },
     {
       num: "04",
@@ -45,7 +45,7 @@ export default function HowItWorks() {
             Up and running in 4 clear steps.
           </h2>
           <p className="section-desc" style={{ margin: "0 auto" }}>
-            We handle menu digitization, tax configuration, and acrylic stand delivery so you can start billing immediately.
+            We handle menu digitization, tax configuration, and table stand delivery so you can start billing immediately.
           </p>
         </div>
 

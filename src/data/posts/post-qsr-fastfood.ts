@@ -103,7 +103,7 @@ Your POS touchscreen must make modifiers one-tap:
 During peak evening hunger hours (7:30 PM to 9:30 PM), street counters often experience extreme clustering where people crowd the glass window trying to catch the cashier's eye.
 
 **How Modern Tech Solves This:**
-* **Counter QR Standees:** Place 3 acrylic QR standees along the sidewalk railing or waiting wall.
+* **Counter QR Standees:** Place 3 durable QR standees along the sidewalk railing or waiting wall.
 * **Scan & Skip the Line:** Tech-savvy young diners scan the QR code with their smartphone, browse the full visual menu, select their toppings, pay via UPI, and receive an instant digital token number on their phone screen.
 * **40% Line Reduction:** Your cashier focuses purely on cash customers, while digital diners flow smoothly through automated QR ordering.
 
@@ -124,7 +124,7 @@ Quick service food outlets operate on lean overhead. Paying ₹15,000 to ₹25,0
 ### 6. Setting Up Your QSR Counter in 24 Hours {#setup-guide}
 
 1. Get a standard 58mm or 80mm thermal receipt printer (like TVS, Everycom, or Epson).
-2. Place a budget Android tablet or smartphone on an angled acrylic counter stand.
+2. Place a budget Android tablet or smartphone on an angled tabletop counter stand.
 3. Activate OruPOS with your menu items, categories, and item photos.
 4. Paste your merchant UPI QR code on the counter.
 5. You are fully operational, audit-proof, and ready to serve hundreds of customers per evening!

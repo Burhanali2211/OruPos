@@ -24,8 +24,8 @@ export default function FaqSection() {
       a: "When an order is placed from a table QR or by waitstaff, the KOT appears immediately on your kitchen display tablet, screen, or prints directly to thermal KOT printers with table numbers and chef notes.",
     },
     {
-      q: "Are physical acrylic table stands included?",
-      a: "Yes. Every table gets a heavy-duty 3mm optical cast acrylic QR station printed with your logo, table number, and dedicated table QR, delivered to your door.",
+      q: "Are physical QR table stands included?",
+      a: "Yes. Every table gets a heavy-duty durable QR station stand printed with your logo, table number, and dedicated table QR, delivered to your door.",
     },
     {
       q: "Do you take any commission on customer orders?",

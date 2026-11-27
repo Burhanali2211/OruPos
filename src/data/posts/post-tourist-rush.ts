@@ -77,7 +77,7 @@ Paper menus with small plain text fail to inspire tourist orders. When a diner c
 [Diner Sits at Table Overlooking Dal Lake]
                        │
                        ▼
-    [Scans OruPOS Cast Acrylic Table Stand]
+    [Scans OruPOS QR Table Stand]
                        │
                        ▼
  ┌─────────────────────────────────────────────────────────┐

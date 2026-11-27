@@ -103,7 +103,7 @@ The aggregator owns the customer relationship. Next week, the app will happily s
 The smartest restaurant and cafe owners in India are actively shifting their focus back to where the highest margins live: **Dine-In and Direct Local Orders**.
 
 \`\`\`
-[Diner Sits at Table] ──► [Scans OruPOS Acrylic Stand]
+[Diner Sits at Table] ──► [Scans OruPOS Table Stand]
                                    │
                                    ▼
           [Direct Mobile Menu • 0% Commission • Instant KOT]
@@ -112,7 +112,7 @@ The smartest restaurant and cafe owners in India are actively shifting their foc
 [WhatsApp Bill Generated ──► Customer Phone Number Saved to Restaurant CRM]
 \`\`\`
 
-1. **Instant Table QR Ordering:** When guests sit at your tables, they scan a sleek acrylic stand. They see high-resolution dish photos and order without waiting 10 minutes for a waiter.
+1. **Instant Table QR Ordering:** When guests sit at your tables, they scan a sleek table stand. They see high-resolution dish photos and order without waiting 10 minutes for a waiter.
 2. **Zero Third-Party Middlemen:** The order punches directly into your kitchen KOT printer in 2 seconds.
 3. **Verified Customer Database:** When guests request their digital bill via WhatsApp or phone, you build a verified list of hundreds of local food lovers who actually live in your neighborhood.
 
@@ -127,7 +127,7 @@ Here is a 4-step blueprint top cafes use to protect their profit margins:
 * **Step 2: Slip "Direct Order" Cards in Takeaway Bags:**  
   Whenever you pack a delivery bag, insert a small postcard: *"Love our food? Order directly on our WhatsApp for 10% off and zero delivery markup next time!"*
 * **Step 3: Eliminate Waiter Sluggishness with Table Stands:**  
-  Guests often leave earlier or order less because waiters are too busy to take a second round of drinks. Acrylic QR table stations empower guests to order an extra dessert or cold beverage with one tap.
+  Guests often leave earlier or order less because waiters are too busy to take a second round of drinks. Table QR stations empower guests to order an extra dessert or cold beverage with one tap.
 * **Step 4: Stop Paying Recurring Monthly POS SaaS Fees:**  
   Why pay ₹20,000/year to legacy software companies who charge you extra for mobile ordering? Switch to a lifetime zero-subscription system.
 
@@ -138,7 +138,7 @@ Here is a 4-step blueprint top cafes use to protect their profit margins:
 OruPOS was built specifically to rescue independent restaurants and cafes from recurring software fees and aggregator platform dependency:
 
 * **₹199 per table one-time setup:** No monthly subscription, no annual renewal fees, and **0% commission** on every order.
-* **Cast Acrylic Table Stands Included:** Clear, durable, wipeable 3mm stands that make your dining room look modern and welcoming.
+* **Durable QR Table Stands Included:** Clear, durable, wipeable table stands that make your dining room look modern and welcoming.
 * **Direct Merchant UPI:** Diners pay straight to your own QR code (mPay, PhonePe, Google Pay, Paytm, or bank account). No 14-day aggregator payment holds.
 `
 };

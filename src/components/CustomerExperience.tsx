@@ -16,7 +16,7 @@ export default function CustomerExperience({ onOpenDemo }: CustomerExperiencePro
           <span className="section-tag">Frictionless Dining Experience</span>
           <h2 className="section-title">See What Your Diners Experience</h2>
           <p className="section-desc">
-            Your customer sits at the table, points their phone camera at the acrylic QR stand, and your full menu loads instantly.
+            Your customer sits at the table, points their phone camera at the table QR stand, and your full menu loads instantly.
           </p>
         </div>
 

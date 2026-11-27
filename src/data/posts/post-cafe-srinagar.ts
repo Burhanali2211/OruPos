@@ -140,7 +140,7 @@ A very common mistake first-time cafe owners make is signing a ₹25,000/year so
 
 **Why OruPOS is ideal for Srinagar Cafes:**
 * **₹199 per table one-time:** A 15-table cafe gets fully operational for under ₹3,000 total. No monthly renewal fees in January when footfall is low.
-* **Acrylic QR Table Stands Included:** Clear, spill-proof table numbers with high-res QR codes. Guests can sit down, scan with their phone, and browse your artisan menu with photos.
+* **Durable QR Table Stands Included:** Clear, spill-proof table numbers with high-res QR codes. Guests can sit down, scan with their phone, and browse your artisan menu with photos.
 * **Instant Kitchen KOT Routing:** Waiters punch orders on their Android phones; tickets instantly print in the kitchen in 2 seconds. No lost paper slips.
 * **Offline-Resilient Billing:** When internet cables freeze or Wi-Fi fluctuates, your counter continues billing locally over your shop's Wi-Fi router.
 

@@ -33,7 +33,7 @@ export default function PricingComparison() {
     },
     {
       feature: "Custom Table QR Stations",
-      orupos: "Custom 3mm optical cast acrylic included",
+      orupos: "Custom durable QR table stands included",
       others: "None (restaurateur prints DIY paper slips)",
     },
     {

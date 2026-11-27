@@ -49,7 +49,7 @@ export const postBillingMachine: BlogPost = {
     },
     {
       question: "Does OruPOS replace the need for an expensive billing machine?",
-      answer: "Absolutely. Instead of spending ₹10,000 to ₹15,000 on a closed hardware box, OruPOS costs just ₹199 per table one-time, runs on hardware you already own, includes acrylic QR table stands, and provides instant KOT routing."
+      answer: "Absolutely. Instead of spending ₹10,000 to ₹15,000 on a closed hardware box, OruPOS costs just ₹199 per table one-time, runs on hardware you already own, includes QR table stands, and provides instant KOT routing."
     }
   ],
   content: `
@@ -89,7 +89,7 @@ It connects your dining room tables, your waiters, your kitchen prep station, an
 | **Menu Interface** | Memorizing 3-digit number codes | Visual touchscreen with photos & categories |
 | **Kitchen KOT Routing** | ❌ None (Waiter must run paper slips) | **✅ Instant Digital & Thermal KOT in < 2s** |
 | **Table Dine-In Tracking** | ❌ Cannot track 15 open tables | **✅ Live floor map (Occupied, Preparing, Billed)** |
-| **Diner QR Code Ordering** | ❌ Impossible | **✅ Included with Acrylic Table Stands** |
+| **Diner QR Code Ordering** | ❌ Impossible | **✅ Included with QR Table Stands** |
 | **Owner Mobile Reports** | ❌ Must physically visit counter | **✅ Real-time sales on your phone anywhere** |
 | **GST Invoicing Compliance** | Basic / Rigid tax splits | **✅ Full 5% CGST/SGST + WhatsApp Receipts** |
 | **Hardware Repair** | Must ship unit to manufacturer | Replace phone/tablet in 5 minutes |
@@ -135,7 +135,7 @@ Let's look at the actual costs for an independent 12-table cafe in India over 3 
 
 #### Setup B: OruPOS Zero-Subscription Hospitality System
 * Software Setup (12 tables @ ₹199/table): ₹2,388 (one-time)
-* High-grade 3mm Acrylic Table Stands: Included
+* High-grade QR Table Stands: Included
 * Complete Cloud POS + KOT Engine: Included
 * Standard 58mm or 80mm ESC/POS Thermal Printer: ₹2,800 (one-time)
 * Annual Software Renewal: **₹0**

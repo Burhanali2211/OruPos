@@ -151,7 +151,7 @@ Let's look at the actual math for a standard **12-table restaurant or cafe in Sr
 
 #### Option B: OruPOS Zero-Subscription Hospitality Model
 * Initial Setup (12 tables @ ₹199/table): ₹2,388 (one-time)
-* High-grade Acrylic QR Table Stations: Included
+* High-grade QR Table Stations: Included
 * Complete Cloud POS + KOT Engine: Included
 * Multi-Device Captain Support: Included
 * Year 2 Renewal: **₹0**
@@ -167,7 +167,7 @@ That extra **₹71,000 saved** goes directly back into your pocket—funding int
 In peak dining hours at popular Srinagar food joints—like evening snacks in Rajbagh or weekend family lunches in Hyderpora—waiters often get overwhelmed. A customer asks for extra gravy, another table wants the bill, and a third party has been waiting 10 minutes just to see the menu.
 
 Here is how modernizing your table workflow transforms the diner experience:
-1. **Self-Service Browsing:** As soon as guests sit down, they scan the acrylic table stand. They immediately see appetizing photos of Rogan Josh, Gushtaba, Lavasa wraps, or artisan coffees.
+1. **Self-Service Browsing:** As soon as guests sit down, they scan the table stand. They immediately see appetizing photos of Rogan Josh, Gushtaba, Lavasa wraps, or artisan coffees.
 2. **Zero Waiter Miscommunication:** Dietary requests (e.g., "less spicy", "extra mint chutney") are entered directly into the KOT.
 3. **Instant Bill Settlement:** Diners tap "Request Bill" or scan the QR code to see their live total. They pay directly via UPI (mPay or any UPI app) without waiting for the captain to walk back and forth with a card machine.
 
@@ -435,7 +435,7 @@ Consider simple restaurant mathematics:
 
 ### 6. Implementation Checklist for Your Outlet
 
-* [ ] Place durable, scratch-resistant acrylic QR table stations at every dining seat.
+* [ ] Place durable, scratch-resistant QR table stations at every dining seat.
 * [ ] Connect a standard 58mm or 80mm ESC/POS thermal printer in the kitchen.
 * [ ] Give floor captains access to the OruPOS mobile captain interface on their personal or outlet Android phones.
 * [ ] Configure your J&K 5% GST details and UPI merchant VPA for automatic bill generation.

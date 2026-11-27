@@ -542,7 +542,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   marginBottom: "24px",
                 }}
               >
-                Zero monthly subscription, full cloud POS software, real-time KOT kitchen routing, durable 3mm acrylic QR table stations, and 100% menu digitization. Doorstep onboarding available in Srinagar and across India.
+                Zero monthly subscription, full cloud POS software, real-time KOT kitchen routing, durable QR table stations, and 100% menu digitization. Doorstep onboarding available in Srinagar and across India.
               </p>
               <a
                 href={ORUPOS_CONFIG.getWhatsAppUrl({ restaurantName: "Kashmir Inquiry" })}
@@ -757,7 +757,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   marginBottom: "16px",
                 }}
               >
-                No annual software rent. Includes physical acrylic QR stands, instant KOT, and full billing.
+                No annual software rent. Includes physical QR table stands, instant KOT, and full billing.
               </p>
               <a
                 href={ORUPOS_CONFIG.getWhatsAppUrl()}

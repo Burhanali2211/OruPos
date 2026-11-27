@@ -80,6 +80,7 @@ export const STARTER_MENU_PACKS: Record<
         category: "starters",
         isVeg: false,
         badge: "Chef Special",
+        image: "/assets/dish-chicken.jpg",
         desc: "Classic bone-in chicken marinated in degi mirch, fresh yogurt, and roasted spices.",
       },
       {
@@ -89,6 +90,7 @@ export const STARTER_MENU_PACKS: Record<
         category: "curries",
         isVeg: true,
         badge: "Must Try",
+        image: "/assets/dish-dal.jpg",
         desc: "Whole black lentils slow-cooked overnight for 16 hours with butter and cream.",
       },
       {
@@ -145,6 +147,7 @@ export const STARTER_MENU_PACKS: Record<
         category: "coffee",
         isVeg: true,
         badge: "Top Rated",
+        image: "/assets/dish-coffee.jpg",
         desc: "Double shot of specialty espresso with steamed condensed milk and silky microfoam.",
       },
       {
@@ -154,6 +157,7 @@ export const STARTER_MENU_PACKS: Record<
         category: "toast",
         isVeg: true,
         badge: "Healthy",
+        image: "/assets/dish-toast.jpg",
         desc: "Artisan sourdough toast with smashed Hass avocado, feta, and toasted pumpkin seeds.",
       },
       {
@@ -163,6 +167,7 @@ export const STARTER_MENU_PACKS: Record<
         category: "burgers",
         isVeg: false,
         badge: "Popular",
+        image: "/assets/dish-burger.jpg",
         desc: "Crispy spiced fried chicken breast with house honey mustard slaw and pickles.",
       },
       {
@@ -208,6 +213,7 @@ export const STARTER_MENU_PACKS: Record<
         price: 450,
         category: "pizza",
         isVeg: true,
+        image: "/assets/dish-pizza.jpg",
         desc: "48-hour fermented slow dough, San Marzano tomatoes, and Fior di Latte mozzarella.",
       },
     ],

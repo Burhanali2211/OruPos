@@ -34,7 +34,7 @@ export default function PricingCalculator() {
             Zero monthly software fees.
           </h2>
           <p className="section-desc" style={{ margin: "0 auto" }}>
-            The cloud POS software is 100% free forever. Pay only a one-time ₹199/table for custom acrylic hardware and complete menu onboarding.
+            The cloud POS software is 100% free forever. Pay only a one-time ₹199/table for custom table hardware and complete menu onboarding.
           </p>
         </div>
 
@@ -84,7 +84,7 @@ export default function PricingCalculator() {
             </div>
 
             <p style={{ fontSize: "0.875rem", color: "var(--zinc-500)", margin: 0, fontWeight: 500 }}>
-              Free Lifetime POS License + 3mm Cast Acrylic Stand + Full Menu Setup
+              Free Lifetime POS License + Durable QR Table Stand + Full Menu Setup
             </p>
           </div>
 

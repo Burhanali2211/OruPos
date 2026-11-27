@@ -24,7 +24,7 @@ export default function Benefits() {
     {
       title: "Individual Table Precision Mapping",
       highlight: "Stand 01 = Table 1 • Stand 02 = Table 2",
-      desc: "Each acrylic stand features bold dual-sided numbering and a unique QR code tied specifically to that dining table. Staff and kitchen managers immediately know which table is placing orders or calling for service.",
+      desc: "Each table stand features bold dual-sided numbering and a unique QR code tied specifically to that dining table. Staff and kitchen managers immediately know which table is placing orders or calling for service.",
       icon: <QrCode size={24} color="#0284C7" />,
       bg: "rgba(14, 165, 233, 0.12)",
       stat: "100%",
@@ -32,8 +32,8 @@ export default function Benefits() {
     },
     {
       title: "Spill-Proof, Gravy-Proof & Pristine",
-      highlight: "Heavy-Duty 3mm Optical Cast Acrylic",
-      desc: "Paper menus get grease stains, curry splashes, and dog-eared corners. Our heavy-duty acrylic stands stay upright beside salt shakers, wipe clean with a wet cloth, and maintain a 5-star restaurant look.",
+      highlight: "Heavy-Duty QR Table Stations",
+      desc: "Paper menus get grease stains, curry splashes, and dog-eared corners. Our heavy-duty QR table stands stay upright beside salt shakers, wipe clean with a wet cloth, and maintain a 5-star restaurant look.",
       icon: <CheckCircle2 size={24} color="#E5A93C" />,
       bg: "rgba(229, 169, 60, 0.15)",
       stat: "100%",
