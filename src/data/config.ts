@@ -113,8 +113,8 @@ export const ORUPOS_CONFIG: OruPosConfig = {
     },
     {
       id: "table-stand",
-      title: "Physical Acrylic Table Station",
-      desc: "Durable clear 3mm acrylic T-stand built to withstand spills, hot food, and restaurant cleaning, featuring clear dual-sided table numbers."
+      title: "Physical QR Table Station",
+      desc: "Durable clear table stand built to withstand spills, hot food, and restaurant cleaning, featuring clear dual-sided table numbers."
     },
     {
       id: "gst-billing",
@@ -148,7 +148,7 @@ export const ORUPOS_CONFIG: OruPosConfig = {
     const ownerName = data.ownerName ? `Owner: ${data.ownerName}` : "";
     const city = data.city ? `City: ${data.city}` : "";
 
-    let text = `Namaste OruPos Team!\nI am interested in getting the OruPos Zero-Subscription POS System for my restaurant.\n\n`;
+    let text = `Hi OruPOS Team,\nI am interested in getting the OruPOS Zero-Subscription POS System for my restaurant.\n\n`;
     text += `• Tables in my restaurant: ${tables} tables\n`;
     text += `• Total One-Time Setup: ${this.formatCurrency(total)} (@ ₹199/table)\n`;
     text += `• Includes: Complete POS software + KOT + QR table stands + Menu setup\n`;

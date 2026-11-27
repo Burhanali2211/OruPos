@@ -188,7 +188,7 @@ export default function Footer() {
               <li><span>Real-Time Kitchen KOT</span></li>
               <li><span>Contactless Table QR Ordering</span></li>
               <li><span>GST Invoicing & WhatsApp Bills</span></li>
-              <li><span>3mm Cast Acrylic Stands</span></li>
+              <li><span>Durable QR Table Stands</span></li>
               <li><span>Zero Monthly Subscription</span></li>
             </ul>
           </div>
@@ -267,7 +267,7 @@ export default function Footer() {
           <div style={{ display: "flex", alignItems: "center", gap: "20px", color: "var(--zinc-500)" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600, fontSize: "12px" }}>
               <ShieldCheck size={14} color="var(--emerald-600)" />
-              <span>3mm Cast Acrylic</span>
+              <span>Durable Table Stands</span>
             </span>
             <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 600, fontSize: "12px" }}>
               <Globe size={14} color="var(--emerald-600)" />

@@ -286,7 +286,7 @@ export default function OrderModal({ isOpen, onClose, initialTables = 10 }: Orde
 
                   <p style={{ fontSize: "12px", color: "var(--color-text-muted)", marginBottom: "20px", display: "flex", alignItems: "center", gap: "6px" }}>
                     <Check size={13} color="var(--color-whatsapp)" />
-                    <span>Includes Cloud POS Software + Kitchen KOT + Custom Acrylic Stands.</span>
+                    <span>Includes Cloud POS Software + Kitchen KOT + Custom Table Stands.</span>
                   </p>
 
                   <button
